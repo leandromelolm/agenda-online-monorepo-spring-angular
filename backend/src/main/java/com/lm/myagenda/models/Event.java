@@ -25,10 +25,10 @@ public class Event implements Serializable{
     private String title; 
     
     @Column(name = "time_start")
-    private Calendar start;
+    private String start;
    
     @Column(name = "time_end")
-    private Calendar end;
+    private String end;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Calendar date;
@@ -49,7 +49,7 @@ public class Event implements Serializable{
     
     public Event(){}
 
-    public Event(UUID id, String groupId, String title, Calendar start, Calendar end, Calendar date, String url,
+    public Event(UUID id, String groupId, String title, String start, String end, Calendar date, String url,
             String backgroundColor, String color, boolean overlap, String display, String descricao, Long servicoId) {
         this.id = id;
         this.groupId = groupId;
@@ -94,19 +94,19 @@ public class Event implements Serializable{
         this.title = title;
     }
 
-    public Calendar getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Calendar start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public Calendar getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Calendar end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
