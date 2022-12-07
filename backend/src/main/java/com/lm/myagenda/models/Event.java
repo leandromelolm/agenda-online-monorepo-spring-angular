@@ -1,6 +1,8 @@
 package com.lm.myagenda.models;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -31,7 +33,7 @@ public class Event implements Serializable{
     private String end;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Calendar date;
+    private Instant date;
 
     private String url;
 
@@ -49,7 +51,7 @@ public class Event implements Serializable{
     
     public Event(){}
 
-    public Event(UUID id, String groupId, String title, String start, String end, Calendar date, String url,
+    public Event(UUID id, String groupId, String title, String start, String end, Instant date, String url,
             String backgroundColor, String color, boolean overlap, String display, String descricao, Long servicoId) {
         this.id = id;
         this.groupId = groupId;
@@ -110,11 +112,11 @@ public class Event implements Serializable{
         this.end = end;
     }
 
-    public Calendar getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 
