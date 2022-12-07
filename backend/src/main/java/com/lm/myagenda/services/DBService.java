@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import com.lm.myagenda.models.Event;
 import com.lm.myagenda.repositories.EventRepository;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 @Service
 public class DBService {
 
@@ -35,31 +33,36 @@ public class DBService {
         long now = System.currentTimeMillis();
         now = now/1000;
         Instant instantNow = Instant.ofEpochSecond(now);
-        Instant instant2= Instant.now();
+        Instant instantNow2= Instant.now();
         Instant instant = Instant.parse(formatDateStringPlusDay(1)+"T10:45:00-03:00");   
         DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT; 
         DateTimeFormatter dtfPatternLocalZone = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").withZone(ZoneId.systemDefault()); 
-        System.out.println(dtf.format(instant2)); // 2022-12-07T14:50:48.522974564Z     
+        
+        System.out.println(dtf.format(instantNow));  //2022-12-07T15:28:40Z
+        System.out.println(dtf.format(instantNow2)); //2022-12-07T14:50:48.522974564Z    
 
         List<Event>eventos = new ArrayList<>();
 
         Event event = new Event();
         event.setTitle("event1 test");
-        event.setDate(instantNow.plus(2,ChronoUnit.DAYS));              
+        event.setDateUTC(instantNow.plus(2,ChronoUnit.DAYS));              
         event.setStart(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)));
         event.setEnd(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)));
         eventos.add(event);                
         
         Event event2 = new Event();
         event2.setTitle("event2 test");
-        event2.setDate(instant);
+        event2.setDateUTC(instant);
         event2.setStart(dtfPatternLocalZone.format(instant));
         event2.setEnd(dtfPatternLocalZone.format(instant.plus(14,ChronoUnit.MINUTES)));
         eventos.add(event2);           
         event2.setDisplay("block");
-        //(UUID id, String groupId, String title, String start, String end, Instant date, String url, String backgroundColor, String color, boolean overlap, String display, String descricao, Long servicoId)
-        Event event3 = new Event(null, null, "Joanna Darrk Madureira Almeida", dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), instant.plus(5, ChronoUnit.DAYS), null, null, null, false, "block", null, null); //899 segundos = 14min:59seg
+        
+        Event event3 = new Event(null, null, "Joanna Darrk Madureira Almeida", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, null, null, false, "block", null, null); //899 segundos = 14min:59seg
         eventos.add(event3);
+
+        Event event4 = new Event(null, null, "usuario event4", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, null, null, false, "block", "descrição test", 8000L, "01234567890", "11988880000", "1992-10-12");
+        eventos.add(event4);
 
         er.saveAll(eventos);
 

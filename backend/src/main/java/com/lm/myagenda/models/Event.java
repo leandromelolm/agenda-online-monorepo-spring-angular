@@ -2,8 +2,6 @@ package com.lm.myagenda.models;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,8 +11,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data //Getter e Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Event implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -25,15 +29,15 @@ public class Event implements Serializable{
     private String groupId;
 
     private String title; 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Instant dateUTC;
     
     @Column(name = "time_start")
     private String start;
    
     @Column(name = "time_end")
-    private String end;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Instant date;
+    private String end;    
 
     private String url;
 
@@ -48,17 +52,21 @@ public class Event implements Serializable{
     private String descricao;
 
     private Long servicoId;
-    
-    public Event(){}
 
-    public Event(UUID id, String groupId, String title, String start, String end, Instant date, String url,
+    private String personCPF;
+
+    private String personPhone;
+
+    private String personBirthDate;  
+
+    public Event(UUID id, String groupId, String title, Instant dateUTC, String start, String end, String url,
             String backgroundColor, String color, boolean overlap, String display, String descricao, Long servicoId) {
         this.id = id;
         this.groupId = groupId;
         this.title = title;
+        this.dateUTC = dateUTC;
         this.start = start;
-        this.end = end;
-        this.date = date;
+        this.end = end;       
         this.url = url;
         this.backgroundColor = backgroundColor;
         this.color = color;
@@ -66,116 +74,7 @@ public class Event implements Serializable{
         this.display = display;
         this.descricao = descricao;
         this.servicoId = servicoId;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-    public Instant getDate() {
-        return date;
-    }
-
-    public void setDate(Instant date) {
-        this.date = date;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public boolean isOverlap() {
-        return overlap;
-    }
-
-    public void setOverlap(boolean overlap) {
-        this.overlap = overlap;
-    }
-
-    public String getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Long getServicoId() {
-        return servicoId;
-    }
-
-    public void setServicoId(Long servicoId) {
-        this.servicoId = servicoId;
-    }
-        
+    }        
 }
 
 // https://www.baeldung.com/spring-data-jpa-query-by-date
