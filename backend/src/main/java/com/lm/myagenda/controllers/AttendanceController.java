@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lm.myagenda.models.scheduledService;
-import com.lm.myagenda.services.ScheduledServService;
+import com.lm.myagenda.models.Attendance;
+import com.lm.myagenda.services.AttendanceService;
 
 @RestController
 @RequestMapping(value="/api")
-public class ScheduledServiceController {
+public class AttendanceController {
 
     @Autowired
-    ScheduledServService scheduledServService;
+    AttendanceService attendanceService;
     
     @RequestMapping(value="/service/all", method = RequestMethod.GET)
-    public ResponseEntity<List<scheduledService>> allService(){
-        List<scheduledService> ss = scheduledServService.findAll();
+    public ResponseEntity<List<Attendance>> allService(){
+        List<Attendance> ss = attendanceService.findAll();
         return ResponseEntity.ok().body(ss);
     }
 }

@@ -7,15 +7,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//Registro de Atendimento
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class scheduledService implements Serializable{
+public class Attendance implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -27,5 +30,9 @@ public class scheduledService implements Serializable{
     private String horaInicio;
     private String horaFim;
     private String observacao;
-    private String dataRegistro;  
+    private String dataRegistro;    
+    @ManyToOne
+    @JoinColumn(name="person_id")
+    private Person person;
+    
 }

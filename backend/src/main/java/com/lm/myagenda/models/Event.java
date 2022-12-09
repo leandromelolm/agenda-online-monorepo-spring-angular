@@ -51,7 +51,7 @@ public class Event implements Serializable{
 
     private String descricao;
 
-    private Long scheduledServiceId;
+    private Long attendanceId;
 
     private String personCPF;
 
@@ -60,7 +60,7 @@ public class Event implements Serializable{
     private String personBirthDate;  
 
     public Event(UUID id, String groupId, String title,Instant dateUTC, String start, String end, String url,
-            String backgroundColor, String color, boolean overlap,String display, String descricao,Long scheduledServiceId) {
+            String backgroundColor, String color, boolean overlap,String display, String descricao,Long attendanceId) {
         this.id = id;
         this.groupId = groupId;
         this.title = title;
@@ -73,7 +73,7 @@ public class Event implements Serializable{
         this.overlap = overlap;
         this.display = display;
         this.descricao = descricao;
-        this.scheduledServiceId = scheduledServiceId;        
+        this.attendanceId = attendanceId;        
     }        
 }
 

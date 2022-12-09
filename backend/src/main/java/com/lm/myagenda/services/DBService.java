@@ -15,12 +15,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lm.myagenda.models.scheduledService;
+import com.lm.myagenda.models.Attendance;
 import com.lm.myagenda.models.Event;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.repositories.EventRepository;
 import com.lm.myagenda.repositories.PersonRepository;
-import com.lm.myagenda.repositories.ScheduledServiceRepository;
+import com.lm.myagenda.repositories.AttendanceRepository;
 
 @Service
 public class DBService {
@@ -29,7 +29,7 @@ public class DBService {
     EventRepository er;
 
     @Autowired
-    ScheduledServiceRepository ssr;
+    AttendanceRepository atr;
 
     @Autowired
     PersonRepository pr;
@@ -69,12 +69,12 @@ public class DBService {
         Person p4 = new Person(null, "maria severina", "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "http://www.google.com", instantNow);
         pr.saveAndFlush(p4);
 
-        scheduledService servicoAgendado1 = new scheduledService(null, null, "Atendimento pendente de confirmação", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString());
-        scheduledService sa2 = new scheduledService(null, null, "Atendimento confirmado", instantNow.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString());
-        scheduledService sa3 = new scheduledService(null, null, "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString());  //899 segundos = 14min:59seg      
-        scheduledService sa4 = new scheduledService(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString());
+        Attendance servicoAgendado1 = new Attendance(null, null, "Atendimento pendente de confirmação", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p1);
+        Attendance sa2 = new Attendance(null, null, "Atendimento confirmado", instantNow.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
+        Attendance sa3 = new Attendance(null, null, "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg      
+        Attendance sa4 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
         
-        ssr.saveAllAndFlush(Arrays.asList(servicoAgendado1,sa2,sa3,sa4));
+        atr.saveAllAndFlush(Arrays.asList(servicoAgendado1,sa2,sa3,sa4));
         
         List<Event>eventos = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class DBService {
         event1.setDateUTC(instantNow.plus(2,ChronoUnit.DAYS));              
         event1.setStart(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)));
         event1.setEnd(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)));        
-        event1.setScheduledServiceId(servicoAgendado1.getId());
+        event1.setAttendanceId(servicoAgendado1.getId());
         event1.setPersonBirthDate(p1.getBirthdate().toString());
         event1.setPersonCPF(p1.getCpf());
         event1.setPersonPhone("11911111111");
@@ -95,7 +95,7 @@ public class DBService {
         event2.setStart(sa2.getHoraInicio());
         event2.setEnd(sa2.getHoraFim());
         event2.setDisplay("block");
-        event2.setScheduledServiceId(sa2.getId());
+        event2.setAttendanceId(sa2.getId());
         event2.setPersonBirthDate(p2.getBirthdate().toString());
         event2.setPersonCPF(p2.getCpf());
         event2.setPersonPhone("22922222222");
