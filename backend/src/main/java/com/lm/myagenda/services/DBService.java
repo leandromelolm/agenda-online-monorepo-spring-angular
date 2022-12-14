@@ -7,10 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.lm.myagenda.models.*;
 import com.lm.myagenda.repositories.*;
@@ -34,6 +31,9 @@ public class DBService {
 
     @Autowired
     PhoneRepository phr;
+
+    @Autowired
+    ProfessionalRepository pfr;
 
     public String currentDayPlusDays(int i){
         String datayyyymmdd = LocalDateTime.from(new Date().toInstant().atZone(ZoneId.of("GMT-3"))).plusDays(i).toString().substring(0, 10);
@@ -60,7 +60,14 @@ public class DBService {
         LocalDate birthdate2 = birthdate1.plusDays(80);
         LocalDate birthdate3 = birthdate1.plusDays(360);
         LocalDate birthdate4 = birthdate1.plusDays(120);
-        
+
+        Professional employee1 = new Professional(null, "nomeEmpregado","01234567890","mat1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
+        Professional emp2 = new Professional(null, "nomeEmpregado","01234567892","mat2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(500));
+        Professional emp3 = new Professional(null, "nomeEmpregado","01234567893","mat3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, LocalDate.now().minusYears(10));
+        Professional emp4 = new Professional(null, "nomeEmpregado","01234567894","mat4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, LocalDate.now().minusMonths(12));
+        Professional emp5 = new Professional(null, "nomeEmpregado","01234567895","mat5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, LocalDate.parse("2013-09-28"));
+        pfr.saveAll(Arrays.asList(employee1,emp2,emp3,emp4,emp5));
+
         Person p1 = new Person(null, "jose severino da silva filho junior", "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url", instantNow);
 //        pr.saveAndFlush(p1);
         Person p2 = new Person(null, "Sheri Almeida Kramer", "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url", instantNow);
@@ -77,15 +84,19 @@ public class DBService {
         Phone tel1 = new Phone(null,"11","999999999","telefone pessoal","pessoal",p1);
         Phone tel3 = new Phone(null,"90","900000000","telefone apenas ws","pessoal",p3);
 
-        pr.saveAll(Arrays.asList(p1,p2,p3,p4));
+        pr.saveAllAndFlush(Arrays.asList(p1,p2,p3,p4));
         addr.saveAll(Arrays.asList(end1,end2,end3,end4,end5));
         phr.saveAll(Arrays.asList(tel1, tel3));
 
         Attendance servicoAgendado1 = new Attendance(null, null, "Atendimento pendente de confirmação", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p1);
+        servicoAgendado1.getServicedBy().addAll(Arrays.asList(employee1,emp2));
         Attendance sa2 = new Attendance(null, null, "Atendimento confirmado", instantNow.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
-        Attendance sa3 = new Attendance(null, null, "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg      
+        sa2.getServicedBy().addAll(Arrays.asList(emp3));
+        Attendance sa3 = new Attendance(null, null, "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg
+        sa3.getServicedBy().addAll(Arrays.asList(emp4,emp5));
         Attendance sa4 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
-        
+        sa4.getServicedBy().addAll(Arrays.asList(emp4,emp2,emp5));
+
         atr.saveAllAndFlush(Arrays.asList(servicoAgendado1,sa2,sa3,sa4));
         
         List<Event>eventos = new ArrayList<>();
