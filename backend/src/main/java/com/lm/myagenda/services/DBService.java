@@ -12,15 +12,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.lm.myagenda.models.*;
+import com.lm.myagenda.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.lm.myagenda.models.Attendance;
-import com.lm.myagenda.models.Event;
-import com.lm.myagenda.models.Person;
-import com.lm.myagenda.repositories.EventRepository;
-import com.lm.myagenda.repositories.PersonRepository;
-import com.lm.myagenda.repositories.AttendanceRepository;
 
 @Service
 public class DBService {
@@ -33,6 +28,12 @@ public class DBService {
 
     @Autowired
     PersonRepository pr;
+
+    @Autowired
+    AddressRepository addr;
+
+    @Autowired
+    PhoneRepository phr;
 
     public String currentDayPlusDays(int i){
         String datayyyymmdd = LocalDateTime.from(new Date().toInstant().atZone(ZoneId.of("GMT-3"))).plusDays(i).toString().substring(0, 10);
@@ -60,14 +61,25 @@ public class DBService {
         LocalDate birthdate3 = birthdate1.plusDays(360);
         LocalDate birthdate4 = birthdate1.plusDays(120);
         
-        Person p1 = new Person(null, "jose severino da silva filho junior", "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "http://www.google.com", instantNow);
-        pr.save(p1);
-        Person p2 = new Person(null, "Sheri Almeida Kramer", "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "http://www.google.com", instantNow);
-        pr.saveAndFlush(p2);
-        Person p3 = new Person(null, "Cosmo Gomes Almeida", "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "http://www.google.com", instantNow);
-        pr.saveAndFlush(p3);
-        Person p4 = new Person(null, "maria severina", "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "http://www.google.com", instantNow);
-        pr.saveAndFlush(p4);
+        Person p1 = new Person(null, "jose severino da silva filho junior", "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url", instantNow);
+//        pr.saveAndFlush(p1);
+        Person p2 = new Person(null, "Sheri Almeida Kramer", "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url", instantNow);
+        Person p3 = new Person(null, "Cosmo Gomes Almeida", "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url", instantNow);
+        Person p4 = new Person(null, "maria severina", "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url", instantNow);
+
+        Address end1 = new Address(null, "avenida principal teste","10","Complemento","Cidade Universitária","Recife","PE","Brasil", "11222111", "observacao", "Residencial", p1);
+//        p1.getEnderecos().addAll(Arrays.asList(end1));
+        Address end2 = new Address(null, "rua segundaria teste","2","Complemento","Cidade Universitária","Joao Pessoa","PB","Brasil", "11222111", "observacao", "Residencial", p2);
+        Address end3 = new Address(null, "travessa terceira teste","300","Complemento","Bairro","Jaboatao","PE","Brasil", "11222111", "observacao", "Residencial", p3);
+        Address end4 = new Address(null, "via 4 teste","4000","Complemento","bairro","Caruau","PE","Brasil", "11222111", "observacao", "Residência Principal", p4);
+        Address end5 = new Address(null, "avenida 5","50","Complemento","Cidade Universitária","Recife","PE","Brasil", "11222111", "observacao", "Residencial", p4);
+
+        Phone tel1 = new Phone(null,"11","999999999","telefone pessoal","pessoal",p1);
+        Phone tel3 = new Phone(null,"90","900000000","telefone apenas ws","pessoal",p3);
+
+        pr.saveAll(Arrays.asList(p1,p2,p3,p4));
+        addr.saveAll(Arrays.asList(end1,end2,end3,end4,end5));
+        phr.saveAll(Arrays.asList(tel1, tel3));
 
         Attendance servicoAgendado1 = new Attendance(null, null, "Atendimento pendente de confirmação", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p1);
         Attendance sa2 = new Attendance(null, null, "Atendimento confirmado", instantNow.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);

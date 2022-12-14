@@ -5,17 +5,15 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,6 +44,10 @@ public class Person implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "person")    
     private List<Attendance> atendimentosAgendados = new ArrayList<>();
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Address> enderecos = new ArrayList<>(); //addresses
+    @OneToMany(mappedBy = "person")
+    private List<Phone> telefones = new ArrayList<>();
 
     public Person(Long id, String name, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
             String ine, String area, String note, String urlImage, Instant registerDate) {
