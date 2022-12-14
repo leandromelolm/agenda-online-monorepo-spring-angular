@@ -31,6 +31,9 @@ public class Attendance implements Serializable{
     @ManyToOne
     @JoinColumn(name="person_id")
     private Person person;
+    @ManyToOne
+    @JoinColumn(name = "agenda_id")
+    private Agenda agenda;
     @ManyToMany
     @JoinTable(
             name = "professional_attendance",

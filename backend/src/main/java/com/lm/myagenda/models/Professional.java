@@ -33,6 +33,9 @@ public class Professional implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "servicedBy")
     private List<Attendance> attendances = new ArrayList<>();
+    @JsonIgnore
+    @OneToOne(mappedBy = "professional")
+    private Agenda agenda;
 
     public Professional(Long id, String nome, String CPF, String matricula, String especialidade, String email, String descricao, String status, LocalDate dataAlteracaoStatus, LocalDate dataCadastro) {
         this.id = id;
