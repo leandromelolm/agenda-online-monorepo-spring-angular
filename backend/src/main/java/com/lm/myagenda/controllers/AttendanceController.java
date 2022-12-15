@@ -18,9 +18,9 @@ public class AttendanceController {
     @Autowired
     AttendanceService attendanceService;
     
-    @RequestMapping(value="/service/all", method = RequestMethod.GET)
+    @RequestMapping(value="/attendance/all", method = RequestMethod.GET)
     public ResponseEntity<List<Attendance>> allService(){
-        List<Attendance> ss = attendanceService.findAll();
-        return ResponseEntity.ok().body(ss);
+        List<Attendance> attendances = attendanceService.findAll();
+        return ResponseEntity.ok().body(attendances);
     }
 }

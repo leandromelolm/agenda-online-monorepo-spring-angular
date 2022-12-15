@@ -1,7 +1,7 @@
 package com.lm.myagenda.controllers;
 
-import com.lm.myagenda.models.ServiceItem;
-import com.lm.myagenda.services.ServiceItemService;
+import com.lm.myagenda.models.Item;
+import com.lm.myagenda.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,14 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="/api")
-public class ServiceItemController {
+public class ItemController {
 
     @Autowired
-    ServiceItemService serviceItemService;
+    ItemService itemService;
     
-    @RequestMapping(value="/serviceitem/all", method = RequestMethod.GET)
-    public ResponseEntity<List<ServiceItem>> test(){
-        List<ServiceItem> itensList = serviceItemService.findAll();
+    @RequestMapping(value="/item/all", method = RequestMethod.GET)
+    public ResponseEntity<List<Item>> test(){
+        List<Item> itensList = itemService.findAll();
         return ResponseEntity.ok().body(itensList);
     }
 }

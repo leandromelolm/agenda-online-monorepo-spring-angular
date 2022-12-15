@@ -11,6 +11,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import com.lm.myagenda.models.*;
+import com.lm.myagenda.models.Order;
 import com.lm.myagenda.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,10 +41,10 @@ public class DBService {
     AgendaRepository agr;
 
     @Autowired
-    ProcedureRepository procedureRepository;
+    OrderRepository orderRepository;
 
     @Autowired
-    ServiceItemRepository serviceItemRepository;
+    ItemRepository itemRepository;
 
     public String currentDayPlusDays(int i){
         String datayyyymmdd = LocalDateTime.from(new Date().toInstant().atZone(ZoneId.of("GMT-3"))).plusDays(i).toString().substring(0, 10);
@@ -71,13 +72,14 @@ public class DBService {
         LocalDate birthdate3 = birthdate1.plusDays(360);
         LocalDate birthdate4 = birthdate1.plusDays(120);
 
-        //Procedure
-        Procedure procedure1 = new Procedure(null, null, "vacinação Gripe", "vacina tipo", new BigDecimal("2.00"));
-        Procedure procedure2 = new Procedure(null, "Coleta sanguinea", "Coleta colesterol Total", "coleta", new BigDecimal("1.10"));
-        Procedure procedure3 = new Procedure(null, null, "Aferição", "Procedimento normal", new BigDecimal("1.00"));
-        Procedure procedure4 = new Procedure(null, null, "Acolhimento", "primeiro atendimento", new BigDecimal("0.01"));
-        Procedure procedure5 = new Procedure(null, "Coleta sanguinea", "Coleta Glicemia", "descrição coleta sanguinea", new BigDecimal("0.50"));
-        procedureRepository.saveAll(Arrays.asList(procedure1,procedure2,procedure3,procedure4,procedure5));
+        //item de serviço
+        Item item1 = new Item(null, "Enfermagem", "vacinação Gripe", "vacina tipo", new BigDecimal("2.00"), true);
+        Item item2 = new Item(null, "Coleta sanguinea", "Coleta colesterol Total", "coleta", new BigDecimal("1.10"), true);
+        Item item3 = new Item(null, "Enfermagem", "Aferição", "Procedimento normal", new BigDecimal("1.00"), false);
+        Item item4 = new Item(null, "Geral", "Acolhimento", "primeiro atendimento", new BigDecimal("0.01"), true);
+        Item item5 = new Item(null, "Coleta sanguinea", "Coleta Glicemia", "descrição coleta sanguinea", new BigDecimal("0.52"), true);
+        Item item6 = new Item(null, "Geral", "Consulta", "Consulta com especialista", new BigDecimal("0.30"), true);
+        itemRepository.saveAll(Arrays.asList(item1,item2,item3,item4,item5,item6));
 
         //Professional
         Professional employee1 = new Professional(null, "nomeEmpregado1","01234567890","mat1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
@@ -121,30 +123,36 @@ public class DBService {
         agr.save(agenda4);
 
         //Atendimentos
-        Attendance servicoAgendado1 = new Attendance(null, "descricao", "Atendimento pendente de confirmação", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
-        servicoAgendado1.getServicedBy().addAll(Arrays.asList(employee1,emp2));
-        servicoAgendado1.setAgenda(agenda1);
-        Attendance sa2 = new Attendance(null, null, "Atendimento confirmado", instantNow.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
-        sa2.getServicedBy().addAll(Arrays.asList(emp3));
-        sa2.setAgenda(agenda2);
-        Attendance sa3 = new Attendance(null, null, "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg
-        sa3.getServicedBy().addAll(Arrays.asList(emp4,emp5));
-        sa3.setAgenda(agenda2);
-        Attendance sa4 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
-        sa4.getServicedBy().addAll(Arrays.asList(emp4,emp2,emp5));
-        sa4.setAgenda(agenda2);
+        Attendance atendimento1 = new Attendance(null, "descricao", "Atendimento pendente de confirmação", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
+        atendimento1.getServicedBy().addAll(Arrays.asList(employee1,emp2));
+        atendimento1.setAgenda(agenda1);
+        Attendance a2 = new Attendance(null, null, "Atendimento confirmado", instantNow.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant), dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
+        a2.getServicedBy().addAll(Arrays.asList(emp3));
+        a2.setAgenda(agenda2);
+        Attendance a3 = new Attendance(null, null, "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg
+        a3.getServicedBy().addAll(Arrays.asList(emp4,emp5));
+        a3.setAgenda(agenda2);
+        Attendance a4 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
+        a4.getServicedBy().addAll(Arrays.asList(emp4,emp2,emp5));
+        a4.setAgenda(agenda2);
+        Attendance a5 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p2);
+        a5.getServicedBy().addAll(Arrays.asList(emp4));
+        a5.setAgenda(agenda3);
+        Attendance a6 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p3);
+        a6.getServicedBy().addAll(Arrays.asList(emp4));
+        a6.setAgenda(agenda3);
 
-        atr.saveAllAndFlush(Arrays.asList(servicoAgendado1,sa2,sa3,sa4));
+        atr.saveAllAndFlush(Arrays.asList(atendimento1,a2,a3,a4,a5,a6));
 
-        //ServiceItem ( item de serviço realizado no atendimento)
-        ServiceItem itemService = new ServiceItem(servicoAgendado1,procedure1);
-        serviceItemRepository.save(itemService);
-        ServiceItem is2 = new ServiceItem(sa2,procedure1);
-        ServiceItem is3 = new ServiceItem(sa2,procedure2);
-        ServiceItem is4 = new ServiceItem(sa2,procedure3);
-        ServiceItem is5 = new ServiceItem(sa2,procedure5);
-        ServiceItem is6 = new ServiceItem(sa3,procedure4);
-        serviceItemRepository.saveAll(Arrays.asList(is2,is3,is4,is5,is6));
+        //Order - Ordem de servico (lista de itens realizados no atendimento)
+        Order order1 = new Order(null,atendimento1,Arrays.asList(item1));
+        orderRepository.save(order1);
+        Order order2 = new Order(null,a2,Arrays.asList(item1));
+        Order order3 = new Order(null,a3,Arrays.asList(item1,item2));
+        Order order4 = new Order(null,a4,Arrays.asList(item3,item5,item4));
+//        Order order5 = new Order(null,a4,Arrays.asList(item1)); // Erro More than one row with the given identifier was found: 4
+        Order order6 = new Order(null,a5,Arrays.asList(item6));
+        orderRepository.saveAll(Arrays.asList(order2,order3,order4,order6));
 
         //Events
         List<Event>eventos = new ArrayList<>();
@@ -154,7 +162,7 @@ public class DBService {
         event1.setDateUTC(instantNow.plus(2,ChronoUnit.DAYS));              
         event1.setStart(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)));
         event1.setEnd(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)));        
-        event1.setAttendanceId(servicoAgendado1.getId());
+        event1.setAttendanceId(atendimento1.getId());
         event1.setPersonBirthDate(p1.getBirthdate().toString());
         event1.setPersonCPF(p1.getCpf());
         event1.setPersonPhone("11911111111");
@@ -162,19 +170,19 @@ public class DBService {
         
         Event event2 = new Event();
         event2.setTitle(p2.getName()+" cpf:"+p2.getCpf());
-        event2.setDateUTC(sa2.getDateInUTC());
-        event2.setStart(sa2.getHoraInicio());
-        event2.setEnd(sa2.getHoraFim());
+        event2.setDateUTC(a2.getDateInUTC());
+        event2.setStart(a2.getHoraInicio());
+        event2.setEnd(a2.getHoraFim());
         event2.setDisplay("block");
-        event2.setAttendanceId(sa2.getId());
+        event2.setAttendanceId(a2.getId());
         event2.setPersonBirthDate(p2.getBirthdate().toString());
         event2.setPersonCPF(p2.getCpf());
         event2.setPersonPhone("22922222222");
         eventos.add(event2);                  
         
-        Event event3 = new Event(null, null, p3.getName(), sa3.getDateInUTC(), sa3.getHoraInicio(), sa3.getHoraFim(), null, null, null, false, "block", null, sa3.getId(),p3.getCpf(),"33933333333", p3.getBirthdate().toString()); 
+        Event event3 = new Event(null, null, p3.getName(), a3.getDateInUTC(), a3.getHoraInicio(), a3.getHoraFim(), null, null, null, false, "block", null, a3.getId(),p3.getCpf(),"33933333333", p3.getBirthdate().toString());
         eventos.add(event3);        
-        Event event4 = new Event(null, null, p4.getName(), sa4.getDateInUTC(), sa4.getHoraInicio(), sa4.getHoraFim(), null, null, null, false, "block", "descrição test", sa4.getId(), p4.getCpf(), "44944444444", p4.getBirthdate().toString());
+        Event event4 = new Event(null, null, p4.getName(), a4.getDateInUTC(), a4.getHoraInicio(), a4.getHoraFim(), null, null, null, false, "block", "descrição test", a4.getId(), p4.getCpf(), "44944444444", p4.getBirthdate().toString());
         eventos.add(event4);
 
         er.saveAll(eventos);

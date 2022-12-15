@@ -3,14 +3,15 @@ package com.lm.myagenda.models;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 //Registro de Atendimento
 @Entity
@@ -43,8 +44,9 @@ public class Attendance implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "professional_id")
     )
     private List<Professional> servicedBy = new ArrayList<>();
-    @OneToMany(mappedBy = "id.attendance")
-    private Set<ServiceItem> itens = new HashSet<>();
+    @JsonIgnore
+    @OneToOne(mappedBy = "attendance",fetch = FetchType.EAGER)
+    private Order order;
 
     public Attendance(Long id, String descricao, String status, Instant dateInUTC, String horaInicio, String horaFim, String observacao, String dataRegistro, Person person) {
         this.id = id;
@@ -58,3 +60,8 @@ public class Attendance implements Serializable{
         this.person = person;
     }
 }
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "attendance",fetch = FetchType.EAGER)
+//    @Cascade(CascadeType.ALL)
+//    private List<Order> procedimentos;
