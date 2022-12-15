@@ -72,10 +72,10 @@ public class DBService {
         LocalDate birthdate3 = birthdate1.plusDays(360);
         LocalDate birthdate4 = birthdate1.plusDays(120);
 
-        //item de serviço
-        Item item1 = new Item(null, "Enfermagem", "vacinação Gripe", "vacina tipo", new BigDecimal("2.00"), true);
+        //Item de serviço
+        Item item1 = new Item(null, "Enfermagem", "vacinação Gripe", "vacina tipo", new BigDecimal("1.96"), true);
         Item item2 = new Item(null, "Coleta sanguinea", "Coleta colesterol Total", "coleta", new BigDecimal("1.10"), true);
-        Item item3 = new Item(null, "Enfermagem", "Aferição", "Procedimento normal", new BigDecimal("1.00"), false);
+        Item item3 = new Item(null, "Enfermagem", "Aferição", "Procedimento normal", new BigDecimal("1.05"), false);
         Item item4 = new Item(null, "Geral", "Acolhimento", "primeiro atendimento", new BigDecimal("0.01"), true);
         Item item5 = new Item(null, "Coleta sanguinea", "Coleta Glicemia", "descrição coleta sanguinea", new BigDecimal("0.52"), true);
         Item item6 = new Item(null, "Geral", "Consulta", "Consulta com especialista", new BigDecimal("0.30"), true);
@@ -144,15 +144,15 @@ public class DBService {
 
         atr.saveAllAndFlush(Arrays.asList(atendimento1,a2,a3,a4,a5,a6));
 
-        //Order - Ordem de servico (lista de itens realizados no atendimento)
+        //Order - Ordem de servico (lista de itens no atendimento)
         Order order1 = new Order(null,atendimento1,Arrays.asList(item1));
-        orderRepository.save(order1);
-        Order order2 = new Order(null,a2,Arrays.asList(item1));
+        Order order2 = new Order(null,a2,Arrays.asList(item2,item3));
         Order order3 = new Order(null,a3,Arrays.asList(item1,item2));
         Order order4 = new Order(null,a4,Arrays.asList(item3,item5,item4));
-//        Order order5 = new Order(null,a4,Arrays.asList(item1)); // Erro More than one row with the given identifier was found: 4
+        Order order5 = new Order(null,null,Arrays.asList(item3));
         Order order6 = new Order(null,a5,Arrays.asList(item6));
-        orderRepository.saveAll(Arrays.asList(order2,order3,order4,order6));
+        orderRepository.save(order1);
+        orderRepository.saveAll(Arrays.asList(order2,order3,order4,order5,order6));
 
         //Events
         List<Event>eventos = new ArrayList<>();
