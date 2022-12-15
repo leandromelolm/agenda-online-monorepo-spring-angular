@@ -1,5 +1,6 @@
 package com.lm.myagenda.services;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -38,6 +39,12 @@ public class DBService {
     @Autowired
     AgendaRepository agr;
 
+    @Autowired
+    ProcedureRepository procedureRepository;
+
+    @Autowired
+    ServiceItemRepository serviceItemRepository;
+
     public String currentDayPlusDays(int i){
         String datayyyymmdd = LocalDateTime.from(new Date().toInstant().atZone(ZoneId.of("GMT-3"))).plusDays(i).toString().substring(0, 10);
 		System.out.println("data yyyy-mm-dd: "+datayyyymmdd); //data yyyy-mm-dd: 2022-12-10
@@ -63,6 +70,14 @@ public class DBService {
         LocalDate birthdate2 = birthdate1.plusDays(80);
         LocalDate birthdate3 = birthdate1.plusDays(360);
         LocalDate birthdate4 = birthdate1.plusDays(120);
+
+        //Procedure
+        Procedure procedure1 = new Procedure(null, null, "vacinação Gripe", "vacina tipo", new BigDecimal("2.00"));
+        Procedure procedure2 = new Procedure(null, "Coleta sanguinea", "Coleta colesterol Total", "coleta", new BigDecimal("1.10"));
+        Procedure procedure3 = new Procedure(null, null, "Aferição", "Procedimento normal", new BigDecimal("1.00"));
+        Procedure procedure4 = new Procedure(null, null, "Acolhimento", "primeiro atendimento", new BigDecimal("0.01"));
+        Procedure procedure5 = new Procedure(null, "Coleta sanguinea", "Coleta Glicemia", "descrição coleta sanguinea", new BigDecimal("0.50"));
+        procedureRepository.saveAll(Arrays.asList(procedure1,procedure2,procedure3,procedure4,procedure5));
 
         //Professional
         Professional employee1 = new Professional(null, "nomeEmpregado1","01234567890","mat1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
@@ -120,6 +135,16 @@ public class DBService {
         sa4.setAgenda(agenda2);
 
         atr.saveAllAndFlush(Arrays.asList(servicoAgendado1,sa2,sa3,sa4));
+
+        //ServiceItem ( item de serviço realizado no atendimento)
+        ServiceItem itemService = new ServiceItem(servicoAgendado1,procedure1);
+        serviceItemRepository.save(itemService);
+        ServiceItem is2 = new ServiceItem(sa2,procedure1);
+        ServiceItem is3 = new ServiceItem(sa2,procedure2);
+        ServiceItem is4 = new ServiceItem(sa2,procedure3);
+        ServiceItem is5 = new ServiceItem(sa2,procedure5);
+        ServiceItem is6 = new ServiceItem(sa3,procedure4);
+        serviceItemRepository.saveAll(Arrays.asList(is2,is3,is4,is5,is6));
 
         //Events
         List<Event>eventos = new ArrayList<>();

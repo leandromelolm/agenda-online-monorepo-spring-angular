@@ -3,7 +3,9 @@ package com.lm.myagenda.models;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,6 +43,8 @@ public class Attendance implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "professional_id")
     )
     private List<Professional> servicedBy = new ArrayList<>();
+    @OneToMany(mappedBy = "id.attendance")
+    private Set<ServiceItem> itens = new HashSet<>();
 
     public Attendance(Long id, String descricao, String status, Instant dateInUTC, String horaInicio, String horaFim, String observacao, String dataRegistro, Person person) {
         this.id = id;
