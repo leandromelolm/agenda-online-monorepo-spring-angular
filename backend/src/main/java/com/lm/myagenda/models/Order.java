@@ -33,12 +33,14 @@ public class Order implements Serializable {
     private List<Item> itens = new ArrayList<>();
 
     private BigDecimal totalPrice;
+    private int quantItem;
 
     public Order(Long id, Attendance attendance, List<Item> itens) {
         this.id = id;
         this.attendance = attendance;
         this.itens = itens;
         this.totalPrice = getValorTotal();
+        this.quantItem = itens.size();
     }
     @JsonIgnore
     public BigDecimal getValorTotal() {

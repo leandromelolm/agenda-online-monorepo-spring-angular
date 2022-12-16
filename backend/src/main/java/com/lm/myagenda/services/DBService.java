@@ -150,7 +150,7 @@ public class DBService {
         Order order3 = new Order(null,a3,Arrays.asList(item1,item2));
         Order order4 = new Order(null,a4,Arrays.asList(item3,item5,item4));
         Order order5 = new Order(null,null,Arrays.asList(item3));
-        Order order6 = new Order(null,a5,Arrays.asList(item6));
+        Order order6 = new Order(null,a5,Arrays.asList(item6,item6,item6,item6,item6,item6));
         orderRepository.save(order1);
         orderRepository.saveAll(Arrays.asList(order2,order3,order4,order5,order6));
 
