@@ -30,7 +30,7 @@ public class OrderDTO implements Serializable {
         itens = itemDtoList(entity.getItens());
         totalPrice = entity.getTotalPrice();
         quantItem = entity.getQuantItem();
-        personNameAttended = (entity.getAttendance() == null) ? null : entity.getAttendance().getPerson().getName();
+        personNameAttended = entity.getAttendance().getPerson().getName();
     }
 
     public List<ItemDTO> itemDtoList(List<Item> itemList){

@@ -139,7 +139,7 @@ public class DBService {
         a5.getServicedBy().addAll(Arrays.asList(emp4));
         a5.setAgenda(agenda3);
         Attendance a6 = new Attendance(null, null, "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instantNow.toString(), p3);
-        a6.getServicedBy().addAll(Arrays.asList(emp4));
+//        a6.getServicedBy().addAll(Arrays.asList(emp4));
         a6.setAgenda(agenda3);
 
         atr.saveAllAndFlush(Arrays.asList(atendimento1,a2,a3,a4,a5,a6));
@@ -149,7 +149,7 @@ public class DBService {
         Order order2 = new Order(null,a2,Arrays.asList(item2,item3));
         Order order3 = new Order(null,a3,Arrays.asList(item1,item2));
         Order order4 = new Order(null,a4,Arrays.asList(item3,item5,item4));
-        Order order5 = new Order(null,null,Arrays.asList(item3)); // pedido com atendimento nulo
+        Order order5 = new Order(null,a6,Arrays.asList(item3));
         Order order6 = new Order(null,a5,Arrays.asList(item6,item6,item6,item6,item6,item6));
         orderRepository.save(order1);
         orderRepository.saveAll(Arrays.asList(order2,order3,order4,order5,order6));
