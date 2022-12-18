@@ -19,7 +19,7 @@ public class PersonController {
     PersonService ps;
     
     @RequestMapping(value="/person/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Person>> test(){
+    public ResponseEntity<List<Person>> findAll(){
         List<Person> persons = ps.findAll();
         return ResponseEntity.ok().body(persons);
     }

@@ -18,7 +18,7 @@ public class ItemController {
     ItemService itemService;
     
     @RequestMapping(value="/item/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Item>> test(){
+    public ResponseEntity<List<Item>> findAll(){
         List<Item> itensList = itemService.findAll();
         return ResponseEntity.ok().body(itensList);
     }

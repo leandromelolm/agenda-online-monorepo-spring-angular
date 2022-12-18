@@ -18,7 +18,7 @@ public class AgendaController {
     AgendaService ags;
     
     @RequestMapping(value="/agenda/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Agenda>> test(){
+    public ResponseEntity<List<Agenda>> findAll(){
         List<Agenda> agendasList = ags.findAll();
         return ResponseEntity.ok().body(agendasList);
     }

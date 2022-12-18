@@ -19,7 +19,7 @@ public class EventController {
     EventService es;
     
     @RequestMapping(value="/events/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Event>> test(){
+    public ResponseEntity<List<Event>> findAll(){
         List<Event> eventos = es.findAll();
         return ResponseEntity.ok().body(eventos);
     }

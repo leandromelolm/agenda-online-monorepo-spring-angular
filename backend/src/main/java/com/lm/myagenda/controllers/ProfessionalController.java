@@ -18,7 +18,7 @@ public class ProfessionalController {
     ProfessionalService pfs;
     
     @RequestMapping(value="/professional/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Professional>> test(){
+    public ResponseEntity<List<Professional>> findAll(){
         List<Professional> professionalList = pfs.findAll();
         return ResponseEntity.ok().body(professionalList);
     }
