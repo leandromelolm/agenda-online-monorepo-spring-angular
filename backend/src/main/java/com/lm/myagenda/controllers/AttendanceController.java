@@ -39,4 +39,10 @@ public class AttendanceController {
         Page<AttendanceDTO> attendanceList = attendanceService.pagedFindAll(pageable, page, size);
         return ResponseEntity.ok().body(attendanceList);
     }
+
+    @GetMapping("/attendances/{id}")
+    public ResponseEntity<Page<AttendanceDTO>>pagedFind(@PathVariable Long id, Pageable pageable){
+        Page<AttendanceDTO> listDto = attendanceService.findAllAttendaceOfAgenda(id, pageable);
+        return ResponseEntity.ok().body(listDto);
+    }
 }

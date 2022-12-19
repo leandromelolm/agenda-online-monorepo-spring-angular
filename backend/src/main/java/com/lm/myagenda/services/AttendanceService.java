@@ -30,4 +30,10 @@ public class AttendanceService {
         Page<Attendance> page = atr.findAll(pageable);
         return page.map(x -> new AttendanceDTO(x));
     }
+
+    @Transactional(readOnly = true)
+    public Page<AttendanceDTO> findAllAttendaceOfAgenda(Long idAgenda, Pageable pageable) {
+        Page<Attendance> page = atr.findAllByIdAgenda(idAgenda, pageable);
+        return page.map(x -> new AttendanceDTO(x));
+    }
 }
