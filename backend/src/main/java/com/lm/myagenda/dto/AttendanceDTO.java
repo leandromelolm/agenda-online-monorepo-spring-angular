@@ -43,8 +43,8 @@ public class AttendanceDTO implements Serializable {
         id = entity.getId();
         status = entity.getStatus();
         dateInUTC = entity.getDateInUTC();
-        horaInicio = entity.getHoraInicio();
-        horaFim = entity.getHoraFim();
+        horaInicio = entity.getStartTime();
+        horaFim = entity.getEndTime();
         observacao = entity.getObservacao();
         nomePessoaAtendida = entity.getPerson().getName();
         nomeAgenda = entity.getAgenda().getNameAgenda();

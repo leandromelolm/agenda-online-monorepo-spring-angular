@@ -25,8 +25,8 @@ public class Attendance implements Serializable{
     private String descricao;
     private String status;
     private Instant dateInUTC;
-    private String horaInicio;
-    private String horaFim;
+    private String startTime;
+    private String endTime;
     private String observacao;
     private String dataRegistro;    
     @ManyToOne
@@ -51,8 +51,8 @@ public class Attendance implements Serializable{
         this.descricao = descricao;
         this.status = status;
         this.dateInUTC = dateInUTC;
-        this.horaInicio = horaInicio;
-        this.horaFim = horaFim;
+        this.startTime = horaInicio;
+        this.endTime = horaFim;
         this.observacao = observacao;
         this.dataRegistro = dataRegistro;
         this.person = person;
