@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,8 +32,11 @@ public class AttendanceController {
     }
 
     @GetMapping("/attendances")
-    public ResponseEntity<Page<AttendanceDTO>> pagedFindAll(Pageable pageable){
-        Page<AttendanceDTO> attendanceList = attendanceService.pagedFindAll(pageable);
+    public ResponseEntity<Page<AttendanceDTO>> pagedFindAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "15") Integer size,
+            Pageable pageable){
+        Page<AttendanceDTO> attendanceList = attendanceService.pagedFindAll(pageable, page, size);
         return ResponseEntity.ok().body(attendanceList);
     }
 }
