@@ -5,6 +5,7 @@ import com.lm.myagenda.models.Attendance;
 import com.lm.myagenda.services.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,19 @@ public class AttendanceController {
     }
 
     @GetMapping("/attendances/{id}")
-    public ResponseEntity<Page<AttendanceDTO>>pagedFind(@PathVariable Long id, Pageable pageable){
+    public ResponseEntity<Page<AttendanceDTO>>pagedFindIdAgenda(@PathVariable Long id, Pageable pageable){
         Page<AttendanceDTO> listDto = attendanceService.findAllAttendaceOfAgenda(id, pageable);
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @GetMapping("/attendances/agenda/")
+    public ResponseEntity<Page<AttendanceDTO>>pagedFindIdAgendaWithRequestParam(
+            @RequestParam(value = "id", defaultValue = "1") Long idAgenda,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "25") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<AttendanceDTO> listDto = attendanceService.findAllAttendaceOfAgenda(idAgenda, pageable);
+        return ResponseEntity.ok().body(listDto);
+        //exemple: http://localhost:8080/api/attendances/agenda/?id=3&page=1&size=2
     }
 }
