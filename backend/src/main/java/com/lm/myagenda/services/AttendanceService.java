@@ -1,9 +1,13 @@
 package com.lm.myagenda.services;
 
+import com.lm.myagenda.dto.AttendanceDTO;
 import com.lm.myagenda.models.Attendance;
 import com.lm.myagenda.repositories.AttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,5 +20,10 @@ public class AttendanceService {
     public List<Attendance> findAll() {
         return  atr.findAll();
     }
-    
+
+    @Transactional(readOnly = true)
+    public Page<AttendanceDTO> pagedFindAll(Pageable pageable) {
+        Page<Attendance> page = atr.findAll(pageable);
+        return page.map(x -> new AttendanceDTO(x));
+    }
 }
