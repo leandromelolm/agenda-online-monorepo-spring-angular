@@ -47,7 +47,7 @@ public class AttendanceController {
         return ResponseEntity.ok().body(listDto);
     }
 
-    @GetMapping("/attendances/agenda/")
+    @GetMapping("/attendances/agenda")
     public ResponseEntity<Page<AttendanceDTO>>pagedFindIdAgendaWithRequestParam(
             @RequestParam(value = "id", defaultValue = "1") Long idAgenda,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -55,6 +55,5 @@ public class AttendanceController {
         Pageable pageable = PageRequest.of(page, size);
         Page<AttendanceDTO> listDto = attendanceService.findAllAttendaceOfAgenda(idAgenda, pageable);
         return ResponseEntity.ok().body(listDto);
-        //exemple: http://localhost:8080/api/attendances/agenda/?id=3&page=1&size=2
     }
 }
