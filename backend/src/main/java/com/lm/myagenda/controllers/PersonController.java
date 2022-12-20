@@ -1,26 +1,36 @@
 package com.lm.myagenda.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/api")
 public class PersonController {
 
     @Autowired
-    PersonService ps;
+    PersonService personService;
     
     @RequestMapping(value="/person/all", method = RequestMethod.GET)
     public ResponseEntity<List<Person>> findAll(){
-        List<Person> persons = ps.findAll();
+        List<Person> persons = personService.findAll();
         return ResponseEntity.ok().body(persons);
+    }
+
+    @GetMapping("/persons")
+    public ResponseEntity<Page<PersonDTO>> searchByNamePaged(
+            @RequestParam(value="search", defaultValue="") String searchedName,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value="orderBy", defaultValue="name") String orderBy,
+            @RequestParam(value="direction", defaultValue="DESC") String direction){
+        Page<PersonDTO> personList = personService.searchByName( searchedName, page, size, direction, orderBy);
+        return ResponseEntity.ok().body(personList);
     }
 }
