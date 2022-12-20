@@ -90,11 +90,11 @@ public class DBService {
         pfr.saveAll(Arrays.asList(employee1,emp2,emp3,emp4,emp5));
 
         //Person
-        Person p1 = new Person(null, "jose severino da silva filho junior", "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url", instantNow);
-//        pr.saveAndFlush(p1);
-        Person p2 = new Person(null, "Sheri Almeida Kramer", "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url", instantNow);
-        Person p3 = new Person(null, "Cosmo Gomes Almeida", "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url", instantNow);
-        Person p4 = new Person(null, "maria severina", "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url", instantNow);
+        Person p1 = new Person(null, "jose severino da silva filho junior", null, "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url", instantNow);
+//        pr.saveAndFlush(p1);'
+        Person p2 = new Person(null, "Sheri Almeida Kramer", null, "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url", instantNow);
+        Person p3 = new Person(null, "Cosmo Gomes Almeida", null, "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url", instantNow);
+        Person p4 = new Person(null, "maria severina", null, "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url", instantNow);
 
         //Address
         Address end1 = new Address(null, "avenida principal teste","10","Complemento","Cidade Universitária","Recife","PE","Brasil", "11222111", "observacao", "Residencial", p1);

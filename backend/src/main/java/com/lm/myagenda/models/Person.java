@@ -28,6 +28,7 @@ public class Person implements Serializable {
     private Long id;
 
     private String name;
+    private String socialName;
     private String cpf;
     private String cns;
     private String emailAddress;
@@ -47,10 +48,11 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person")
     private List<Phone> telefones = new ArrayList<>();
 
-    public Person(Long id, String name, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
+    public Person(Long id, String name, String socialName, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
             String ine, String area, String note, String urlImage, Instant registerDate) {
         this.id = id;
-        this.name = name;
+        this.name = name.toUpperCase();
+        this.socialName = socialName;
         this.cpf = cpf;
         this.cns = cns;
         this.emailAddress = emailAddress;
