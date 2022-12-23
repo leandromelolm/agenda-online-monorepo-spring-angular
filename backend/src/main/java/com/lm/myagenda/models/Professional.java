@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -30,9 +28,6 @@ public class Professional implements Serializable {
     private String status;
     private LocalDate dataAlteracaoStatus;
     private LocalDate dataCadastro;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "servicedBy")
-    private List<Attendance> attendances = new ArrayList<>();
     @JsonIgnore
     @OneToOne(mappedBy = "professional")
     private Agenda agenda;

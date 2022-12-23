@@ -13,7 +13,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -32,7 +34,7 @@ public class AttendanceDTO implements Serializable {
     private String nomePessoaAtendida;
     private String nomeAgenda;
     private int funcionariosAtendendo;
-    private List<String> funcionariosNomes;
+    private Set<String> funcionariosNomes;
     private BigDecimal orderTotalPrice;
     private List<ItemDTO> orderItens;
 
@@ -48,14 +50,14 @@ public class AttendanceDTO implements Serializable {
         observacao = entity.getObservacao();
         nomePessoaAtendida = entity.getPerson().getName();
         nomeAgenda = entity.getAgenda().getNameAgenda();
-        funcionariosAtendendo = entity.getServicedBy().size();
-        funcionariosNomes = employeeNameList(entity.getServicedBy());
+        funcionariosAtendendo = entity.getProfessionais().size();
+        funcionariosNomes = employeeNameList(entity.getProfessionais());
         orderTotalPrice = (entity.getOrder() == null ) ? null : entity.getOrder().getTotalPrice();
         orderItens = (entity.getOrder() == null) ? null : itemDTO.itemDtoList(entity.getOrder().getItens());
     }
 
-    public List<String> employeeNameList(List<Professional> professionalList){
-        List<String> strList = new ArrayList<>();
+    public Set<String> employeeNameList(Set<Professional> professionalList){
+        Set<String> strList = new HashSet<>();
         professionalList.forEach(x -> strList.add(x.getNome()));
         return strList;
     }

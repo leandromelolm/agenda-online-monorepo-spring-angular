@@ -1,5 +1,10 @@
 package com.lm.myagenda.services;
 
+import com.lm.myagenda.models.*;
+import com.lm.myagenda.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.Instant;
@@ -8,13 +13,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
-
-import com.lm.myagenda.models.*;
-import com.lm.myagenda.models.Order;
-import com.lm.myagenda.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class DBService {
@@ -123,31 +125,30 @@ public class DBService {
         agr.save(agenda4);
 
         //Atendimentos
-        Attendance atendimento1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
-        atendimento1.getServicedBy().addAll(Arrays.asList(employee1,emp2));
-        atendimento1.setAgenda(agenda1);
+        Attendance a1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
+        a1.getProfessionais().addAll(Arrays.asList(employee1,emp3));
+        a1.setAgenda(agenda1);
         Attendance a2 = new Attendance(null, "descricao atendimento2", "Atendimento confirmado", instant.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
-        a2.getServicedBy().addAll(Arrays.asList(emp3));
+        a2.getProfessionais().addAll(Arrays.asList(emp2,emp4));
         a2.setAgenda(agenda2);
         Attendance a3 = new Attendance(null, "descricao atendimento3", "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg
-        a3.getServicedBy().addAll(Arrays.asList(emp4,emp5));
+        a3.getProfessionais().addAll(Arrays.asList(employee1));
         a3.setAgenda(agenda2);
         Attendance a4 = new Attendance(null, "descricao atendimento4", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
-        a4.getServicedBy().addAll(Arrays.asList(emp4,emp2,emp5));
+        a4.getProfessionais().addAll(Arrays.asList(emp2));
         a4.setAgenda(agenda2);
         Attendance a5 = new Attendance(null, "descricao atendimento5", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p2);
-        a5.getServicedBy().addAll(Arrays.asList(emp4));
+        a5.getProfessionais().addAll(Arrays.asList(emp3));
         a5.setAgenda(agenda3);
         Attendance a6 = new Attendance(null, "descricao atendimento6", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instantNow.toString(), p3);
-//        a6.getServicedBy().addAll(Arrays.asList(emp4));
         a6.setAgenda(agenda3);
         Attendance a7 = new Attendance(null, "descricao atendimento7", "Atendimento confirmado", instant.minus(3,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instant.minus(10,ChronoUnit.DAYS).toString(), p3);
         a7.setAgenda(agenda3);
 
-        atr.saveAllAndFlush(Arrays.asList(atendimento1,a2,a3,a4,a5,a6,a7));
+        atr.saveAllAndFlush(Arrays.asList(a1,a2,a3,a4,a5,a6,a7));
 
         //Order - Ordem de servico (lista de itens no atendimento)
-        Order order1 = new Order(null,atendimento1,Arrays.asList(item1));
+        Order order1 = new Order(null,a1,Arrays.asList(item1));
         Order order2 = new Order(null,a2,Arrays.asList(item2,item3));
         Order order3 = new Order(null,a3,Arrays.asList(item1,item2));
         Order order4 = new Order(null,a4,Arrays.asList(item3,item5,item4));
@@ -164,7 +165,7 @@ public class DBService {
         event1.setDateUTC(instantNow.plus(2,ChronoUnit.DAYS));              
         event1.setStart(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)));
         event1.setEnd(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)));        
-        event1.setAttendanceId(atendimento1.getId());
+        event1.setAttendanceId(a1.getId());
         event1.setPersonBirthDate(p1.getBirthdate().toString());
         event1.setPersonCPF(p1.getCpf());
         event1.setPersonPhone("11911111111");

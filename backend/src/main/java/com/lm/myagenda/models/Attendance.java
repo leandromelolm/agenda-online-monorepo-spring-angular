@@ -1,15 +1,18 @@
 package com.lm.myagenda.models;
 
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 //Registro de Atendimento
 @Entity
@@ -36,14 +39,12 @@ public class Attendance implements Serializable{
     @JoinColumn(name = "agenda_id")
     private Agenda agenda;
     @ManyToMany
-    @JoinTable(
-            name = "professional_attendance",
-            joinColumns = @JoinColumn(name = "attendance_id"),
-            inverseJoinColumns = @JoinColumn(name = "professional_id")
-    )
-    private List<Professional> servicedBy = new ArrayList<>();
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Professional> professionais = new HashSet<>();
     @JsonIgnore
-    @OneToOne(mappedBy = "attendance",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "attendance",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Order order;
 
     public Attendance(Long id, String descricao, String status, Instant dateInUTC, String horaInicio, String horaFim, String observacao, String dataRegistro, Person person) {
@@ -58,8 +59,3 @@ public class Attendance implements Serializable{
         this.person = person;
     }
 }
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "attendance",fetch = FetchType.EAGER)
-//    @Cascade(CascadeType.ALL)
-//    private List<Order> procedimentos;
