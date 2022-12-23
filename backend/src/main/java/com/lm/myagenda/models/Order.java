@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,11 +28,13 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Attendance attendance;
 
     @ManyToMany
     @Cascade(CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Item> itens = new ArrayList<>();
 
     private BigDecimal totalPrice;
@@ -52,7 +56,3 @@ public class Order implements Serializable {
         return sum;
     }
 }
-
-
-//    @ManyToOne(optional = true)
-//    private Attendance attendance;

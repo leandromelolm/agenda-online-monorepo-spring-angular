@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -64,5 +65,14 @@ public class PersonService {
         person.getEnderecos().add(address);
         person.getTelefones().add(phone);
         return person;
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        personRepository.deleteById(id);
+    }
+
+    public Optional<Person> findById(Long id) {
+        return personRepository.findById(id);
     }
 }

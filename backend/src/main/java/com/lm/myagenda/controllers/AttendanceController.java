@@ -49,7 +49,7 @@ public class AttendanceController {
 
     @GetMapping("/attendances/agenda")
     public ResponseEntity<Page<AttendanceDTO>>pagedFindIdAgendaWithRequestParam(
-            @RequestParam(value = "id", defaultValue = "1") Long idAgenda,
+            @RequestParam(value = "id", defaultValue = "0") Long idAgenda,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "25") Integer size){
         Pageable pageable = PageRequest.of(page, size);

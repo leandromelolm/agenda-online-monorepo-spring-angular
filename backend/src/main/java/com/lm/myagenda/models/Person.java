@@ -1,20 +1,19 @@
 package com.lm.myagenda.models;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -41,11 +40,14 @@ public class Person implements Serializable {
     private String urlImage;
     private Instant registerDate;
     @JsonIgnore
-    @OneToMany(mappedBy = "person")    
+    @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Attendance> atendimentosAgendados = new ArrayList<>();
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Address> enderecos = new ArrayList<>(); //addresses
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person",  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Phone> telefones = new ArrayList<>();
 
     public Person(Long id, String name, String socialName, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
