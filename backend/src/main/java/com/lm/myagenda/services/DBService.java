@@ -92,11 +92,14 @@ public class DBService {
         pfr.saveAll(Arrays.asList(employee1,emp2,emp3,emp4,emp5));
 
         //Person
-        Person p1 = new Person(null, "jose severino da silva filho junior", null, "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url", instantNow);
-//        pr.saveAndFlush(p1);'
-        Person p2 = new Person(null, "Sheri Almeida Kramer", null, "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url", instantNow);
-        Person p3 = new Person(null, "Cosmo Gomes Almeida", null, "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url", instantNow);
-        Person p4 = new Person(null, "maria severina", null, "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url", instantNow);
+        Person p1 = new Person(null, "jose severino da silva filho junior", null, "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url");
+        p1.setRegisterDate(instantNow);
+        Person p2 = new Person(null, "Sheri Almeida Kramer", null, "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url");
+        p2.setRegisterDate(instantNow);
+        Person p3 = new Person(null, "Cosmo Gomes Almeida", null, "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url");
+        p3.setRegisterDate(instantNow);
+        Person p4 = new Person(null, "maria severina", null, "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url");
+        p4.setRegisterDate(instantNow);
 
         //Address
         Address end1 = new Address(null, "avenida principal teste","10","Complemento","Cidade Universitária","Recife","PE","Brasil", "11222111", "observacao", "Residencial", p1);
@@ -115,14 +118,21 @@ public class DBService {
         phr.saveAll(Arrays.asList(tel1, tel3));
 
         //Agenda
-        Agenda agenda1 = new Agenda(null,"AgendaAAA","agenda do profissional 1","ativa","grupoAgenda",emp2);
+        Agenda agenda1 = new Agenda(null,"Agenda A funcionario2","agenda do profissional 1","ativa","grupoAgenda",emp2);
         agr.save(agenda1);
-        Agenda agenda2 = new Agenda(null,"BBB","agenda do profissional 2","ativa","grupoAgenda",emp3);
+        Agenda agenda2 = new Agenda(null,"Agenda B funcionario3","agenda do profissional 2","ativa","grupoAgenda",emp3);
         agr.save(agenda2);
-        Agenda agenda3 = new Agenda(null,"Dentista-DrCC",emp4.getNome(),"ativa","Dentista",emp4);
+        Agenda agenda3 = new Agenda(null,"Agenda C funcionario4",emp4.getNome(),"ativa","Dentista",emp4);
         agr.saveAndFlush(agenda3);
-        Agenda agenda4 = new Agenda(null,"Médico-DrDDD", emp5.getNome(),"ativa","Médico",emp5);
+        Agenda agenda4 = new Agenda(null,"Agenda D funcionario5", emp5.getNome(),"ativa","Médico",emp5);
         agr.save(agenda4);
+
+        // Adding agenda for the professional
+        emp2.setAgenda(agenda1);
+        emp3.setAgenda(agenda2);
+        emp4.setAgenda(agenda3);
+        emp5.setAgenda(agenda4);
+        pfr.saveAll(Arrays.asList(emp2,emp3,emp4,emp5));
 
         //Atendimentos
         Attendance a1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
