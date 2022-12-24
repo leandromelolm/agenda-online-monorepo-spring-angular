@@ -28,9 +28,9 @@ public class PersonController {
         return ResponseEntity.ok().body(persons);
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<Page<PersonDTO>> searchByNamePaged(
-            @RequestParam(value="search", defaultValue="") String searchedName,
+            @RequestParam(value="name", defaultValue="") String searchedName,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value="orderBy", defaultValue="name") String orderBy,
