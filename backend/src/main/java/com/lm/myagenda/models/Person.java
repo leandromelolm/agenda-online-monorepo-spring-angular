@@ -33,7 +33,9 @@ public class Person implements Serializable {
     private String emailAddress;
     private String gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthdate;    
+    private LocalDate birthdate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate deathdate;
     private String ine; // Identificado Nacional de Equipe
     private String area;
     private String note;
