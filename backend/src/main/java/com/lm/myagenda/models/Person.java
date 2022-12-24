@@ -51,7 +51,7 @@ public class Person implements Serializable {
     private List<Phone> telefones = new ArrayList<>();
 
     public Person(Long id, String name, String socialName, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
-            String ine, String area, String note, String urlImage, Instant registerDate) {
+            String ine, String area, String note, String urlImage) {
         this.id = id;
         this.name = name.toUpperCase();
         this.socialName = socialName;
@@ -64,6 +64,5 @@ public class Person implements Serializable {
         this.area = area;
         this.note = note;
         this.urlImage = urlImage;
-        this.registerDate = registerDate;
     }
 }

@@ -32,9 +32,15 @@ public class PersonService {
     @Autowired
     PhoneRepository phoneRepository;
 
+    private final static Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
+
     @Transactional(readOnly = true)
     public List<Person> findAll() {
         return personRepository.findAll();
+    }
+
+    public Optional<Person> findById(Long id) {
+        return personRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
@@ -47,24 +53,22 @@ public class PersonService {
     @Transactional
     public Person insert(Person person){
         person.setId(null);
+        person.setRegisterDate(dateRegister);
         person = personRepository.save(person);
         addressRepository.saveAll(person.getEnderecos());
         phoneRepository.saveAll(person.getTelefones());
         return person;
     }
 
-    public Person fromDtoToEntity(PersonNewDTO p){
-        Person person = new Person(null, p.getName(), p.getSocialName(),
-                p.getCpf(), p.getCns(), p.getEmailAddress(), p.getGender(),
-                p.getBirthdate(), p.getIne(), p.getArea(), p.getNote(),
-                p.getUrlImage(), Instant.ofEpochSecond(System.currentTimeMillis()/1000));
-        Address address = new Address(null, p.getLogradouro(), p.getNumero(),
-                p.getComplemento(), p.getBairro(), p.getCidade(), p.getEstado(), p.getPais(),
-                p.getCep(), p.getObservacao(), p.getTipo(), person);
-        Phone phone = new Phone(null, p.getDdd(), p.getNumber(), p.getDescription(), p.getPhoneType(), person);
-        person.getEnderecos().add(address);
-        person.getTelefones().add(phone);
-        return person;
+    @Transactional
+    public void updatePerson(Long id, Person updatedPerson, Person currentPerson){
+        updatedPerson.setId(id);
+        /* CPF, Data de Registro, Endereços e Telefones não são alterados ao atualizar a pessoa*/
+        updatedPerson.setCpf(currentPerson.getCpf());
+        updatedPerson.setRegisterDate(currentPerson.getRegisterDate());
+        updatedPerson.setEnderecos(currentPerson.getEnderecos());
+        updatedPerson.setTelefones(currentPerson.getTelefones());
+        personRepository.save(updatedPerson);
     }
 
     @Transactional
@@ -72,7 +76,17 @@ public class PersonService {
         personRepository.deleteById(id);
     }
 
-    public Optional<Person> findById(Long id) {
-        return personRepository.findById(id);
+    public Person fromDtoToEntity(PersonNewDTO p){
+        Person person = new Person(null, p.getName(), p.getSocialName(),
+                p.getCpf(), p.getCns(), p.getEmailAddress(), p.getGender(),
+                p.getBirthdate(), p.getIne(), p.getArea(), p.getNote(),
+                p.getUrlImage());
+        Address address = new Address(null, p.getLogradouro(), p.getNumero(),
+                p.getComplemento(), p.getBairro(), p.getCidade(), p.getEstado(), p.getPais(),
+                p.getCep(), p.getObservacao(), p.getTipo(), person);
+        Phone phone = new Phone(null, p.getDdd(), p.getNumber(), p.getDescription(), p.getPhoneType(), person);
+        person.getEnderecos().add(address);
+        person.getTelefones().add(phone);
+        return person;
     }
 }

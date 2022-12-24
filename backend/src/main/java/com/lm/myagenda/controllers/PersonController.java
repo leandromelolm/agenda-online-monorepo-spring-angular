@@ -48,6 +48,18 @@ public class PersonController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id,
+                                         @RequestBody PersonNewDTO updatedPersonDTO){
+        Optional<Person> personOptional = personService.findById(id);
+        if (!personOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
+        }
+        Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
+        personService.updatePerson(id, updatedPerson, personOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(updatedPerson);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         Optional<Person> personOptional = personService.findById(id);

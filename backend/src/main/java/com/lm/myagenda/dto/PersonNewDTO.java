@@ -2,6 +2,7 @@ package com.lm.myagenda.dto;
 
 import com.lm.myagenda.models.Person;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class PersonNewDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
