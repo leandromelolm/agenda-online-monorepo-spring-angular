@@ -71,6 +71,16 @@ public class PersonService {
         personRepository.save(updatedPerson);
     }
 
+    public void updateAddress(Long id, int i, Person updatedPerson, Person currentPerson){
+        updatedPerson.setId(id);
+        updatedPerson.getEnderecos().get(0).setId(currentPerson.getEnderecos().get(i).getId());
+        /* CPF, Data de Registro e Telefones não são alterados ao atualizar a pessoa*/
+        updatedPerson.setCpf(currentPerson.getCpf());
+        updatedPerson.setRegisterDate(currentPerson.getRegisterDate());
+        updatedPerson.setTelefones(currentPerson.getTelefones());
+        addressRepository.save(updatedPerson.getEnderecos().get(0));
+    }
+
     @Transactional
     public void delete(Long id) {
         personRepository.deleteById(id);

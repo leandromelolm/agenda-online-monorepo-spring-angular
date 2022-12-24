@@ -49,14 +49,35 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id,
-                                         @RequestBody PersonNewDTO updatedPersonDTO){
+    public ResponseEntity<Object> update(
+            @PathVariable(value = "id") Long id,
+            @RequestBody PersonNewDTO updatedPersonDTO){
         Optional<Person> personOptional = personService.findById(id);
         if (!personOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
         }
         Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
         personService.updatePerson(id, updatedPerson, personOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(updatedPerson);
+    }
+
+    @PutMapping("/{idPerson}/address/{addressIndex}")
+    public ResponseEntity<Object> updateAddress(
+            @PathVariable(value = "idPerson") Long id,
+            @PathVariable(value = "addressIndex") Integer addressIndex,
+            @RequestBody PersonNewDTO updatedPersonDTO){
+        Optional<Person> personOptional = personService.findById(id);
+        if (personOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
+        }
+        addressIndex = --addressIndex;
+        //verifica se existe o indice na lista endereços da pessoa
+        if(addressIndex >= personOptional.get().getEnderecos().size() || addressIndex < 1 ){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Address not found. quantity of address registration for this person: "+ personOptional.get().getEnderecos().size());
+        }
+        Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
+        personService.updateAddress(id, addressIndex, updatedPerson, personOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body(updatedPerson);
     }
 
