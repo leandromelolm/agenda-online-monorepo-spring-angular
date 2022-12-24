@@ -61,7 +61,7 @@
 | pesquisar por nome do arquivo                           | ctrl + p                      |
 | pesquisar por nome do arquivo                           | ctrl + shift + n              |
 | pesquisar endpoint # (GET POST)                         | ctrl + n                      |
-| pesquisa arquivo #1                                     | [alt] ctrl+D                  |
+| pesquisa arquivo **1                                     | [alt] ctrl+D                  |
 | pesquisar no editor de texto                            | ctrl + f                      |
 | substituir no editor de texto                           | ctrl + r                      |
 | pesquisar selecionando texto                            | ctrl + k                      |
@@ -76,7 +76,8 @@
 | Abrir o liveServer no html                              | alt+L alt+O                   |
 | Parar o liveServer no html                              | alt+L alt+C                   |
 | #                                                       | #                             |
-#1(se estiver selecionado no editor de texto a linha atual é excluida)
+
+**1(se estiver selecionado no editor de texto a linha atual é excluida)
 
 Observação: Algumas teclas foram customizadas na IDE.
 
