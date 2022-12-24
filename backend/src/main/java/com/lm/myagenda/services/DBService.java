@@ -22,25 +22,25 @@ import java.util.List;
 public class DBService {
 
     @Autowired
-    EventRepository er;
+    EventRepository eventRepository;
 
     @Autowired
-    AttendanceRepository atr;
+    AttendanceRepository attendanceRepository;
 
     @Autowired
-    PersonRepository pr;
+    PersonRepository personRepository;
 
     @Autowired
-    AddressRepository addr;
+    AddressRepository addressRepository;
 
     @Autowired
-    PhoneRepository phr;
+    PhoneRepository phoneRepository;
 
     @Autowired
-    ProfessionalRepository pfr;
+    ProfessionalRepository professionalRepository;
 
     @Autowired
-    AgendaRepository agr;
+    AgendaRepository agendaRepository;
 
     @Autowired
     OrderRepository orderRepository;
@@ -83,66 +83,71 @@ public class DBService {
         Item item6 = new Item(null, "Geral", "Consulta", "Consulta com especialista", new BigDecimal("0.30"), true);
         itemRepository.saveAll(Arrays.asList(item1,item2,item3,item4,item5,item6));
 
-        //Professional
-        Professional employee1 = new Professional(null, "nomeEmpregado1","01234567890","mat1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
-        Professional emp2 = new Professional(null, "nomeEmpregado2","01234567892","mat2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(500));
-        Professional emp3 = new Professional(null, "nomeEmpregado3","01234567893","mat3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, LocalDate.now().minusYears(10));
-        Professional emp4 = new Professional(null, "nomeEmpregado4","01234567894","mat4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, LocalDate.now().minusMonths(12));
-        Professional emp5 = new Professional(null, "nomeEmpregado5","01234567895","mat5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, LocalDate.parse("2013-09-28"));
-        pfr.saveAll(Arrays.asList(employee1,emp2,emp3,emp4,emp5));
+        //Professional (employee)
+        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","mat1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
+        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","mat2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(500));
+        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","mat3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, LocalDate.now().minusYears(10));
+        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","mat4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, LocalDate.now().minusMonths(12));
+        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","mat5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, LocalDate.parse("2013-09-28"));
+        professionalRepository.saveAll(Arrays.asList(emp1,emp2,emp3,emp4,emp5));
 
         //Person
-        Person p1 = new Person(null, "jose severino da silva filho junior", null, "01234567891", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url");
+        Person p1 = new Person(null, "jose severino da silva Neto jr", null, "14031195036", "123123412341231", "jose@email.com", "masculino", birthdate1, "0000001234", "area","anotação", "url");
         p1.setRegisterDate(instantNow);
-        Person p2 = new Person(null, "Sheri Almeida Kramer", null, "01234567892", "123123412341232", "skeri@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url");
+        Person p2 = new Person(null, "Ágatha Rodrigues Gomes", null, "23397241049", "223123412341232", "agatha@email.com", "masculino", birthdate2, "0000001234", "area","anotação", "url");
         p2.setRegisterDate(instantNow);
-        Person p3 = new Person(null, "Cosmo Gomes Almeida", null, "01234567893", "123123412341233", "cosmo@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url");
+        Person p3 = new Person(null, "Julieta Gonçalves Araujo", null, "38406257008", "323123412341233", "Julieta@email.com", "masculino", birthdate3, "0000001234", "area","anotação", "url");
         p3.setRegisterDate(instantNow);
-        Person p4 = new Person(null, "maria severina", null, "01234567894", "123123412341234", "maria@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url");
+        Person p4 = new Person(null, "Laura Azevedo Severina", null, "44232636021", "423123412341234", "Laura@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url");
         p4.setRegisterDate(instantNow);
+        Person p5 = new Person(null, "Nicolash Barbosa Souza", null, "57627251036", "523123412341234", "Nicolash@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url");
+        p5.setRegisterDate(instantNow);
+        Person p6 = new Person(null, "Caio Almeida Souza gomes", null, "67210502009", "623123412341234", "Caio@email.com", "feminino", birthdate4, "0000001234", "area","anotação", "url");
+        p6.setRegisterDate(instantNow);
 
         //Address
         Address end1 = new Address(null, "avenida principal teste","10","Complemento","Cidade Universitária","Recife","PE","Brasil", "11222111", "observacao", "Residencial", p1);
-//        p1.getEnderecos().addAll(Arrays.asList(end1));
         Address end2 = new Address(null, "rua segundaria teste","2","Complemento","Cidade Universitária","Joao Pessoa","PB","Brasil", "11222111", "observacao", "Residencial", p2);
         Address end3 = new Address(null, "travessa terceira teste","300","Complemento","Bairro","Jaboatao","PE","Brasil", "11222111", "observacao", "Residencial", p3);
         Address end4 = new Address(null, "via 4 teste","4000","Complemento","bairro","Caruau","PE","Brasil", "11222111", "observacao", "Residência Principal", p4);
         Address end5 = new Address(null, "avenida 5","50","Complemento","Cidade Universitária","Recife","PE","Brasil", "11222111", "observacao", "Residencial", p4);
+        Address end6 = new Address(null, "rua segundaria teste","2","Complemento","Cidade Universitária","Joao Pessoa","PB","Brasil", "11222111", "observacao", "Residencial", p5);
+        Address end7 = new Address(null, "rua segundaria teste","2","Complemento","Cidade Universitária","Joao Pessoa","PB","Brasil", "11222111", "observacao", "Residencial", p6);
 
         //Phone
         Phone tel1 = new Phone(null,"11","999999999","telefone pessoal","pessoal",p1);
         Phone tel3 = new Phone(null,"90","900000000","telefone apenas ws","pessoal",p3);
 
-        pr.saveAllAndFlush(Arrays.asList(p1,p2,p3,p4));
-        addr.saveAll(Arrays.asList(end1,end2,end3,end4,end5));
-        phr.saveAll(Arrays.asList(tel1, tel3));
+        personRepository.saveAllAndFlush(Arrays.asList(p1, p2, p3, p4, p5, p6));
+        addressRepository.saveAll(Arrays.asList(end1, end2, end3, end4, end5, end6, end7));
+        phoneRepository.saveAll(Arrays.asList(tel1, tel3));
 
         //Agenda
         Agenda agenda1 = new Agenda(null,"Agenda A funcionario2","agenda do profissional 1","ativa","grupoAgenda",emp2);
-        agr.save(agenda1);
+        agendaRepository.save(agenda1);
         Agenda agenda2 = new Agenda(null,"Agenda B funcionario3","agenda do profissional 2","ativa","grupoAgenda",emp3);
-        agr.save(agenda2);
+        agendaRepository.save(agenda2);
         Agenda agenda3 = new Agenda(null,"Agenda C funcionario4",emp4.getNome(),"ativa","Dentista",emp4);
-        agr.saveAndFlush(agenda3);
+        agendaRepository.saveAndFlush(agenda3);
         Agenda agenda4 = new Agenda(null,"Agenda D funcionario5", emp5.getNome(),"ativa","Médico",emp5);
-        agr.save(agenda4);
+        agendaRepository.save(agenda4);
 
         // Adding agenda for the professional
         emp2.setAgenda(agenda1);
         emp3.setAgenda(agenda2);
         emp4.setAgenda(agenda3);
         emp5.setAgenda(agenda4);
-        pfr.saveAll(Arrays.asList(emp2,emp3,emp4,emp5));
+        professionalRepository.saveAll(Arrays.asList(emp2,emp3,emp4,emp5));
 
         //Atendimentos
         Attendance a1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
-        a1.getProfessionais().addAll(Arrays.asList(employee1,emp3));
+        a1.getProfessionais().addAll(Arrays.asList(emp1,emp3));
         a1.setAgenda(agenda1);
         Attendance a2 = new Attendance(null, "descricao atendimento2", "Atendimento confirmado", instant.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
         a2.getProfessionais().addAll(Arrays.asList(emp2,emp4));
         a2.setAgenda(agenda2);
         Attendance a3 = new Attendance(null, "descricao atendimento3", "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg
-        a3.getProfessionais().addAll(Arrays.asList(employee1));
+        a3.getProfessionais().addAll(Arrays.asList(emp1));
         a3.setAgenda(agenda2);
         Attendance a4 = new Attendance(null, "descricao atendimento4", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
         a4.getProfessionais().addAll(Arrays.asList(emp2));
@@ -155,7 +160,7 @@ public class DBService {
         Attendance a7 = new Attendance(null, "descricao atendimento7", "Atendimento confirmado", instant.minus(3,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instant.minus(10,ChronoUnit.DAYS).toString(), p3);
         a7.setAgenda(agenda3);
 
-        atr.saveAllAndFlush(Arrays.asList(a1,a2,a3,a4,a5,a6,a7));
+        attendanceRepository.saveAllAndFlush(Arrays.asList(a1,a2,a3,a4,a5,a6,a7));
 
         //Order - Ordem de servico (lista de itens no atendimento)
         Order order1 = new Order(null,a1,Arrays.asList(item1));
@@ -198,7 +203,7 @@ public class DBService {
         Event event4 = new Event(null, null, p4.getName(), a4.getDateInUTC(), a4.getStartTime(), a4.getEndTime(), null, null, null, false, "block", "descrição test", a4.getId(), p4.getCpf(), "44944444444", p4.getBirthdate().toString());
         eventos.add(event4);
 
-        er.saveAll(eventos);
+        eventRepository.saveAll(eventos);
 
     }
     
