@@ -1,5 +1,6 @@
 ## IDE shortcut key (Teclas de atalho do IDE)
 
+
 ### Intellij IDEA Comunity shortcut keys (teclas de atalho - usando linux)
 
 | Comando                                         | Atalho teclado       |
@@ -40,6 +41,7 @@
 | Duplicate current line                          | ctrl + D             |
 | Ver edições recentes                            | Ctrl + shift + E     |
 | #                                               | #                    |
+
 
 
  ### VSCode shortcut keys (teclas de atalho - usando linux)
