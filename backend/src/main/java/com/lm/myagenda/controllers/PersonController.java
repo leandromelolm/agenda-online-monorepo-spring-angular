@@ -2,6 +2,7 @@ package com.lm.myagenda.controllers;
 
 import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.dto.PersonNewDTO;
+import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,24 +62,49 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedPerson);
     }
 
-    @PutMapping("/{idPerson}/address/{addressIndex}")
+    @PutMapping("/{personId}/address/{addressId}")
     public ResponseEntity<Object> updateAddress(
-            @PathVariable(value = "idPerson") Long id,
+            @PathVariable(value = "personId") Long personId,
+            @PathVariable(value = "addressId") Long addressId,
+            @RequestBody PersonNewDTO updatedPersonDTO){
+        Optional<Person> personOptional = personService.findById(personId);
+        Optional<Address> addressOptional = personService.findByAddressId(addressId);
+        if (!personOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
+        }
+        if(!addressOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Address not found");
+        }
+        if(!addressOptional.get().getPerson().getId().equals(personOptional.get().getId())){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    "Address id does not match person id (id do endereço não corresponde com o id da pessoa)");
+        }
+        Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
+        personService.updateAddress(personId, addressId, updatedPerson, personOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(updatedPerson.getEnderecos());
+    }
+
+    @PutMapping("/{personId}/addressbyindex/{addressIndex}")
+    public ResponseEntity<Object> updateAddressByIndex(
+            @PathVariable(value = "personId") Long personId,
             @PathVariable(value = "addressIndex") Integer addressIndex,
             @RequestBody PersonNewDTO updatedPersonDTO){
-        Optional<Person> personOptional = personService.findById(id);
+        Optional<Person> personOptional = personService.findById(personId);
         if (personOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
         }
-        addressIndex = --addressIndex;
         //verifica se existe o indice na lista endereços da pessoa
-        if(addressIndex >= personOptional.get().getEnderecos().size() || addressIndex < 1 ){
+        addressIndex--;
+        if(addressIndex >= personOptional.get().getEnderecos().size() || addressIndex < 0){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Address not found. quantity of address registration for this person: "+ personOptional.get().getEnderecos().size());
+                    .body("Address not found. The value after addressbyindex/"+
+                            "must be greater than 0 and less than or equal to "+
+                            personOptional.get().getEnderecos().size() + ".");
         }
         Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
-        personService.updateAddress(id, addressIndex, updatedPerson, personOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body(updatedPerson);
+        personService.updateAddressByIndex(personId, addressIndex, updatedPerson, personOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(" Address updated with success");
     }
 
     @DeleteMapping("/{id}")

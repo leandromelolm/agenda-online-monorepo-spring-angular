@@ -43,6 +43,10 @@ public class PersonService {
         return personRepository.findById(id);
     }
 
+    public Optional<Address> findByAddressId(Long id){
+        return addressRepository.findById(id);
+    }
+
     @Transactional(readOnly = true)
     public Page<PersonDTO> searchByName(String searchedName, Integer page, Integer size, String direction, String orderBy) {
         Pageable pageable =  PageRequest.of(page, size, Direction.valueOf(direction),orderBy);
@@ -71,13 +75,17 @@ public class PersonService {
         personRepository.save(updatedPerson);
     }
 
-    public void updateAddress(Long id, int i, Person updatedPerson, Person currentPerson){
+    @Transactional
+    public void updateAddress(Long idPerson, Long idAddress, Person updatedPerson, Person currentPerson){
+        updatedPerson.setId(idPerson);
+        updatedPerson.getEnderecos().get(0).setId(idAddress);
+        addressRepository.save(updatedPerson.getEnderecos().get(0));
+    }
+
+    @Transactional
+    public void updateAddressByIndex(Long id, int i, Person updatedPerson, Person currentPerson){
         updatedPerson.setId(id);
         updatedPerson.getEnderecos().get(0).setId(currentPerson.getEnderecos().get(i).getId());
-        /* CPF, Data de Registro e Telefones não são alterados ao atualizar a pessoa*/
-        updatedPerson.setCpf(currentPerson.getCpf());
-        updatedPerson.setRegisterDate(currentPerson.getRegisterDate());
-        updatedPerson.setTelefones(currentPerson.getTelefones());
         addressRepository.save(updatedPerson.getEnderecos().get(0));
     }
 
