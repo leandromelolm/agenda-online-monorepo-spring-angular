@@ -29,6 +29,15 @@ public class PersonController {
         return ResponseEntity.ok().body(persons);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOnePerson(@PathVariable("id") Long id){
+        Optional<Person> personOptional = personService.findById(id);
+        if(personOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found.");
+        }
+        return ResponseEntity.ok().body(personOptional.get());
+    }
+
     @GetMapping("/search")
     public ResponseEntity<Page<PersonDTO>> searchByNamePaged(
             @RequestParam(value="name", defaultValue="") String searchedName,
