@@ -49,19 +49,4 @@ public class PersonNewDTO implements Serializable {
     private String description;
     private String phoneType;
 
-    public PersonNewDTO(Person p) {
-        this.id = p.getId();
-        this.name = p.getName();
-        this.socialName = p.getSocialName();
-        this.cpf = p.getCpf();
-        this.cns = p.getCns();
-        this.emailAddress = p.getEmailAddress();
-        this.gender = p.getGender();
-        this.birthdate = p.getBirthdate();
-        this.ine = p.getIne();
-        this.area = p.getArea();
-        this.note = p.getNote();
-        this.urlImage = p.getUrlImage();
-        this.registerDate = p.getRegisterDate();
-    }
 }

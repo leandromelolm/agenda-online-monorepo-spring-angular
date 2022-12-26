@@ -55,7 +55,7 @@ public class Person implements Serializable {
     public Person(Long id, String name, String socialName, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
             String ine, String area, String note, String urlImage) {
         this.id = id;
-        this.name = name.toUpperCase();
+        this.name = (name == null) ? null : name.toUpperCase();
         this.socialName = socialName;
         this.cpf = cpf;
         this.cns = cns;
