@@ -1,6 +1,5 @@
 package com.lm.myagenda.dto;
 
-import com.lm.myagenda.models.Person;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,6 @@
 package com.lm.myagenda.services;
 
+import com.lm.myagenda.dto.AddressDTO;
 import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.dto.PersonNewDTO;
 import com.lm.myagenda.models.Address;
@@ -8,6 +9,7 @@ import com.lm.myagenda.models.Phone;
 import com.lm.myagenda.repositories.AddressRepository;
 import com.lm.myagenda.repositories.PersonRepository;
 import com.lm.myagenda.repositories.PhoneRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,9 @@ public class PersonService {
 
     @Autowired
     PhoneRepository phoneRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     private final static Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
 
@@ -76,10 +81,10 @@ public class PersonService {
     }
 
     @Transactional
-    public void updateAddress(Long idPerson, Long idAddress, Person updatedPerson, Person currentPerson){
-        updatedPerson.setId(idPerson);
-        updatedPerson.getEnderecos().get(0).setId(idAddress);
-        addressRepository.save(updatedPerson.getEnderecos().get(0));
+    public void updateAddress(Long idAddress, Address addressNew, Person currentPerson){
+        addressNew.setId(idAddress);
+        addressNew.setPerson(currentPerson);
+        addressRepository.save(addressNew);
     }
 
     @Transactional
@@ -92,6 +97,10 @@ public class PersonService {
     @Transactional
     public void delete(Long id) {
         personRepository.deleteById(id);
+    }
+
+    public Address fromDtoToEntityUsingModelMapper(AddressDTO addressDTO){
+        return modelMapper.map(addressDTO, Address.class);
     }
 
     public Person fromDtoToEntity(PersonNewDTO p){

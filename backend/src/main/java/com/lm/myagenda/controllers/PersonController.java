@@ -1,5 +1,6 @@
 package com.lm.myagenda.controllers;
 
+import com.lm.myagenda.dto.AddressDTO;
 import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.dto.PersonNewDTO;
 import com.lm.myagenda.models.Address;
@@ -75,7 +76,7 @@ public class PersonController {
     public ResponseEntity<Object> updateAddress(
             @PathVariable(value = "personId") Long personId,
             @PathVariable(value = "addressId") Long addressId,
-            @RequestBody PersonNewDTO updatedPersonDTO){
+            @RequestBody AddressDTO addressNewDTO){
         Optional<Person> personOptional = personService.findById(personId);
         Optional<Address> addressOptional = personService.findByAddressId(addressId);
         if (!personOptional.isPresent()){
@@ -89,9 +90,9 @@ public class PersonController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     "Address id does not match person id (id do endereço não corresponde com o id da pessoa)");
         }
-        Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
-        personService.updateAddress(personId, addressId, updatedPerson, personOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body(updatedPerson.getEnderecos());
+        Address address = personService.fromDtoToEntityUsingModelMapper(addressNewDTO);
+        personService.updateAddress(addressId, address, personOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(address);
     }
 
     @PutMapping("/{personId}/addressbyindex/{addressIndex}")
