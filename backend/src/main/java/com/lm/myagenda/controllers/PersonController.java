@@ -1,6 +1,7 @@
 package com.lm.myagenda.controllers;
 
 import com.lm.myagenda.dto.AddressDTO;
+import com.lm.myagenda.dto.PersonAddressDTO;
 import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.dto.PersonNewDTO;
 import com.lm.myagenda.models.Address;
@@ -8,6 +9,7 @@ import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,15 @@ public class PersonController {
     public ResponseEntity<List<Person>> findAll(){
         List<Person> persons = personService.findAll();
         return ResponseEntity.ok().body(persons);
+    }
+
+    @RequestMapping(value="/persons/address", method = RequestMethod.GET)
+    public ResponseEntity<Page<PersonAddressDTO>> findAllPaged(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<PersonAddressDTO> personList = personService.findAllPage(pageRequest);
+        return ResponseEntity.ok().body(personList);
     }
 
     @GetMapping("/{id}")

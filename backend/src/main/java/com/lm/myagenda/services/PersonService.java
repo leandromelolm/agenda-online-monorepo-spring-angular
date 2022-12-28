@@ -1,6 +1,7 @@
 package com.lm.myagenda.services;
 
 import com.lm.myagenda.dto.AddressDTO;
+import com.lm.myagenda.dto.PersonAddressDTO;
 import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.dto.PersonNewDTO;
 import com.lm.myagenda.models.Address;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -42,6 +44,14 @@ public class PersonService {
     @Transactional(readOnly = true)
     public List<Person> findAll() {
         return personRepository.findAll();
+    }
+
+    public Page<PersonAddressDTO> findAllPage(PageRequest pageRequest) {
+        Page<Person> page = personRepository.findAll(pageRequest);
+        // A linha de código seguinte força o JPA a instanciar os objetos em memória fazendo cache dos objetos,
+        // com isso não é feita outras consultas no bd. Solução para resolver o problema de N+1 consultas.
+        personRepository.findPersonsAndAddress(page.stream().collect(Collectors.toList()));
+        return page.map(x -> new PersonAddressDTO(x));
     }
 
     public Optional<Person> findById(Long id) {

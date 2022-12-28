@@ -9,12 +9,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Transactional(readOnly = true)
 //    @Query("SELECT x FROM Person x WHERE UPPER(x.name) LIKE CONCAT('%',UPPER(:searchedname),'%')") //JPQL
     Page<Person> findByNameContainingIgnoreCase(@Param("searchedname") String searchedName, Pageable pageable); //Query with Spring Data JPA
+
+    @Transactional(readOnly = true)
+    @Query("SELECT obj FROM Person obj JOIN FETCH obj.enderecos WHERE obj IN :persons")
+    List<Person> findPersonsAndAddress(List<Person> persons);
 }
 
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
