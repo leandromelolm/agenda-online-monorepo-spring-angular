@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -37,7 +38,7 @@ public class PersonDTO implements Serializable {
     private String urlImage;
     private Instant registerDate;
     private List<AttendanceDTO> attendances = new ArrayList<>();
-    private List<Address> addresses = new ArrayList<>();
+    private List<AddressDTO> addresses = new ArrayList<>();
     private List<Phone> phones = new ArrayList<>();
 
     public PersonDTO(Person p) {
@@ -53,7 +54,7 @@ public class PersonDTO implements Serializable {
         this.note = p.getNote();
         this.urlImage = p.getUrlImage();
         this.registerDate = p.getRegisterDate();
-        this.addresses = p.getEnderecos();
+        this.addresses = p.getEnderecos().stream().map(x -> new AddressDTO(x)).collect(Collectors.toList());
         this.phones = p.getTelefones();
     }
 
