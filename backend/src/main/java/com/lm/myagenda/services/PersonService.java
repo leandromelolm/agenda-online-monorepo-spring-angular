@@ -11,6 +11,7 @@ import com.lm.myagenda.repositories.AddressRepository;
 import com.lm.myagenda.repositories.PersonRepository;
 import com.lm.myagenda.repositories.PhoneRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +49,13 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<PersonDTO> findAllWithAddress(Integer limitSize){
+        Page<Person> persons = personRepository.findAllWithAddress(PageRequest.of(0,limitSize)); // Optimized Query
+        return  getPersonAddressDtos(Collections.unmodifiableList(persons.getContent()));
+    }
+
+    @Transactional(readOnly = true)
     public Page<PersonAddressDTO> findAllPage(PageRequest pageRequest) {
         Page<Person> page = personRepository.findAll(pageRequest);
         // A linha de código seguinte força o JPA a instanciar os objetos em memória fazendo cache dos objetos,
@@ -54,10 +64,12 @@ public class PersonService {
         return page.map(x -> new PersonAddressDTO(x));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Person> findById(Long id) {
         return personRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Address> findByAddressId(Long id){
         return addressRepository.findById(id);
     }
@@ -125,5 +137,21 @@ public class PersonService {
         person.getEnderecos().add(address);
         person.getTelefones().add(phone);
         return person;
+    }
+
+    private List<PersonDTO> getPersonAddressDtos(List<Person> personList) {
+        if(personList.size() == 0) return  null;
+
+        List<PersonDTO> personDTOList = new ArrayList<>();
+        personList.forEach(s -> {
+            PersonDTO dtoPerson = new PersonDTO();
+            BeanUtils.copyProperties(s, dtoPerson);
+
+            AddressDTO addressDTO = new AddressDTO();
+            BeanUtils.copyProperties(s.getEnderecos().get(0), addressDTO); // pegando apenas o endereço do indice 0
+            dtoPerson.getAddresses().add(addressDTO);
+            personDTOList.add(dtoPerson);
+        });
+        return personDTOList;
     }
 }

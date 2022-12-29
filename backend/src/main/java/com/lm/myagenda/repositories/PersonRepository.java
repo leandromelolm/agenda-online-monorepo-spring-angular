@@ -21,6 +21,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Transactional(readOnly = true)
     @Query("SELECT obj FROM Person obj JOIN FETCH obj.enderecos WHERE obj IN :persons")
     List<Person> findPersonsAndAddress(List<Person> persons);
+
+//    Optimized Query
+    @Query(value = "SELECT p FROM Person p JOIN FETCH p.enderecos",
+            countQuery = "SELECT COUNT(p) FROM Person p JOIN p.enderecos")
+    Page<Person> findAllWithAddress(Pageable pageable);
 }
 
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation

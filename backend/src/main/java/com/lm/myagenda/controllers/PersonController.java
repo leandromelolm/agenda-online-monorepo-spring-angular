@@ -32,6 +32,12 @@ public class PersonController {
         return ResponseEntity.ok().body(persons);
     }
 
+    @RequestMapping(value="/all/address", method = RequestMethod.GET)
+    public ResponseEntity<List<PersonDTO>> findAllWithAddress(){
+        List<PersonDTO> persons = personService.findAllWithAddress(1000);
+        return ResponseEntity.ok().body(persons);
+    }
+
     @RequestMapping(value="/persons/address", method = RequestMethod.GET)
     public ResponseEntity<Page<PersonAddressDTO>> findAllPaged(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
