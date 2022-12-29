@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -34,17 +35,21 @@ public class Attendance implements Serializable{
     private String dataRegistro;    
     @ManyToOne
     @JoinColumn(name="person_id")
+    @ToString.Exclude
     private Person person;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agenda_id")
+    @ToString.Exclude
     private Agenda agenda;
     @ManyToMany
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private Set<Professional> professionais = new HashSet<>();
     @JsonIgnore
-    @OneToOne(mappedBy = "attendance",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "attendance",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private Order order;
 
     public Attendance(Long id, String descricao, String status, Instant dateInUTC, String horaInicio, String horaFim, String observacao, String dataRegistro, Person person) {
@@ -59,3 +64,5 @@ public class Attendance implements Serializable{
         this.person = person;
     }
 }
+
+// https://projectlombok.org/features/ToString

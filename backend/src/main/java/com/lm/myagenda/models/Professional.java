@@ -2,10 +2,7 @@ package com.lm.myagenda.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,8 +27,9 @@ public class Professional implements Serializable {
     private LocalDate dataAlteracaoStatus;
     private LocalDate dataCadastro;
     @JsonIgnore
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agenda_id", referencedColumnName = "id")
+    @ToString.Exclude
     private Agenda agenda;
 
     public Professional(Long id, String nome, String CPF, String matricula, String especialidade, String email, String descricao, String status, LocalDate dataAlteracaoStatus, LocalDate dataCadastro) {
