@@ -1,9 +1,6 @@
 package com.lm.myagenda.controllers;
 
-import com.lm.myagenda.dto.AddressDTO;
-import com.lm.myagenda.dto.PersonAddressDTO;
-import com.lm.myagenda.dto.PersonDTO;
-import com.lm.myagenda.dto.PersonNewDTO;
+import com.lm.myagenda.dto.*;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
@@ -32,13 +29,21 @@ public class PersonController {
         return ResponseEntity.ok().body(persons);
     }
 
-    @RequestMapping(value="/all/address", method = RequestMethod.GET)
+    @GetMapping("/all/summary")
+    public ResponseEntity<Page<PersonSumaryDTO>> findAllSummary(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "100") Integer size) {
+        Page<PersonSumaryDTO> persons = personService.findAllSummary(page , size);
+        return ResponseEntity.ok().body(persons);
+    }
+
+    @GetMapping(value="/all/address")
     public ResponseEntity<List<PersonDTO>> findAllWithAddress(){
         List<PersonDTO> persons = personService.findAllWithAddress(1000);
         return ResponseEntity.ok().body(persons);
     }
 
-    @RequestMapping(value="/persons/address", method = RequestMethod.GET)
+    @GetMapping(value="/persons/address")
     public ResponseEntity<Page<PersonAddressDTO>> findAllPaged(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size) {

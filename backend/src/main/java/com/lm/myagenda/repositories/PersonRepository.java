@@ -23,6 +23,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findPersonsAndAddress(List<Person> persons);
 
 //    Optimized Query
+    @Transactional(readOnly = true)
     @Query(value = "SELECT p FROM Person p JOIN FETCH p.enderecos",
             countQuery = "SELECT COUNT(p) FROM Person p JOIN p.enderecos")
     Page<Person> findAllWithAddress(Pageable pageable);

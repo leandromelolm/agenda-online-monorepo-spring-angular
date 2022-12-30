@@ -1,9 +1,6 @@
 package com.lm.myagenda.services;
 
-import com.lm.myagenda.dto.AddressDTO;
-import com.lm.myagenda.dto.PersonAddressDTO;
-import com.lm.myagenda.dto.PersonDTO;
-import com.lm.myagenda.dto.PersonNewDTO;
+import com.lm.myagenda.dto.*;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.models.Phone;
@@ -47,6 +44,11 @@ public class PersonService {
     @Transactional(readOnly = true)
     public List<Person> findAll() {
         return personRepository.findAll();
+    }
+
+    public Page<PersonSumaryDTO> findAllSummary(Integer page, Integer limitSize){
+        Page<Person> persons = personRepository.findAll(PageRequest.of(page,limitSize));
+        return persons.map(x -> new PersonSumaryDTO(x));
     }
 
     @Transactional(readOnly = true)

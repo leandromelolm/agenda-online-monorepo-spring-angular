@@ -31,7 +31,7 @@ public class Address implements Serializable {
     private String observacao;
     private String tipo;
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="person_id")
     private Person person;
 }
