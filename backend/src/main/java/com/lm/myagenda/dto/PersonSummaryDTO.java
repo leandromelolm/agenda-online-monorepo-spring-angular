@@ -13,11 +13,10 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
-public class PersonSumaryDTO implements Serializable {
+public class PersonSummaryDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long id;
     private String name;
     private String cpf;
     private String cns;
@@ -25,8 +24,7 @@ public class PersonSumaryDTO implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
-    public PersonSumaryDTO(Person p) {
-        this.id = p.getId();
+    public PersonSummaryDTO(Person p) {
         this.name = p.getName();
         this.cpf = p.getCpf();
         this.cns = p.getCns();

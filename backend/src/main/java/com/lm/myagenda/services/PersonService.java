@@ -46,9 +46,24 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Page<PersonSumaryDTO> findAllSummary(Integer page, Integer limitSize){
+    @Transactional(readOnly = true)
+    public Page<PersonSummaryDTO> findByNameOrCpfOrCns(String findString, Integer page, Integer size, String orderBy, String direction) {
+        Pageable pageable =  PageRequest.of(page, size, Direction.valueOf(direction),orderBy);
+        if(findString.isBlank()){
+            Page<Person> persons = personRepository.findAllPerson(PageRequest.of(page,size));
+            return persons.map(x -> new PersonSummaryDTO(x));
+        }
+        if(isNumber(findString)){
+            Page<Person> persons = personRepository.findByCpf(findString, pageable);
+            return persons.map(x -> new PersonSummaryDTO(x));
+        }
+        Page<Person> persons = personRepository.findByNameContaining(findString, pageable);
+        return persons.map(x -> new PersonSummaryDTO(x));
+    }
+
+    public Page<PersonSummaryDTO> findAllSummary(Integer page, Integer limitSize){
         Page<Person> persons = personRepository.findAll(PageRequest.of(page,limitSize));
-        return persons.map(x -> new PersonSumaryDTO(x));
+        return persons.map(x -> new PersonSummaryDTO(x));
     }
 
     @Transactional(readOnly = true)
@@ -145,15 +160,24 @@ public class PersonService {
         if(personList.size() == 0) return  null;
 
         List<PersonDTO> personDTOList = new ArrayList<>();
-        personList.forEach(s -> {
+        personList.forEach(p -> {
             PersonDTO dtoPerson = new PersonDTO();
-            BeanUtils.copyProperties(s, dtoPerson);
+            BeanUtils.copyProperties(p, dtoPerson);
 
             AddressDTO addressDTO = new AddressDTO();
-            BeanUtils.copyProperties(s.getEnderecos().get(0), addressDTO); // pegando apenas o endereço do indice 0
+            BeanUtils.copyProperties(p.getEnderecos().get(0), addressDTO); // pegando apenas o endereço do indice 0
             dtoPerson.getAddresses().add(addressDTO);
             personDTOList.add(dtoPerson);
         });
         return personDTOList;
+    }
+
+    public boolean isNumber(String s){
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

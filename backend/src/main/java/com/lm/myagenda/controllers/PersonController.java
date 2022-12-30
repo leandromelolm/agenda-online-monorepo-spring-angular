@@ -29,11 +29,22 @@ public class PersonController {
         return ResponseEntity.ok().body(persons);
     }
 
+    @GetMapping()
+    public ResponseEntity<Page<PersonSummaryDTO>> searchByNameOrCpfOrCns(
+            @RequestParam(value="search", defaultValue="") String searchNameOrCpfOrCns,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value="orderBy", defaultValue="name") String orderBy,
+            @RequestParam(value="direction", defaultValue="DESC") String direction){
+        Page<PersonSummaryDTO> personSummaryList = personService.findByNameOrCpfOrCns(searchNameOrCpfOrCns, page, size, orderBy, direction);
+        return ResponseEntity.ok().body(personSummaryList);
+    }
+
     @GetMapping("/all/summary")
-    public ResponseEntity<Page<PersonSumaryDTO>> findAllSummary(
+    public ResponseEntity<Page<PersonSummaryDTO>> findAllSummary(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "100") Integer size) {
-        Page<PersonSumaryDTO> persons = personService.findAllSummary(page , size);
+        Page<PersonSummaryDTO> persons = personService.findAllSummary(page , size);
         return ResponseEntity.ok().body(persons);
     }
 

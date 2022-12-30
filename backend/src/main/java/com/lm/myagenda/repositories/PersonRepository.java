@@ -2,6 +2,7 @@ package com.lm.myagenda.repositories;
 
 import com.lm.myagenda.models.Person;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +28,24 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query(value = "SELECT p FROM Person p JOIN FETCH p.enderecos",
             countQuery = "SELECT COUNT(p) FROM Person p JOIN p.enderecos")
     Page<Person> findAllWithAddress(Pageable pageable);
+
+    @Transactional(readOnly = true)
+    @Query(value = "SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) FROM Person p")
+    Page<Person> findAllPerson(PageRequest of);
+
+    @Transactional(readOnly = true)
+    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) " +
+            "FROM Person p WHERE p.cpf = :search " +
+            "OR p.cns = :search")
+    Page<Person> findByCpf(@Param("search")String search, Pageable pageable);
+
+    @Transactional(readOnly = true)
+    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) " +
+            "FROM Person p WHERE UPPER(p.name) " +
+            "LIKE CONCAT('%',UPPER(:search),'%')")
+    Page<Person> findByNameContaining(@Param("search")String search, Pageable pageable);
 }
+
+
 
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation

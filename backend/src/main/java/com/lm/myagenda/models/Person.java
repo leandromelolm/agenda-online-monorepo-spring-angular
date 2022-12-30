@@ -1,6 +1,7 @@
 package com.lm.myagenda.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,6 +44,7 @@ public class Person implements Serializable {
     private String urlImage;
     private Instant registerDate;
     @JsonIgnore
+//    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
@@ -70,5 +72,12 @@ public class Person implements Serializable {
         this.area = area;
         this.note = note;
         this.urlImage = urlImage;
+    }
+
+    public Person(String name, String cpf, String cns, LocalDate birthdate){
+        this.name = name;
+        this.cpf = cpf;
+        this.cns = cns;
+        this.birthdate = birthdate;
     }
 }
