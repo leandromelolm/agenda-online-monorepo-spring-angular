@@ -35,9 +35,9 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Transactional(readOnly = true)
     @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) " +
-            "FROM Person p WHERE p.cpf = :search " +
-            "OR p.cns = :search")
-    Page<Person> findByCpf(@Param("search")String search, Pageable pageable);
+            "FROM Person p WHERE p.cpf LIKE %:search%" +
+            "OR p.cns LIKE %:search%")
+    Page<Person> findByCpfOrCns(@Param("search")String search, Pageable pageable);
 
     @Transactional(readOnly = true)
     @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) " +
