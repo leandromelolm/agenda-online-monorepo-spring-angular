@@ -43,8 +43,8 @@ public class Person implements Serializable {
     private String note;
     private String urlImage;
     private Instant registerDate;
-    @JsonIgnore
-//    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+//    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
@@ -61,11 +61,11 @@ public class Person implements Serializable {
     public Person(Long id, String name, String socialName, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
             String ine, String area, String note, String urlImage) {
         this.id = id;
-        this.name = (name == null) ? null : name.toUpperCase();
-        this.socialName = socialName;
+        this.name = (name == null) ? null : name.toUpperCase().trim();
+        this.socialName = (socialName == null) ? null : socialName.trim();
         this.cpf = cpf;
         this.cns = cns;
-        this.emailAddress = emailAddress;
+        this.emailAddress = (emailAddress == null) ? null : emailAddress.toLowerCase().trim();
         this.gender = gender;
         this.birthdate = birthdate;
         this.ine = ine;
