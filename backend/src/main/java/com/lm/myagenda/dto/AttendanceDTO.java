@@ -20,7 +20,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class AttendanceDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

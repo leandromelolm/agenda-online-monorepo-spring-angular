@@ -20,7 +20,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Table(name = "pedido")
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;

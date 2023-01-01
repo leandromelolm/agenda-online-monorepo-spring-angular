@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class PersonNewDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

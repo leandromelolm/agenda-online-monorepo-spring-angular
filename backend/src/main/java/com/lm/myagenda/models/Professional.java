@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Entity
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Professional implements Serializable {
     private static final long serialVersionUID = 1L;
 

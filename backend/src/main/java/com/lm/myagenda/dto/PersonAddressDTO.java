@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class PersonAddressDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
