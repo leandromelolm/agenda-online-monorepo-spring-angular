@@ -54,7 +54,7 @@ public class PersonService {
             return persons.map(x -> new PersonSummaryDTO(x));
         }
         if(isNumber(findString)){
-            Page<Person> persons = personRepository.findByCpf(findString, pageable);
+            Page<Person> persons = personRepository.findByCpfOrCns(findString, pageable);
             return persons.map(x -> new PersonSummaryDTO(x));
         }
         Page<Person> persons = personRepository.findByNameContaining(findString, pageable);

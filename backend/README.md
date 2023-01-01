@@ -2,11 +2,22 @@
 ## MyAgenda - Backend
 
 #### PERSON GET ENDPOINT
+###### person summary with name, cpf, cns, birthdate
+###### http://localhost:8080/api/person?search= [all paged]
+###### http://localhost:8080/api/person?search= {name} or {cpf} or {cns}
+###### http://localhost:8080/api/person/all/summary
+
+###### person with address, phone and attendance
 ###### http://localhost:8080/api/person/search [all]
 ###### http://localhost:8080/api/person/search?name=gomes [search by name]
-###### http://localhost:8080/api/person/{personId} [find by id]
+
+###### person with address
+###### http://localhost:8080/api/person/ {personId} [find by id]
+###### http://localhost:8080/api/person/persons/address
+###### http://localhost:8080/api/person/all/address
+
 #### PERSON DELETE ENDPOINT
-###### http://localhost:8080/api/person/{personId}
+###### http://localhost:8080/api/person/ {personId}
 
 ### JSON EXAMPLES
 
