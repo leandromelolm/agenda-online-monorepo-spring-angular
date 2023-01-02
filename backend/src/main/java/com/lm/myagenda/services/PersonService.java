@@ -73,7 +73,7 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PersonAddressDTO> findAllPage(PageRequest pageRequest) {
+    public Page<PersonAddressDTO> findPersonsAndAddress(PageRequest pageRequest) {
         Page<Person> page = personRepository.findAll(pageRequest);
         // A linha de código seguinte força o JPA a instanciar os objetos em memória fazendo cache dos objetos,
         // com isso não é feita outras consultas no bd. Solução para resolver o problema de N+1 consultas.
