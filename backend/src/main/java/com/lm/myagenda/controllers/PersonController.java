@@ -55,11 +55,11 @@ public class PersonController {
     }
 
     @GetMapping(value="/persons/address")
-    public ResponseEntity<Page<PersonAddressDTO>> findAllPaged(
+    public ResponseEntity<Page<PersonAddressDTO>> findPersonsAndAddress(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<PersonAddressDTO> personList = personService.findAllPage(pageRequest);
+        Page<PersonAddressDTO> personList = personService.findPersonsAndAddress(pageRequest);
         return ResponseEntity.ok().body(personList);
     }
 
