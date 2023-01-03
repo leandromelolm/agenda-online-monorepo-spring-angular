@@ -7,6 +7,7 @@ import com.lm.myagenda.models.Phone;
 import com.lm.myagenda.repositories.AddressRepository;
 import com.lm.myagenda.repositories.PersonRepository;
 import com.lm.myagenda.repositories.PhoneRepository;
+import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +83,9 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Person> findById(Long id) {
-        return personRepository.findById(id);
+    public Person findById(Long id) {
+       Optional<Person> person = personRepository.findById(id);
+        return person.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
     @Transactional(readOnly = true)
