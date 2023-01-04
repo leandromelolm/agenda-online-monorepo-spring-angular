@@ -24,7 +24,7 @@ public class ItemDTO implements Serializable {
         price = entity.getPrice();
     }
 
-    public List<ItemDTO> itemDtoList(List<Item> itemList){
+    public List<ItemDTO> converterItemListToitemDTOList(List<Item> itemList){
         List<ItemDTO> itemDtoList = new ArrayList<>();
         itemList.forEach(x -> itemDtoList.add(new ItemDTO(x)));
         return itemDtoList;
