@@ -140,24 +140,26 @@ public class DBService {
         professionalRepository.saveAll(Arrays.asList(emp2,emp3,emp4,emp5));
 
         //Atendimentos
-        Attendance a1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao", instantNow.toString(), p1);
+        Attendance a1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao1", instantNow.toString(), p1);
         a1.getProfessionais().addAll(Arrays.asList(emp1,emp3));
         a1.setAgenda(agenda1);
-        Attendance a2 = new Attendance(null, "descricao atendimento2", "Atendimento confirmado", instant.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), null, instantNow.toString(), p2);
+        Attendance a2 = new Attendance(null, "descricao atendimento2", "Atendimento confirmado", instant.plus(2,ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao2", instantNow.toString(), p2);
         a2.getProfessionais().addAll(Arrays.asList(emp2,emp4));
         a2.setAgenda(agenda2);
-        Attendance a3 = new Attendance(null, "descricao atendimento3", "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), null, instantNow.toString(), p3);  //899 segundos = 14min:59seg
+        Attendance a3 = new Attendance(null, "descricao atendimento3", "Atendimento suspenso", instant.plus(5, ChronoUnit.DAYS), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(899,ChronoUnit.SECONDS)), "observacao3", instantNow.toString(), p3);  //899 segundos = 14min:59seg
         a3.getProfessionais().addAll(Arrays.asList(emp1));
         a3.setAgenda(agenda2);
-        Attendance a4 = new Attendance(null, "descricao atendimento4", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p4);
+        Attendance a4 = new Attendance(null, "descricao atendimento4", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao4", instantNow.toString(), p4);
         a4.getProfessionais().addAll(Arrays.asList(emp2));
         a4.setAgenda(agenda2);
-        Attendance a5 = new Attendance(null, "descricao atendimento5", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), null, instantNow.toString(), p2);
+        Attendance a5 = new Attendance(null, "descricao atendimento5", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao5", instantNow.toString(), p2);
         a5.getProfessionais().addAll(Arrays.asList(emp3));
         a5.setAgenda(agenda3);
         Attendance a6 = new Attendance(null, "descricao atendimento6", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instantNow.toString(), p3);
+        a6.getProfessionais().addAll(Arrays.asList(emp3));
         a6.setAgenda(agenda3);
         Attendance a7 = new Attendance(null, "descricao atendimento7", "Atendimento confirmado", instant.minus(3,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instant.minus(10,ChronoUnit.DAYS).toString(), p3);
+//        a7.getProfessionais().addAll(Arrays.asList(emp3));
         a7.setAgenda(agenda3);
 
         attendanceRepository.saveAllAndFlush(Arrays.asList(a1,a2,a3,a4,a5,a6,a7));
