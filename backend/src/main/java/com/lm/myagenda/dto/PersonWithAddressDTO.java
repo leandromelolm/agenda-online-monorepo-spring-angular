@@ -2,7 +2,6 @@ package com.lm.myagenda.dto;
 
 import com.lm.myagenda.models.Person;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class PersonAddressDTO implements Serializable {
+public class PersonWithAddressDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +34,7 @@ public class PersonAddressDTO implements Serializable {
     private Instant registerDate;
     private List<AddressDTO> addresses = new ArrayList<>();
 
-    public PersonAddressDTO(Person p) {
+    public PersonWithAddressDTO(Person p) {
         this.id = p.getId();
         this.name = p.getName();
         this.cpf = p.getCpf();

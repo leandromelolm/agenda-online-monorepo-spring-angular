@@ -62,18 +62,18 @@ public class PersonController {
     }
 
     @GetMapping(value="/persons/address")
-    public ResponseEntity<Page<PersonAddressDTO>> findPersonsAndAddress(
+    public ResponseEntity<Page<PersonWithAddressDTO>> findPersonsAndAddress(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<PersonAddressDTO> personList = personService.findPersonsAndAddress(pageRequest);
+        Page<PersonWithAddressDTO> personList = personService.findPersonsAndAddress(pageRequest);
         return ResponseEntity.ok().body(personList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonDTO> getOnePerson(@PathVariable("id") Long id){
+    public ResponseEntity<PersonWithAddressDTO> getOnePerson(@PathVariable("id") Long id){
         Person person = personService.findById(id);
-        PersonDTO personDTO = modelMapper.map(person, PersonDTO.class);
+        PersonWithAddressDTO personDTO = modelMapper.map(person, PersonWithAddressDTO.class);
         return ResponseEntity.ok().body(personDTO);
     }
 
