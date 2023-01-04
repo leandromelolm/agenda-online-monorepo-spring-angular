@@ -132,11 +132,11 @@ public class PersonController {
         Person person = personService.findById(personId);
         //verifica se existe o indice na lista endereços da pessoa
         addressIndex--;
-        if(addressIndex >= person.getEnderecos().size() || addressIndex < 0){
+        if(addressIndex >= person.getAddresses().size() || addressIndex < 0){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Address not found. The value after addressbyindex/"+
                             "must be greater than 0 and less than or equal to "+
-                            person.getEnderecos().size() + ".");
+                            person.getAddresses().size() + ".");
         }
         Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
         personService.updateAddressByIndex(personId, addressIndex, updatedPerson, person);

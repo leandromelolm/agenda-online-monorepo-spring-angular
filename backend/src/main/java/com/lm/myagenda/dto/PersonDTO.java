@@ -36,9 +36,9 @@ public class PersonDTO implements Serializable {
     private String note;
     private String urlImage;
     private Instant registerDate;
-    private List<AttendanceDTO> attendances = new ArrayList<>();
-    private List<AddressDTO> addresses = new ArrayList<>();
-    private List<Phone> phones = new ArrayList<>();
+    private List<AttendanceDTO> atendimentos = new ArrayList<>();
+    private List<AddressDTO> enderecos = new ArrayList<>();
+    private List<Phone> telefones = new ArrayList<>();
 
     public PersonDTO(Person p) {
         this.id = p.getId();
@@ -53,12 +53,12 @@ public class PersonDTO implements Serializable {
         this.note = p.getNote();
         this.urlImage = p.getUrlImage();
         this.registerDate = p.getRegisterDate();
-        this.addresses = p.getEnderecos().stream().map(x -> new AddressDTO(x)).collect(Collectors.toList());
-        this.phones = p.getTelefones();
+        this.enderecos = p.getAddresses().stream().map(x -> new AddressDTO(x)).collect(Collectors.toList());
+        this.telefones = p.getPhones();
     }
 
     public PersonDTO(Person p, List<Attendance> attendances){
         this(p);
-        attendances.forEach(x -> this.attendances.add(new AttendanceDTO(x)));
+        attendances.forEach(x -> this.atendimentos.add(new AttendanceDTO(x)));
     }
 }

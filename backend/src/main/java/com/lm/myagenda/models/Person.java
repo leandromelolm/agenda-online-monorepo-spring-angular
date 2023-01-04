@@ -48,15 +48,15 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
-    private List<Attendance> atendimentosAgendados = new ArrayList<>();
+    private List<Attendance> attendances = new ArrayList<>();
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
-    private List<Address> enderecos = new ArrayList<>(); //addresses
+    private List<Address> addresses = new ArrayList<>(); //addresses
     @OneToMany(mappedBy = "person",  cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
-    private List<Phone> telefones = new ArrayList<>();
+    private List<Phone> phones = new ArrayList<>();
 
     public Person(Long id, String name, String socialName, String cpf, String cns, String emailAddress, String gender, LocalDate birthdate,
             String ine, String area, String note, String urlImage) {

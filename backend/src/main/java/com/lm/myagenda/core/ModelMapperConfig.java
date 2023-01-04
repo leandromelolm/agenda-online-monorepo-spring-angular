@@ -17,8 +17,8 @@ public class ModelMapperConfig {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.createTypeMap(Person.class, PersonDTO.class)
-                .<List<AddressDTO>>addMapping(x -> x.getEnderecos(), (dest, value) -> dest.setAddresses(value));
-
+                .addMapping(Person::getAddresses, PersonDTO::setEnderecos);
+//                .<List<AddressDTO>>addMapping(source -> source.getAddresses(),(dest, value) -> dest.setEnderecos(value));
         return modelMapper;
     }
 }

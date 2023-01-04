@@ -97,7 +97,7 @@ public class PersonService {
     public Page<PersonDTO> searchByName(String searchedName, Integer page, Integer size, String direction, String orderBy) {
         Pageable pageable =  PageRequest.of(page, size, Direction.valueOf(direction),orderBy);
         Page<Person> pagePerson = personRepository.findByNameContainingIgnoreCase(searchedName, pageable);
-        return pagePerson.map(x -> new PersonDTO(x, x.getAtendimentosAgendados()));
+        return pagePerson.map(x -> new PersonDTO(x, x.getAttendances()));
     }
 
     @Transactional
@@ -105,8 +105,8 @@ public class PersonService {
         person.setId(null);
         person.setRegisterDate(dateRegister);
         person = personRepository.save(person);
-        addressRepository.saveAll(person.getEnderecos());
-        phoneRepository.saveAll(person.getTelefones());
+        addressRepository.saveAll(person.getAddresses());
+        phoneRepository.saveAll(person.getPhones());
         return person;
     }
 
@@ -116,8 +116,8 @@ public class PersonService {
         /* CPF, Data de Registro, Endereços e Telefones não são alterados ao atualizar a pessoa*/
         updatedPerson.setCpf(currentPerson.getCpf());
         updatedPerson.setRegisterDate(currentPerson.getRegisterDate());
-        updatedPerson.setEnderecos(currentPerson.getEnderecos());
-        updatedPerson.setTelefones(currentPerson.getTelefones());
+        updatedPerson.setAddresses(currentPerson.getAddresses());
+        updatedPerson.setPhones(currentPerson.getPhones());
         personRepository.save(updatedPerson);
     }
 
@@ -131,8 +131,8 @@ public class PersonService {
     @Transactional
     public void updateAddressByIndex(Long id, int i, Person updatedPerson, Person currentPerson){
         updatedPerson.setId(id);
-        updatedPerson.getEnderecos().get(0).setId(currentPerson.getEnderecos().get(i).getId());
-        addressRepository.save(updatedPerson.getEnderecos().get(0));
+        updatedPerson.getAddresses().get(0).setId(currentPerson.getAddresses().get(i).getId());
+        addressRepository.save(updatedPerson.getAddresses().get(0));
     }
 
     @Transactional
@@ -153,8 +153,8 @@ public class PersonService {
                 p.getComplemento(), p.getBairro(), p.getCidade(), p.getEstado(), p.getPais(),
                 p.getCep(), p.getObservacao(), p.getTipo(), person);
         Phone phone = new Phone(null, p.getDdd(), p.getNumber(), p.getDescription(), p.getPhoneType(), person);
-        person.getEnderecos().add(address);
-        person.getTelefones().add(phone);
+        person.getAddresses().add(address);
+        person.getPhones().add(phone);
         return person;
     }
 
@@ -167,8 +167,8 @@ public class PersonService {
             BeanUtils.copyProperties(p, dtoPerson);
 
             AddressDTO addressDTO = new AddressDTO();
-            BeanUtils.copyProperties(p.getEnderecos().get(0), addressDTO); // pegando apenas o endereço do indice 0
-            dtoPerson.getAddresses().add(addressDTO);
+            BeanUtils.copyProperties(p.getAddresses().get(0), addressDTO); // pegando apenas o endereço do indice 0
+            dtoPerson.getEnderecos().add(addressDTO);
             personDTOList.add(dtoPerson);
         });
         return personDTOList;

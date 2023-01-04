@@ -48,6 +48,6 @@ public class PersonAddressDTO implements Serializable {
         this.note = p.getNote();
         this.urlImage = p.getUrlImage();
         this.registerDate = p.getRegisterDate();
-        this.addresses = p.getEnderecos().stream().map(x -> new AddressDTO(x)).collect(Collectors.toList());
+        this.addresses = p.getAddresses().stream().map(x -> new AddressDTO(x)).collect(Collectors.toList());
     }
 }

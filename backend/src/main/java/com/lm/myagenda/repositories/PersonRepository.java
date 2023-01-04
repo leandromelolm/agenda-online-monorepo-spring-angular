@@ -20,13 +20,13 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Page<Person> findByNameContainingIgnoreCase(@Param("searchedname") String searchedName, Pageable pageable); //Query with Spring Data JPA
 
     @Transactional(readOnly = true)
-    @Query("SELECT obj FROM Person obj JOIN FETCH obj.enderecos WHERE obj IN :persons")
+    @Query("SELECT obj FROM Person obj JOIN FETCH obj.addresses WHERE obj IN :persons")
     List<Person> findPersonsAndAddress(List<Person> persons);
 
 //    Optimized Query
     @Transactional(readOnly = true)
-    @Query(value = "SELECT p FROM Person p JOIN FETCH p.enderecos",
-            countQuery = "SELECT COUNT(p) FROM Person p JOIN p.enderecos")
+    @Query(value = "SELECT p FROM Person p JOIN FETCH p.addresses",
+            countQuery = "SELECT COUNT(p) FROM Person p JOIN p.addresses")
     Page<Person> findAllWithAddress(Pageable pageable);
 
     @Transactional(readOnly = true)
