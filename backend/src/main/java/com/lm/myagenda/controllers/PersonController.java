@@ -27,7 +27,8 @@ public class PersonController {
 
     @Autowired
     ModelMapper modelMapper;
-    
+
+    //Rota com problema n+1
     @RequestMapping(value="/all", method = RequestMethod.GET)
     public ResponseEntity<List<PersonDTO>> findAll(){
         return ResponseEntity.ok().body(personService.findAll().stream()
@@ -41,7 +42,8 @@ public class PersonController {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value="orderBy", defaultValue="name") String orderBy,
             @RequestParam(value="direction", defaultValue="DESC") String direction){
-        Page<PersonSummaryDTO> personSummaryList = personService.findByNameOrCpfOrCns(searchNameOrCpfOrCns, page, size, orderBy, direction);
+        Page<PersonSummaryDTO> personSummaryList =
+                personService.findByNameOrCpfOrCns(searchNameOrCpfOrCns, page, size, orderBy, direction);
         return ResponseEntity.ok().body(personSummaryList);
     }
 
@@ -82,7 +84,8 @@ public class PersonController {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value="orderBy", defaultValue="name") String orderBy,
             @RequestParam(value="direction", defaultValue="DESC") String direction){
-        Page<PersonDTO> personList = personService.searchByName( searchedName, page, size, direction, orderBy);
+        Page<PersonDTO> personList =
+                personService.searchByName( searchedName, page, size, direction, orderBy);
         return ResponseEntity.ok().body(personList);
     }
 
