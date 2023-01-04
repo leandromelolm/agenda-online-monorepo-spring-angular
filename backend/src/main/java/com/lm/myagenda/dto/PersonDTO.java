@@ -1,11 +1,9 @@
 package com.lm.myagenda.dto;
 
-import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Attendance;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.models.Phone;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
