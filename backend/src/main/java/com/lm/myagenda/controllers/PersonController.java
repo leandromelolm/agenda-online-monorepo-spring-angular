@@ -4,6 +4,7 @@ import com.lm.myagenda.dto.*;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,9 @@ public class PersonController {
 
     @Autowired
     PersonService personService;
+
+    @Autowired
+    ModelMapper modelMapper;
     
     @RequestMapping(value="/all", method = RequestMethod.GET)
     public ResponseEntity<List<Person>> findAll(){
@@ -64,9 +68,10 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOnePerson(@PathVariable("id") Long id){
+    public ResponseEntity<PersonDTO> getOnePerson(@PathVariable("id") Long id){
         Person person = personService.findById(id);
-        return ResponseEntity.ok().body(person);
+        PersonDTO personDTO = modelMapper.map(person, PersonDTO.class);
+        return ResponseEntity.ok().body(personDTO);
     }
 
     @GetMapping("/search")
