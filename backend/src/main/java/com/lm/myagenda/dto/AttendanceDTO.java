@@ -27,32 +27,36 @@ public class AttendanceDTO implements Serializable {
     private Long id;
     private String status;
     private Instant dateInUTC;
-    private String horaInicio;
-    private String horaFim;
+    private String startTime;
+    private String endTime;
     private String observacao;
     private String nomePessoaAtendida;
     private String nomeAgenda;
     private int funcionariosAtendendo;
-    private Set<String> funcionariosNomes;
+//    private Set<String> funcionariosNomes;
+    private Set<ProfessionalDTO> professionais = new HashSet<>();
     private BigDecimal orderTotalPrice;
     private List<ItemDTO> orderItens;
 
     @JsonIgnore
     ItemDTO itemDTO = new ItemDTO();
+    @JsonIgnore
+    ProfessionalDTO professionalDTO = new ProfessionalDTO();
 
     public AttendanceDTO(Attendance entity){
         id = entity.getId();
         status = entity.getStatus();
         dateInUTC = entity.getDateInUTC();
-        horaInicio = entity.getStartTime();
-        horaFim = entity.getEndTime();
+        startTime = entity.getStartTime();
+        endTime = entity.getEndTime();
         observacao = entity.getObservacao();
         nomePessoaAtendida = entity.getPerson().getName();
         nomeAgenda = entity.getAgenda().getNameAgenda();
         funcionariosAtendendo = entity.getProfessionais().size();
-        funcionariosNomes = employeeNameList(entity.getProfessionais());
+//        funcionariosNomes = employeeNameList(entity.getProfessionais());
+        professionais = professionalDTO.converterEntityToDto(entity.getProfessionais());
         orderTotalPrice = (entity.getOrder() == null ) ? null : entity.getOrder().getTotalPrice();
-        orderItens = (entity.getOrder() == null) ? null : itemDTO.itemDtoList(entity.getOrder().getItens());
+        orderItens = (entity.getOrder() == null) ? null : itemDTO.converterItemListToitemDTOList(entity.getOrder().getItens());
     }
 
     public Set<String> employeeNameList(Set<Professional> professionalList){
