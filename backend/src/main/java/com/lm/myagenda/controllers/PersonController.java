@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api/person")
@@ -28,9 +29,9 @@ public class PersonController {
     ModelMapper modelMapper;
     
     @RequestMapping(value="/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Person>> findAll(){
-        List<Person> persons = personService.findAll();
-        return ResponseEntity.ok().body(persons);
+    public ResponseEntity<List<PersonDTO>> findAll(){
+        return ResponseEntity.ok().body(personService.findAll().stream()
+                .map(x -> modelMapper.map(x, PersonDTO.class)).collect(Collectors.toList()));
     }
 
     @GetMapping()
