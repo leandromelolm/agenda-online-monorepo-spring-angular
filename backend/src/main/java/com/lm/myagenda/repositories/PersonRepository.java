@@ -11,9 +11,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
+
+    @Transactional(readOnly = true)
+    @Query(value = "SELECT p FROM Person p JOIN FETCH p.addresses WHERE p.id = :id")
+    Optional<Person> findById(@Param("id")Long id);
 
     @Transactional(readOnly = true)
 //    @Query("SELECT x FROM Person x WHERE UPPER(x.name) LIKE CONCAT('%',UPPER(:searchedname),'%')") //JPQL

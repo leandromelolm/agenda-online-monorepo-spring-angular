@@ -43,8 +43,9 @@ public class PersonService {
     private final static Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
 
     @Transactional(readOnly = true)
-    public List<Person> findAll() {
-        return personRepository.findAll();
+    public Person findById(Long id) {
+        Optional<Person> person = personRepository.findById(id);
+        return person.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
     @Transactional(readOnly = true)
@@ -62,6 +63,13 @@ public class PersonService {
         return persons.map(x -> new PersonSummaryDTO(x));
     }
 
+    // Com problema N+1
+    @Transactional(readOnly = true)
+    public List<Person> findAll() {
+        return personRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Page<PersonSummaryDTO> findAllSummary(Integer page, Integer limitSize){
         Page<Person> persons = personRepository.findAll(PageRequest.of(page,limitSize));
         return persons.map(x -> new PersonSummaryDTO(x));
@@ -83,21 +91,15 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public Person findById(Long id) {
-       Optional<Person> person = personRepository.findById(id);
-        return person.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    public Page<PersonDTO> searchByName(String searchedName, Integer page, Integer size, String direction, String orderBy) {
+        Pageable pageable =  PageRequest.of(page, size, Direction.valueOf(direction),orderBy);
+        Page<Person> pagePerson = personRepository.findByNameContainingIgnoreCase(searchedName, pageable);
+        return pagePerson.map(x -> new PersonDTO(x, x.getAttendances()));
     }
 
     @Transactional(readOnly = true)
     public Optional<Address> findByAddressId(Long id){
         return addressRepository.findById(id);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PersonDTO> searchByName(String searchedName, Integer page, Integer size, String direction, String orderBy) {
-        Pageable pageable =  PageRequest.of(page, size, Direction.valueOf(direction),orderBy);
-        Page<Person> pagePerson = personRepository.findByNameContainingIgnoreCase(searchedName, pageable);
-        return pagePerson.map(x -> new PersonDTO(x, x.getAttendances()));
     }
 
     @Transactional

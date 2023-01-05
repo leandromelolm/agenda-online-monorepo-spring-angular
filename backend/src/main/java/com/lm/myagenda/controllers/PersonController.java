@@ -28,11 +28,11 @@ public class PersonController {
     @Autowired
     ModelMapper modelMapper;
 
-    //Rota com problema n+1
-    @RequestMapping(value="/all", method = RequestMethod.GET)
-    public ResponseEntity<List<PersonDTO>> findAll(){
-        return ResponseEntity.ok().body(personService.findAll().stream()
-                .map(x -> modelMapper.map(x, PersonDTO.class)).collect(Collectors.toList()));
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonWithAddressDTO> getOnePerson(@PathVariable("id") Long id){
+        Person person = personService.findById(id);
+        PersonWithAddressDTO personDTO = modelMapper.map(person, PersonWithAddressDTO.class);
+        return ResponseEntity.ok().body(personDTO);
     }
 
     @GetMapping()
@@ -47,7 +47,14 @@ public class PersonController {
         return ResponseEntity.ok().body(personSummaryList);
     }
 
-    @GetMapping("/all/summary")
+    //Rota com problema N+1
+    @RequestMapping(value="/all", method = RequestMethod.GET) //test
+    public ResponseEntity<List<PersonDTO>> findAll(){
+        return ResponseEntity.ok().body(personService.findAll().stream()
+                .map(x -> modelMapper.map(x, PersonDTO.class)).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/all/summary") //test
     public ResponseEntity<Page<PersonSummaryDTO>> findAllSummary(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "100") Integer size) {
@@ -55,13 +62,13 @@ public class PersonController {
         return ResponseEntity.ok().body(persons);
     }
 
-    @GetMapping(value="/all/address")
+    @GetMapping(value="/all/address") //test
     public ResponseEntity<List<PersonWithAddressDTO>> findAllWithAddress(){
         List<PersonWithAddressDTO> persons = personService.findAllWithAddress(1000);
         return ResponseEntity.ok().body(persons);
     }
 
-    @GetMapping(value="/persons/address")
+    @GetMapping(value="/persons/address") //test
     public ResponseEntity<Page<PersonWithAddressDTO>> findPersonsAndAddress(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size) {
@@ -70,14 +77,7 @@ public class PersonController {
         return ResponseEntity.ok().body(personList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PersonWithAddressDTO> getOnePerson(@PathVariable("id") Long id){
-        Person person = personService.findById(id);
-        PersonWithAddressDTO personDTO = modelMapper.map(person, PersonWithAddressDTO.class);
-        return ResponseEntity.ok().body(personDTO);
-    }
-
-    @GetMapping("/search")
+    @GetMapping("/search") //test
     public ResponseEntity<Page<PersonDTO>> searchByNamePaged(
             @RequestParam(value="name", defaultValue="") String searchedName,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
