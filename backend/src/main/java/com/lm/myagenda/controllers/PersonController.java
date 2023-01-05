@@ -56,8 +56,8 @@ public class PersonController {
     }
 
     @GetMapping(value="/all/address")
-    public ResponseEntity<List<PersonDTO>> findAllWithAddress(){
-        List<PersonDTO> persons = personService.findAllWithAddress(1000);
+    public ResponseEntity<List<PersonWithAddressDTO>> findAllWithAddress(){
+        List<PersonWithAddressDTO> persons = personService.findAllWithAddress(1000);
         return ResponseEntity.ok().body(persons);
     }
 

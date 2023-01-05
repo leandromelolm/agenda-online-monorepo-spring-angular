@@ -68,7 +68,7 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-    public List<PersonDTO> findAllWithAddress(Integer limitSize){
+    public List<PersonWithAddressDTO> findAllWithAddress(Integer limitSize){
         Page<Person> persons = personRepository.findAllWithAddress(PageRequest.of(0,limitSize)); // Optimized Query
         return  getPersonAddressDtos(Collections.unmodifiableList(persons.getContent()));
     }
@@ -158,17 +158,17 @@ public class PersonService {
         return person;
     }
 
-    private List<PersonDTO> getPersonAddressDtos(List<Person> personList) {
+    private List<PersonWithAddressDTO> getPersonAddressDtos(List<Person> personList) {
         if(personList.size() == 0) return  null;
 
-        List<PersonDTO> personDTOList = new ArrayList<>();
+        List<PersonWithAddressDTO> personDTOList = new ArrayList<>();
         personList.forEach(p -> {
-            PersonDTO dtoPerson = new PersonDTO();
+            PersonWithAddressDTO dtoPerson = new PersonWithAddressDTO();
             BeanUtils.copyProperties(p, dtoPerson);
 
             AddressDTO addressDTO = new AddressDTO();
             BeanUtils.copyProperties(p.getAddresses().get(0), addressDTO); // pegando apenas o endereço do indice 0
-            dtoPerson.getEnderecos().add(addressDTO);
+            dtoPerson.getAddresses().add(addressDTO);
             personDTOList.add(dtoPerson);
         });
         return personDTOList;
