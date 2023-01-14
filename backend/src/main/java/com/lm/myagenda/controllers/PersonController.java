@@ -47,48 +47,6 @@ public class PersonController {
         return ResponseEntity.ok().body(personSummaryList);
     }
 
-    //Rota com problema N+1
-    @RequestMapping(value="/all", method = RequestMethod.GET) //test
-    public ResponseEntity<List<PersonDTO>> findAll(){
-        return ResponseEntity.ok().body(personService.findAll().stream()
-                .map(x -> modelMapper.map(x, PersonDTO.class)).collect(Collectors.toList()));
-    }
-
-    @GetMapping("/all/summary") //test
-    public ResponseEntity<Page<PersonSummaryDTO>> findAllSummary(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "100") Integer size) {
-        Page<PersonSummaryDTO> persons = personService.findAllSummary(page , size);
-        return ResponseEntity.ok().body(persons);
-    }
-
-    @GetMapping(value="/all/address") //test
-    public ResponseEntity<List<PersonWithAddressDTO>> findAllWithAddress(){
-        List<PersonWithAddressDTO> persons = personService.findAllWithAddress(1000);
-        return ResponseEntity.ok().body(persons);
-    }
-
-    @GetMapping(value="/persons/address") //test
-    public ResponseEntity<Page<PersonWithAddressDTO>> findPersonsAndAddress(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<PersonWithAddressDTO> personList = personService.findPersonsAndAddress(pageRequest);
-        return ResponseEntity.ok().body(personList);
-    }
-
-    @GetMapping("/search") //test
-    public ResponseEntity<Page<PersonDTO>> searchByNamePaged(
-            @RequestParam(value="name", defaultValue="") String searchedName,
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size,
-            @RequestParam(value="orderBy", defaultValue="name") String orderBy,
-            @RequestParam(value="direction", defaultValue="DESC") String direction){
-        Page<PersonDTO> personList =
-                personService.searchByName( searchedName, page, size, direction, orderBy);
-        return ResponseEntity.ok().body(personList);
-    }
-
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody PersonNewDTO personNewDTO){
         Person person = personService.fromDtoToEntity(personNewDTO);

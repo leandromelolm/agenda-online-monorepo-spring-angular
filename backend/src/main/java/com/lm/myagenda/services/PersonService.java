@@ -85,41 +85,6 @@ public class PersonService {
         }
     }
 
-
-    // Com problema N+1
-    @Transactional(readOnly = true)
-    public List<Person> findAll() {
-        return personRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PersonSummaryDTO> findAllSummary(Integer page, Integer limitSize){
-        Page<Person> persons = personRepository.findAll(PageRequest.of(page,limitSize));
-        return persons.map(x -> new PersonSummaryDTO(x));
-    }
-
-    @Transactional(readOnly = true)
-    public List<PersonWithAddressDTO> findAllWithAddress(Integer limitSize){
-        Page<Person> persons = personRepository.findAllWithAddress(PageRequest.of(0,limitSize)); // Optimized Query
-        return  getPersonAddressDtos(Collections.unmodifiableList(persons.getContent()));
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PersonWithAddressDTO> findPersonsAndAddress(PageRequest pageRequest) {
-        Page<Person> page = personRepository.findAll(pageRequest);
-        // A linha de código seguinte força o JPA a instanciar os objetos em memória fazendo cache dos objetos,
-        // com isso não é feita outras consultas no bd. Solução para resolver o problema de N+1 consultas.
-        personRepository.findPersonsAndAddress(page.stream().collect(Collectors.toList()));
-        return page.map(x -> new PersonWithAddressDTO(x));
-    }
-
-    @Transactional(readOnly = true)
-    public Page<PersonDTO> searchByName(String searchedName, Integer page, Integer size, String direction, String orderBy) {
-        Pageable pageable =  PageRequest.of(page, size, Direction.valueOf(direction),orderBy);
-        Page<Person> pagePerson = personRepository.findByNameContainingIgnoreCase(searchedName, pageable);
-        return pagePerson.map(x -> new PersonDTO(x, x.getAttendances()));
-    }
-
     @Transactional(readOnly = true)
     public Optional<Address> findByAddressId(Long id){
         return addressRepository.findById(id);
