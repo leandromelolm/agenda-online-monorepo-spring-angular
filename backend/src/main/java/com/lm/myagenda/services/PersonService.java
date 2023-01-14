@@ -1,6 +1,9 @@
 package com.lm.myagenda.services;
 
-import com.lm.myagenda.dto.*;
+import com.lm.myagenda.dto.AddressDTO;
+import com.lm.myagenda.dto.PersonNewDTO;
+import com.lm.myagenda.dto.PersonSummaryDTO;
+import com.lm.myagenda.dto.PersonWithAddressDTO;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.models.Phone;
@@ -21,10 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -119,13 +120,6 @@ public class PersonService {
         addressNew.setId(idAddress);
         addressNew.setPerson(currentPerson);
         addressRepository.save(addressNew);
-    }
-
-    @Transactional
-    public void updateAddressByIndex(Long id, int i, Person updatedPerson, Person currentPerson){
-        updatedPerson.setId(id);
-        updatedPerson.getAddresses().get(0).setId(currentPerson.getAddresses().get(i).getId());
-        addressRepository.save(updatedPerson.getAddresses().get(0));
     }
 
     @Transactional

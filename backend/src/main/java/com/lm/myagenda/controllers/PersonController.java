@@ -1,22 +1,22 @@
 package com.lm.myagenda.controllers;
 
-import com.lm.myagenda.dto.*;
+import com.lm.myagenda.dto.AddressDTO;
+import com.lm.myagenda.dto.PersonNewDTO;
+import com.lm.myagenda.dto.PersonSummaryDTO;
+import com.lm.myagenda.dto.PersonWithAddressDTO;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api/person")
@@ -84,25 +84,6 @@ public class PersonController {
         Address address = personService.fromDtoToEntityUsingModelMapper(addressNewDTO);
         personService.updateAddress(addressId, address, person);
         return ResponseEntity.status(HttpStatus.OK).body(address);
-    }
-
-    @PutMapping("/{personId}/addressbyindex/{addressIndex}")
-    public ResponseEntity<Object> updateAddressByIndex(
-            @PathVariable(value = "personId") Long personId,
-            @PathVariable(value = "addressIndex") Integer addressIndex,
-            @RequestBody PersonNewDTO updatedPersonDTO){
-        Person person = personService.findById(personId);
-        //verifica se existe o indice na lista endereços da pessoa
-        addressIndex--;
-        if(addressIndex >= person.getAddresses().size() || addressIndex < 0){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Address not found. The value after addressbyindex/"+
-                            "must be greater than 0 and less than or equal to "+
-                            person.getAddresses().size() + ".");
-        }
-        Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
-        personService.updateAddressByIndex(personId, addressIndex, updatedPerson, person);
-        return ResponseEntity.status(HttpStatus.OK).body(" Address updated with success");
     }
 
     @DeleteMapping("/{id}")
