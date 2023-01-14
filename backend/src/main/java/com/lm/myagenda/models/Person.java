@@ -30,8 +30,11 @@ public class Person implements Serializable {
 
     private String name;
     private String socialName;
+    @Column(unique = true)
     private String cpf;
+    @Column(unique = true)
     private String cns;
+    @Column(unique = true)
     private String emailAddress;
     private String gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

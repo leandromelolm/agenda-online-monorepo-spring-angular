@@ -7,6 +7,7 @@ import com.lm.myagenda.models.Phone;
 import com.lm.myagenda.repositories.AddressRepository;
 import com.lm.myagenda.repositories.PersonRepository;
 import com.lm.myagenda.repositories.PhoneRepository;
+import com.lm.myagenda.services.exceptions.DataIntegratyViolationException;
 import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -63,6 +64,28 @@ public class PersonService {
         return persons.map(x -> new PersonSummaryDTO(x));
     }
 
+    private void findByEmail(Person obj){
+        Optional<Person> personOptional = personRepository.findByEmailAddress(obj.getEmailAddress());
+        if(personOptional.isPresent()){
+            throw new DataIntegratyViolationException("Email já cadastrado");
+        }
+    }
+
+    private void findByCpf(Person obj){
+        Optional<Person> personOptional = personRepository.findByCpf(obj.getCpf());
+        if(personOptional.isPresent()){
+            throw new DataIntegratyViolationException("CPF já cadastrado");
+        }
+    }
+
+    private void findByCns(Person obj){
+        Optional<Person> personOptional = personRepository.findByCns(obj.getCns());
+        if(personOptional.isPresent()){
+            throw new DataIntegratyViolationException("CNS já cadastrado");
+        }
+    }
+
+
     // Com problema N+1
     @Transactional(readOnly = true)
     public List<Person> findAll() {
@@ -104,6 +127,9 @@ public class PersonService {
 
     @Transactional
     public Person insert(Person person){
+        findByCpf(person);
+        findByCns(person);
+        findByEmail(person);
         person.setId(null);
         person.setRegisterDate(dateRegister);
         person = personRepository.save(person);

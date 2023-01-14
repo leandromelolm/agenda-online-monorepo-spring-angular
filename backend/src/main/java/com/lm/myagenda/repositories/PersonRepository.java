@@ -49,6 +49,12 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
             "FROM Person p WHERE UPPER(p.name) " +
             "LIKE CONCAT('%',UPPER(:search),'%')")
     Page<Person> findByNameContaining(@Param("search")String search, Pageable pageable);
+
+    Optional<Person> findByEmailAddress(String emailAddress);
+
+    Optional<Person> findByCpf(String cpf);
+
+    Optional<Person> findByCns(String cns);
 }
 
 
