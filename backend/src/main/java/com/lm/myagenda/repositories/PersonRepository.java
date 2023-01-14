@@ -31,17 +31,18 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Page<Person> findAllWithAddress(Pageable pageable);
 
     @Transactional(readOnly = true)
-    @Query(value = "SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) FROM Person p")
+    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate, p.emailAddress, p.id) " +
+            "FROM Person p")
     Page<Person> findAllPerson(PageRequest of);
 
     @Transactional(readOnly = true)
-    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) " +
+    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate, p.emailAddress, p.id) " +
             "FROM Person p WHERE p.cpf LIKE %:search% " +
             "OR p.cns LIKE %:search%")
     Page<Person> findByCpfOrCns(@Param("search")String search, Pageable pageable);
 
     @Transactional(readOnly = true)
-    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate) " +
+    @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate, p.emailAddress, p.id) " +
             "FROM Person p WHERE UPPER(p.name) " +
             "LIKE CONCAT('%',UPPER(:search),'%')")
     Page<Person> findByNameContaining(@Param("search")String search, Pageable pageable);

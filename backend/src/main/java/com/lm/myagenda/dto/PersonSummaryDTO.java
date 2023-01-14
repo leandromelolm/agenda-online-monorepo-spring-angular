@@ -16,6 +16,7 @@ public class PersonSummaryDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     private String name;
     private String cpf;
     private String cns;
@@ -24,6 +25,7 @@ public class PersonSummaryDTO implements Serializable {
     private LocalDate birthdate;
 
     public PersonSummaryDTO(Person p) {
+        this.id = p.getId();
         this.name = p.getName();
         this.cpf = p.getCpf();
         this.cns = p.getCns();

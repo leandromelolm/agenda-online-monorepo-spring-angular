@@ -77,10 +77,12 @@ public class Person implements Serializable {
         this.urlImage = urlImage;
     }
 
-    public Person(String name, String cpf, String cns, LocalDate birthdate){
+    public Person(String name, String cpf, String cns, LocalDate birthdate, String email, Long id){
         this.name = name;
         this.cpf = cpf;
         this.cns = cns;
         this.birthdate = birthdate;
+        this.emailAddress = email;
+        this.id = id;
     }
 }
