@@ -24,12 +24,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("SELECT obj FROM Person obj JOIN FETCH obj.addresses WHERE obj IN :persons")
     List<Person> findAllPersonsWithAddress(List<Person> persons);
 
-//    Optimized Query
-    @Transactional(readOnly = true)
-    @Query(value = "SELECT p FROM Person p JOIN FETCH p.addresses",
-            countQuery = "SELECT COUNT(p) FROM Person p JOIN p.addresses")
-    Page<Person> findAllWithAddress(Pageable pageable);
-
     @Transactional(readOnly = true)
     @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate, p.emailAddress, p.id) " +
             "FROM Person p")
@@ -47,15 +41,23 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
             "LIKE CONCAT('%',UPPER(:search),'%')")
     Page<Person> findByNameContaining(@Param("search")String search, Pageable pageable);
 
-    @Transactional(readOnly = true)
-//    @Query("SELECT x FROM Person x WHERE UPPER(x.name) LIKE CONCAT('%',UPPER(:name),'%')") //JPQL
-    Page<Person> findByNameContainingIgnoreCase(@Param("searchedname") String name, Pageable pageable); //Query with Spring Data JPA
-
     Optional<Person> findByEmailAddress(String emailAddress);
 
     Optional<Person> findByCpf(String cpf);
 
     Optional<Person> findByCns(String cns);
+
+
+
+    @Transactional(readOnly = true)
+//    @Query("SELECT x FROM Person x WHERE UPPER(x.name) LIKE CONCAT('%',UPPER(:name),'%')") //JPQL
+    Page<Person> findByNameContainingIgnoreCase(@Param("searchedname") String name, Pageable pageable); //Query with Spring Data JPA
+
+    //    Optimized Query
+    @Transactional(readOnly = true)
+    @Query(value = "SELECT p FROM Person p JOIN FETCH p.addresses",
+            countQuery = "SELECT COUNT(p) FROM Person p JOIN p.addresses")
+    Page<Person> findAllWithAddress(Pageable pageable);
 }
 
 

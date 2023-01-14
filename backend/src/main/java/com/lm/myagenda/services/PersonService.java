@@ -146,22 +146,6 @@ public class PersonService {
         return person;
     }
 
-    private List<PersonWithAddressDTO> getPersonAddressDtos(List<Person> personList) {
-        if(personList.size() == 0) return  null;
-
-        List<PersonWithAddressDTO> personDTOList = new ArrayList<>();
-        personList.forEach(p -> {
-            PersonWithAddressDTO dtoPerson = new PersonWithAddressDTO();
-            BeanUtils.copyProperties(p, dtoPerson);
-
-            AddressDTO addressDTO = new AddressDTO();
-            BeanUtils.copyProperties(p.getAddresses().get(0), addressDTO); // pegando apenas o endereço do indice 0
-            dtoPerson.getAddresses().add(addressDTO);
-            personDTOList.add(dtoPerson);
-        });
-        return personDTOList;
-    }
-
     public boolean isNumber(String s){
         for (int i = 0; i < s.length(); i++) {
             if (!Character.isDigit(s.charAt(i))) {
