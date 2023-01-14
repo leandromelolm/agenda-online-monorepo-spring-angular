@@ -26,6 +26,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -168,5 +169,14 @@ public class PersonService {
             }
         }
         return true;
+    }
+
+    @Transactional(readOnly = true) //test
+    public Page<PersonWithAddressDTO> findAllPersonsWithAddress(PageRequest pageRequest) {
+        Page<Person> page = personRepository.findAll(pageRequest);
+        // A linha de código seguinte força o JPA a instanciar os objetos em memória fazendo cache dos objetos,
+        // com isso não é feita outras consultas no bd. Solução para resolver o problema de N+1 consultas.
+        personRepository.findAllPersonsWithAddress(page.stream().collect(Collectors.toList()));
+        return page.map(x -> new PersonWithAddressDTO(x));
     }
 }

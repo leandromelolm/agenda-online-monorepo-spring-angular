@@ -21,12 +21,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Optional<Person> findById(@Param("id")Long id);
 
     @Transactional(readOnly = true)
-//    @Query("SELECT x FROM Person x WHERE UPPER(x.name) LIKE CONCAT('%',UPPER(:searchedname),'%')") //JPQL
-    Page<Person> findByNameContainingIgnoreCase(@Param("searchedname") String searchedName, Pageable pageable); //Query with Spring Data JPA
-
-    @Transactional(readOnly = true)
     @Query("SELECT obj FROM Person obj JOIN FETCH obj.addresses WHERE obj IN :persons")
-    List<Person> findPersonsAndAddress(List<Person> persons);
+    List<Person> findAllPersonsWithAddress(List<Person> persons);
 
 //    Optimized Query
     @Transactional(readOnly = true)
@@ -49,6 +45,10 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
             "FROM Person p WHERE UPPER(p.name) " +
             "LIKE CONCAT('%',UPPER(:search),'%')")
     Page<Person> findByNameContaining(@Param("search")String search, Pageable pageable);
+
+    @Transactional(readOnly = true)
+//    @Query("SELECT x FROM Person x WHERE UPPER(x.name) LIKE CONCAT('%',UPPER(:name),'%')") //JPQL
+    Page<Person> findByNameContainingIgnoreCase(@Param("searchedname") String name, Pageable pageable); //Query with Spring Data JPA
 
     Optional<Person> findByEmailAddress(String emailAddress);
 
