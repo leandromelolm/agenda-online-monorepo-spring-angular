@@ -7,6 +7,8 @@ import com.lm.myagenda.dto.PersonWithAddressDTO;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
+import com.lm.myagenda.services.exceptions.AuthorizationException;
+import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,12 +77,10 @@ public class PersonController {
         Person person = personService.findById(personId);
         Optional<Address> addressOptional = personService.findByAddressId(addressId);
         if(!addressOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Address not found");
+            throw new ObjectNotFoundException("Address not found");
         }
         if(!addressOptional.get().getPerson().getId().equals(person.getId())){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    "Address id does not match person id (id do endereço não corresponde com o id da pessoa)");
+            throw new AuthorizationException("Address id does not match person id (id do endereço não pertence a pessoa)");
         }
         Address address = personService.fromDtoToEntityUsingModelMapper(addressNewDTO);
         personService.updateAddress(addressId, address, person);
