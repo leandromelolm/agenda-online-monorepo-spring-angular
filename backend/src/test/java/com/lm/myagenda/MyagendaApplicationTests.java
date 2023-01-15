@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MyagendaApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void main(){
+		MyagendaApplication.main(new String[] {});
 	}
 
 }
