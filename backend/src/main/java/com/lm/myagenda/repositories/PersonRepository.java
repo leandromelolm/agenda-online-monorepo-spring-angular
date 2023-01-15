@@ -58,6 +58,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query(value = "SELECT p FROM Person p JOIN FETCH p.addresses",
             countQuery = "SELECT COUNT(p) FROM Person p JOIN p.addresses")
     Page<Person> findAllWithAddress(Pageable pageable);
+
+    boolean existsByCpfAndCns(String cpf, String cns);
 }
 
 

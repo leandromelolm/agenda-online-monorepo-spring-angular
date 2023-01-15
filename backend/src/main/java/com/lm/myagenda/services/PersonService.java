@@ -68,23 +68,26 @@ public class PersonService {
 
     private void findByEmail(Person obj){
         Optional<Person> personOptional = personRepository.findByEmailAddress(obj.getEmailAddress());
-        if(personOptional.isPresent()){
+        if(personOptional.isPresent() && !personOptional.get().getId().equals(obj.getId())){
             throw new DataIntegratyViolationException("Email já cadastrado");
         }
     }
 
     private void findByCpf(Person obj){
         Optional<Person> personOptional = personRepository.findByCpf(obj.getCpf());
-        if(personOptional.isPresent()){
+        if(personOptional.isPresent() && !personOptional.get().getId().equals(obj.getId())){
             throw new DataIntegratyViolationException("CPF já cadastrado");
         }
     }
 
     private void findByCns(Person obj){
         Optional<Person> personOptional = personRepository.findByCns(obj.getCns());
-        if(personOptional.isPresent()){
+        if(personOptional.isPresent() && !personOptional.get().getId().equals(obj.getId())){
             throw new DataIntegratyViolationException("CNS já cadastrado");
         }
+    }
+    public boolean existsByCpfAndCns(String cpf, String cns) {
+        return personRepository.existsByCpfAndCns(cpf, cns);
     }
 
     @Transactional(readOnly = true)
@@ -107,6 +110,8 @@ public class PersonService {
 
     @Transactional
     public void updatePerson(Long id, Person updatedPerson, Person currentPerson){
+        findByCns(updatedPerson);
+        findByEmail(updatedPerson);
         updatedPerson.setId(id);
         /* CPF, Data de Registro, Endereços e Telefones não são alterados ao atualizar a pessoa*/
         updatedPerson.setCpf(currentPerson.getCpf());
