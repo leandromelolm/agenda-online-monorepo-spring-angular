@@ -14,8 +14,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -50,6 +55,7 @@ class PersonServiceTest {
     public static final String CEP = "11222111";
     public static final String OBS = "observacao";
     public static final String TIPO = "Residencial";
+    public static final int INDEX = 0;
 
     @InjectMocks
     private PersonService personService;
@@ -145,7 +151,7 @@ class PersonServiceTest {
         assertEquals(CPF, response.getCpf());
         assertEquals(person.getAddresses(), response.getAddresses());
         assertEquals(person.getPhones(), response.getPhones());
-        assertEquals(phone, response.getPhones().get(0));
+        assertEquals(phone, response.getPhones().get(INDEX));
     }
 
     @Test
@@ -166,7 +172,31 @@ class PersonServiceTest {
 
     @Test
     void fromDtoToEntity(){
+    }
 
+    @Test
+    void whenfindAllPersonsWithAddressThenReturnAnListOfPersonWithAddress(){
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+        Page<Person> personPage = new PageImpl<>(personList);
+        PageRequest pageable = PageRequest.of(0,1);
+
+        when(this.personRepository.findAllPersonsWithAddress(personList)).thenReturn(personList);
+        when(this.personRepository.findAll(pageable)).thenReturn(personPage);
+
+        Page<PersonWithAddressDTO> response = personService.findAllPersonsWithAddress(pageable);
+
+        assertNotNull(response);
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(PersonWithAddressDTO.class, response.getContent().get(INDEX).getClass());
+        assertEquals(AddressDTO.class, response.getContent().get(INDEX).getAddresses().get(INDEX).getClass());
+        assertEquals(NAME.toUpperCase(), response.getContent().get(INDEX).getName());
+        assertEquals(CPF, response.getContent().get(INDEX).getCpf());
+        assertEquals(EMAIL, response.getContent().get(INDEX).getEmailAddress());
+        assertEquals(LOGRADOURO, response.getContent().get(INDEX).getAddresses().get(INDEX).getLogradouro());
+        assertEquals(BAIRRO, response.getContent().get(INDEX).getAddresses().get(INDEX).getBairro());
+        assertEquals(CIDADE, response.getContent().get(INDEX).getAddresses().get(INDEX).getCidade());
+        assertEquals(CEP, response.getContent().get(INDEX).getAddresses().get(INDEX).getCep());
     }
 
     private void startPerson(){
