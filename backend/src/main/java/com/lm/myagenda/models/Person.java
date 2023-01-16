@@ -46,8 +46,8 @@ public class Person implements Serializable {
     private String note;
     private String urlImage;
     private Instant registerDate;
-//    @JsonIgnore
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude

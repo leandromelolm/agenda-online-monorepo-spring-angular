@@ -26,7 +26,7 @@ public class AddressDTO implements Serializable {
     private String observacao;
     private String tipo;
 
-    AddressDTO(Address address){
+    public AddressDTO(Address address){
         this.logradouro = address.getLogradouro();
         this.numero = address.getNumero();
         this.complemento = address.getComplemento();

@@ -97,7 +97,7 @@ public class PersonService {
         findByCpf(person);
         findByCns(person);
         findByEmail(person);
-        person.setId(null);
+//        person.setId(null);
         person.setRegisterDate(dateRegister);
         person = personRepository.save(person);
         addressRepository.saveAll(person.getAddresses());
