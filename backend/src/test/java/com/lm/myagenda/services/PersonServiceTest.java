@@ -14,9 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -73,6 +71,7 @@ class PersonServiceTest {
     private ModelMapper modelMapper;
 
     private Person person;
+    private Person person1;
 
     private PersonDTO personDTO;
     private PersonSummaryDTO personSummaryDTO;
@@ -129,7 +128,57 @@ class PersonServiceTest {
     }
 
     @Test
-    void findByNameOrCpfOrCns() {
+    void whenFindByNameOrCpfOrCns_SearchBlank_ThenReturnAllPerson() {
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+        personList.add(person1);
+        Page<Person> personPage = new PageImpl<>(personList);
+        PageRequest pageRequest = PageRequest.of(0,5);
+        when(personRepository.findAllPerson(pageRequest)).thenReturn(personPage);
+
+        Page<PersonSummaryDTO> response =
+                personService.findByNameOrCpfOrCns("",0,5,"name","DESC");
+
+        assertNotNull(response);
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(PersonSummaryDTO.class, response.getContent().get(0).getClass());
+        assertEquals(NAME.toUpperCase(), response.getContent().get(0).getName());
+        assertEquals("Jose João".toUpperCase(), response.getContent().get(1).getName());
+        assertEquals(2, response.getContent().size());
+    }
+    @Test
+    void whenFindByNameOrCpfOrCns_SearchByNumber_ThenReturnFindedPerson() {
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+        Page<Person> personPage = new PageImpl<>(personList);
+        Pageable pageable =  PageRequest.of(0, 10, Sort.Direction.valueOf("DESC"),"name");
+        when(personRepository.findByCpfOrCns(CPF,pageable)).thenReturn(personPage);
+
+        Page<PersonSummaryDTO> response =
+                personService.findByNameOrCpfOrCns(CPF,0,10,"name","DESC");
+
+        assertNotNull(response);
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(PersonSummaryDTO.class, response.getContent().get(0).getClass());
+        assertEquals(NAME.toUpperCase(), response.getContent().get(0).getName());
+        assertEquals(1, response.getContent().size());
+    }
+
+    @Test
+    void whenFindByNameOrCpfOrCns_SearchByName_ThenReturnFindedPerson() {
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+        Page<Person> personPage = new PageImpl<>(personList);
+        Pageable pageable =  PageRequest.of(0, 10, Sort.Direction.valueOf("DESC"),"name");
+        when(personRepository.findByNameContaining(NAME,pageable)).thenReturn(personPage);
+
+        Page<PersonSummaryDTO> response =
+                personService.findByNameOrCpfOrCns(NAME,0,10,"name","DESC");
+
+        assertNotNull(response);
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(PersonSummaryDTO.class, response.getContent().get(0).getClass());
+        assertEquals(NAME.toUpperCase(), response.getContent().get(0).getName());
     }
 
     @Test
@@ -202,6 +251,8 @@ class PersonServiceTest {
     private void startPerson(){
         person = new Person
                 (ID, NAME, SOCIAL_NAME, CPF, CNS, EMAIL, GENDER, BIRTHDATE, INE, AREA, NOTE, URL_IMAGE);
+        person1 = new Person
+                (ID+1, "Jose João", SOCIAL_NAME, CPF, CNS, EMAIL, GENDER, BIRTHDATE, INE, AREA, NOTE, URL_IMAGE);
         personSummaryDTO = new PersonSummaryDTO(person);
         personWithAddressDTO = new PersonWithAddressDTO(person);
         personOptional = Optional.of

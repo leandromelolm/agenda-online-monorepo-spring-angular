@@ -27,7 +27,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Transactional(readOnly = true)
     @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate, p.emailAddress, p.id) " +
             "FROM Person p")
-    Page<Person> findAllPerson(PageRequest of);
+    Page<Person> findAllPerson(PageRequest pageRequest);
 
     @Transactional(readOnly = true)
     @Query("SELECT new Person(p.name, p.cpf, p.cns, p.birthdate, p.emailAddress, p.id) " +
