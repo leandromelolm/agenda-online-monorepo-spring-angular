@@ -128,7 +128,7 @@ class PersonServiceTest {
     }
 
     @Test
-    void whenFindByNameOrCpfOrCns_SearchBlank_ThenReturnAllPerson() {
+    void whenFindByNameOrCpfOrCns_SearchBlank_ThenReturnAListOfPersonsPaged() {
         List<Person> personList = new ArrayList<>();
         personList.add(person);
         personList.add(person1);
@@ -147,7 +147,7 @@ class PersonServiceTest {
         assertEquals(2, response.getContent().size());
     }
     @Test
-    void whenFindByNameOrCpfOrCns_SearchByNumber_ThenReturnFindedPerson() {
+    void whenFindByNameOrCpfOrCns_SearchByNumber_ThenReturnFindedPersonPaged() {
         List<Person> personList = new ArrayList<>();
         personList.add(person);
         Page<Person> personPage = new PageImpl<>(personList);
@@ -165,7 +165,7 @@ class PersonServiceTest {
     }
 
     @Test
-    void whenFindByNameOrCpfOrCns_SearchByName_ThenReturnFindedPerson() {
+    void whenFindByNameOrCpfOrCns_SearchByName_ThenReturnFindedPersonPaged() {
         List<Person> personList = new ArrayList<>();
         personList.add(person);
         Page<Person> personPage = new PageImpl<>(personList);
@@ -224,16 +224,16 @@ class PersonServiceTest {
     }
 
     @Test
-    void whenfindAllPersonsWithAddressThenReturnAnListOfPersonWithAddress(){
+    void whenfindAllPersonsWithAddressThenReturnAListOfPersonsWithAddressPaged(){
         List<Person> personList = new ArrayList<>();
         personList.add(person);
         Page<Person> personPage = new PageImpl<>(personList);
-        PageRequest pageable = PageRequest.of(0,1);
+        PageRequest pageRequest = PageRequest.of(0,1);
 
         when(this.personRepository.findAllPersonsWithAddress(personList)).thenReturn(personList);
-        when(this.personRepository.findAll(pageable)).thenReturn(personPage);
+        when(this.personRepository.findAll(pageRequest)).thenReturn(personPage);
 
-        Page<PersonWithAddressDTO> response = personService.findAllPersonsWithAddress(pageable);
+        Page<PersonWithAddressDTO> response = personService.findAllPersonsWithAddress(pageRequest);
 
         assertNotNull(response);
         assertEquals(PageImpl.class, response.getClass());
