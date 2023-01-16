@@ -106,7 +106,7 @@ public class PersonService {
     }
 
     @Transactional
-    public void updatePerson(Long id, Person updatedPerson, Person currentPerson){
+    public Person updatePerson(Long id, Person updatedPerson, Person currentPerson){
         findByCns(updatedPerson);
         findByEmail(updatedPerson);
         updatedPerson.setId(id);
@@ -115,7 +115,7 @@ public class PersonService {
         updatedPerson.setRegisterDate(currentPerson.getRegisterDate());
         updatedPerson.setAddresses(currentPerson.getAddresses());
         updatedPerson.setPhones(currentPerson.getPhones());
-        personRepository.save(updatedPerson);
+        return personRepository.save(updatedPerson);
     }
 
     @Transactional

@@ -204,7 +204,16 @@ class PersonServiceTest {
     }
 
     @Test
-    void updatePerson() {
+    void whenUpdateThenReturnSuccess() {
+        when(personRepository.save(any())).thenReturn(person);
+
+        Person response = personService.updatePerson(ID, person, person);
+
+        assertEquals(Person.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME.toUpperCase(), response.getName());
+        assertEquals(EMAIL, response.getEmailAddress());
+        assertEquals(CPF, response.getCpf());
     }
 
     @Test

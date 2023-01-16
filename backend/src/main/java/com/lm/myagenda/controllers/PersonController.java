@@ -65,8 +65,7 @@ public class PersonController {
             @RequestBody PersonNewDTO updatedPersonDTO){
         Person person = personService.findById(id);
         Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
-        personService.updatePerson(id, updatedPerson, person);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedPerson);
+        return ResponseEntity.status(HttpStatus.OK).body(personService.updatePerson(id, updatedPerson, person));
     }
 
     @PutMapping("/{personId}/address/{addressId}")
