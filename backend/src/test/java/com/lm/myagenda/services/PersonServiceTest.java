@@ -7,6 +7,7 @@ import com.lm.myagenda.models.Phone;
 import com.lm.myagenda.repositories.AddressRepository;
 import com.lm.myagenda.repositories.PersonRepository;
 import com.lm.myagenda.repositories.PhoneRepository;
+import com.lm.myagenda.services.exceptions.DataIntegratyViolationException;
 import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,11 @@ import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 class PersonServiceTest {
 
-    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
     public static final long ID = 10L;
     public static final String NAME = "personName10";
     public static final String EMAIL = "personname10@email.com";
@@ -54,6 +53,9 @@ class PersonServiceTest {
     public static final String OBS = "observacao";
     public static final String TIPO = "Residencial";
     public static final int INDEX = 0;
+
+    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
+    private static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "Email já cadastrado";
 
     @InjectMocks
     private PersonService personService;
@@ -214,6 +216,19 @@ class PersonServiceTest {
         assertEquals(NAME.toUpperCase(), response.getName());
         assertEquals(EMAIL, response.getEmailAddress());
         assertEquals(CPF, response.getCpf());
+    }
+
+    @Test
+    void whenUpdateThenReturnAnDataIntegrityViolationException() {
+        when(personRepository.findByEmailAddress(anyString())).thenReturn(personOptional);
+
+        try{
+            personOptional.get().setId(11L);
+            personService.updatePerson(ID, person, person);
+        } catch (Exception ex) {
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
+        }
     }
 
     @Test
