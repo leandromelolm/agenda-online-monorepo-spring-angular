@@ -25,7 +25,7 @@ import java.util.Optional;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PersonServiceTest {
 
@@ -248,7 +248,11 @@ class PersonServiceTest {
     }
 
     @Test
-    void delete() {
+    void deleteWithSuccess() {
+        when(personRepository.findById(anyLong())).thenReturn(personOptional);
+        doNothing().when(personRepository).deleteById(anyLong());
+        personService.delete(ID);
+        verify(personRepository, times(1)).deleteById(anyLong());
     }
 
     @Test
