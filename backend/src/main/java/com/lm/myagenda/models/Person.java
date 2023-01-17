@@ -27,7 +27,6 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-
     private String name;
     private String socialName;
     @Column(unique = true)
@@ -46,6 +45,9 @@ public class Person implements Serializable {
     private String note;
     private String urlImage;
     private Instant registerDate;
+    private String fatherName;
+    private String motherName;
+    private String birthPlace;
     @JsonIgnore
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
