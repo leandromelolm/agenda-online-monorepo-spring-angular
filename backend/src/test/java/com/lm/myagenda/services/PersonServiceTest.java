@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 class PersonServiceTest {
 
-    public static final long ID = 10L;
+    public static final long ID = 1L;
     public static final String NAME = "personName10";
     public static final String EMAIL = "personname10@email.com";
     public static final String CPF = "1234567890";
@@ -55,7 +55,7 @@ class PersonServiceTest {
     public static final int INDEX = 0;
 
     public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado";
-    private static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "Email já cadastrado";
+    private static final String E_MAIL_JA_CADASTRADO = "Email já cadastrado";
 
     @InjectMocks
     private PersonService personService;
@@ -206,6 +206,18 @@ class PersonServiceTest {
     }
 
     @Test
+    void whenInsertPersonThenReturnAnDataIntegrityViolationException() {
+        when(personRepository.findByEmailAddress(anyString())).thenReturn(personOptional);
+
+        try{
+            personOptional.get().setId(2L);
+            personService.insert(person);
+        } catch (Exception ex) {
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(E_MAIL_JA_CADASTRADO, ex.getMessage());
+        }
+    }
+    @Test
     void whenUpdateThenReturnSuccess() {
         when(personRepository.save(any())).thenReturn(person);
 
@@ -223,11 +235,11 @@ class PersonServiceTest {
         when(personRepository.findByEmailAddress(anyString())).thenReturn(personOptional);
 
         try{
-            personOptional.get().setId(11L);
+            personOptional.get().setId(2L);
             personService.updatePerson(ID, person, person);
         } catch (Exception ex) {
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
-            assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
+            assertEquals(E_MAIL_JA_CADASTRADO, ex.getMessage());
         }
     }
 
