@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.*;
 
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -253,6 +254,27 @@ class PersonServiceTest {
         doNothing().when(personRepository).deleteById(anyLong());
         personService.delete(ID);
         verify(personRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void deleteShouldThrowObjectNotFoundExceptionWhenIdDoesNotExist() {
+        long nonExistingId = 2L;
+        when(personRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+        doThrow(ObjectNotFoundException.class).when(personRepository).deleteById(nonExistingId);;
+        assertThrows(ObjectNotFoundException.class, () -> {
+            personService.delete(nonExistingId);
+        });
+        verify(personRepository, times(1)).deleteById(nonExistingId);
+    }
+
+    @Test
+    public void deleteShouldDoNothingWhenIdExists() {
+        long existingId = 1L;
+        doNothing().when(personRepository).deleteById(existingId);
+        assertDoesNotThrow(() -> {
+            personService.delete(existingId);
+        });
+        verify(personRepository, times(1)).deleteById(existingId);
     }
 
     @Test
