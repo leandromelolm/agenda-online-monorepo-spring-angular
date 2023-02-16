@@ -84,11 +84,11 @@ public class DBService {
         itemRepository.saveAll(Arrays.asList(item1,item2,item3,item4,item5,item6));
 
         //Professional (employee)
-        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","mat1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
-        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","mat2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(500));
-        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","mat3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, LocalDate.now().minusYears(10));
-        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","mat4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, LocalDate.now().minusMonths(12));
-        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","mat5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, LocalDate.parse("2013-09-28"));
+        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
+        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(500));
+        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, LocalDate.now().minusYears(10));
+        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, LocalDate.now().minusMonths(12));
+        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, LocalDate.parse("2013-09-28"));
         professionalRepository.saveAll(Arrays.asList(emp1,emp2,emp3,emp4,emp5));
 
         //Person

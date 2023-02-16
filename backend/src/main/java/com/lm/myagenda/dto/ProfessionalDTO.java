@@ -18,7 +18,7 @@ public class ProfessionalDTO {
 
     private Long id;
     private String nome;
-    private String CPF;
+    private String cpf;
     private String matricula;
     private String especialidade;
     private String email;
@@ -31,7 +31,7 @@ public class ProfessionalDTO {
     public ProfessionalDTO(Professional entity){
         this.id = entity.getId();
         this.nome = entity.getNome();
-        this.CPF = entity.getCPF();
+        this.cpf = entity.getCpf();
         this.matricula = entity.getMatricula();
         this.especialidade = entity.getEspecialidade();
         this.email = entity.getEmail();

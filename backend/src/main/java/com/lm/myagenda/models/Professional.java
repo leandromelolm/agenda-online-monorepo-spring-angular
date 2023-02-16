@@ -17,7 +17,7 @@ public class Professional implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String CPF;
+    private String cpf;
     private String matricula;
     private String especialidade;
     private String email;
@@ -31,10 +31,10 @@ public class Professional implements Serializable {
     @ToString.Exclude
     private Agenda agenda;
 
-    public Professional(Long id, String nome, String CPF, String matricula, String especialidade, String email, String descricao, String status, LocalDate dataAlteracaoStatus, LocalDate dataCadastro) {
+    public Professional(Long id, String nome, String cpf, String matricula, String especialidade, String email, String descricao, String status, LocalDate dataAlteracaoStatus, LocalDate dataCadastro) {
         this.id = id;
         this.nome = nome;
-        this.CPF = CPF;
+        this.cpf = cpf;
         this.matricula = matricula;
         this.especialidade = especialidade;
         this.email = email;
@@ -42,5 +42,13 @@ public class Professional implements Serializable {
         this.status = status;
         this.dataAlteracaoStatus = dataAlteracaoStatus;
         this.dataCadastro = dataCadastro;
+    }
+
+    public Professional(Long id, String nome, String cpf, String matricula, String especialidade){
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.matricula = matricula;
+        this.especialidade = especialidade;
     }
 }
