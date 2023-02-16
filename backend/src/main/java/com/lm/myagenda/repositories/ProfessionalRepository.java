@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface ProfessionalRepository extends JpaRepository<Professional, Long> {
 
@@ -26,9 +28,12 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Long
     @Transactional(readOnly = true)
     Page<Professional> findByNomeContainingIgnoreCase(String search, Pageable pageable);
 
-    boolean existsByCpf(String cpf);
+    @Transactional(readOnly = true)
+    Optional<Professional> findByCpf(String cpf);
 
-    boolean existsByMatricula(String matricula);
+    @Transactional(readOnly = true)
+    Optional<Professional> findByEmail(String cpf);
 
-    boolean existsByEmail(String email);
+    @Transactional(readOnly = true)
+    Optional<Professional> findByMatricula(String matricula);
 }

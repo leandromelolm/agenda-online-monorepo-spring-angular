@@ -1,8 +1,6 @@
 package com.lm.myagenda.services;
 
-import com.lm.myagenda.dto.PersonSummaryDTO;
 import com.lm.myagenda.dto.ProfessionalDTO;
-import com.lm.myagenda.models.Person;
 import com.lm.myagenda.models.Professional;
 import com.lm.myagenda.repositories.AttendanceRepository;
 import com.lm.myagenda.repositories.ProfessionalRepository;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.time.Instant;
 import java.util.List;
@@ -59,23 +56,10 @@ public class ProfessionalService {
     }
 
     public Professional create(ProfessionalDTO obj) {
-        existsRegistration(obj);
+        existsRegister(obj);
         obj.setStatus("Ativo");
         obj.setDataCadastro(Instant.ofEpochSecond(System.currentTimeMillis()/1000));
         return repository.save(modelMapper.map(obj, Professional.class));
-    }
-
-    @Transactional(readOnly = true)
-    private void existsRegistration(ProfessionalDTO obj){
-        if(repository.existsByCpf(obj.getCpf())){
-            throw new DataIntegratyViolationException("CPF já cadastrado!");
-        }
-        if(repository.existsByMatricula(obj.getMatricula())){
-            throw new DataIntegratyViolationException("Matrícula já cadastrado!");
-        }
-        if(repository.existsByEmail(obj.getEmail())){
-            throw new DataIntegratyViolationException("Email já cadastrado!");
-        }
     }
 
     public boolean isNumber(String s){
@@ -87,12 +71,31 @@ public class ProfessionalService {
         return true;
     }
 
-    public void delete(Long id) {
-        Optional<Professional> obj = repository.findById(id);
-        if(!obj.isPresent()){
-            throw new ObjectNotFoundException("Não encontrado");
+    public Professional udpate(ProfessionalDTO objDto) {
+        existsRegister(objDto);
+        Professional obj = findById(objDto.getId());
+        objDto.setDataCadastro(obj.getDataCadastro());
+        return repository.save(modelMapper.map(objDto, Professional.class));
+    }
+
+    @Transactional(readOnly = true)
+    private void existsRegister(ProfessionalDTO dto){
+        Optional<Professional> optCpf = repository.findByCpf(dto.getCpf());
+        if(optCpf.isPresent() && !optCpf.get().getId().equals(dto.getId())) {
+            throw new DataIntegratyViolationException("CPF já cadastrado no sistema");
         }
-        if(attendanceRepository.existsProfessionalInSomeAttendance(obj.get().getId())){
+        Optional<Professional> optEmail = repository.findByEmail(dto.getEmail());
+        if(optEmail.isPresent() && !optEmail.get().getId().equals(dto.getId())) {
+            throw new DataIntegratyViolationException("E-mail já cadastrado no sistema");
+        }
+        Optional<Professional> optMat = repository.findByMatricula(dto.getMatricula());
+        if(optMat.isPresent() && !optMat.get().getId().equals(dto.getId())) {
+            throw new DataIntegratyViolationException("Matricula já cadastrado no sistema");
+        }
+    }
+
+    public void delete(Long id) {
+        if(attendanceRepository.existsProfessionalInSomeAttendance(findById(id).getId())){
             throw new DataIntegratyViolationException("Violação de integridade! não é possível deletar!");
         }
         repository.deleteById(id);

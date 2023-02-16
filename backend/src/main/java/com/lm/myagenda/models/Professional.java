@@ -2,11 +2,14 @@ package com.lm.myagenda.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -17,10 +20,15 @@ public class Professional implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "O campo NOME não pode está em branco")
+    @Size(min=5, max=50, message="O campo NOME deve ter entre 5 e 50 caracteres")
     private String nome;
+    @Column(unique=true)
     private String cpf;
+    @Column(unique=true)
     private String matricula;
     private String especialidade;
+    @Column(unique=true)
     private String email;
     private String descricao;
     private String status;

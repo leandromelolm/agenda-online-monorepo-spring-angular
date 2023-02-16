@@ -54,6 +54,12 @@ public class ProfessionalController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ProfessionalDTO> update(@PathVariable Long id, @RequestBody ProfessionalDTO objDto){
+        objDto.setId(id);
+        return ResponseEntity.ok().body(modelMapper.map(service.udpate(objDto), ProfessionalDTO.class));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ProfessionalDTO> delete(@PathVariable Long id){
         service.delete(id);
