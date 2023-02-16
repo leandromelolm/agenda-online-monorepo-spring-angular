@@ -54,4 +54,9 @@ public class ProfessionalController {
         return ResponseEntity.created(uri).build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProfessionalDTO> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
