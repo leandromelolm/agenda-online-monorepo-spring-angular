@@ -86,11 +86,11 @@ public class DBService {
         itemRepository.saveAll(Arrays.asList(item1,item2,item3,item4,item5,item6));
 
         //Professional (employee)
-        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, dateRegister);
-        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, dateRegister);
-        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, dateRegister);
-        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, dateRegister);
-        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, dateRegister);
+        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","1101","Tec de enfermagem", "user1@email.com","descricao","PAUSADO",null, dateRegister);
+        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","2022","tec de enfermagem", "user2@email.com","descricao","ATIVO",null, dateRegister);
+        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","3330","tec de enfermagem", "user3@email.com","descricao","ATIVO",null, dateRegister);
+        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","4144","tec de enfermagem", "user4@email.com","descricao","ATIVO",null, dateRegister);
+        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","5505","tec de enfermagem", "user5@email.com","descricao","CANCELADO",null, dateRegister);
         professionalRepository.saveAll(Arrays.asList(emp1,emp2,emp3,emp4,emp5));
 
         //Person
@@ -125,21 +125,16 @@ public class DBService {
         phoneRepository.saveAll(Arrays.asList(tel1, tel3));
 
         //Agenda
-        Agenda agenda1 = new Agenda(null,"Agenda A funcionario2","agenda do profissional 1","ativa","grupoAgenda",emp2);
+        Agenda agenda1 = new Agenda(null,"Agenda A func1","agenda profissional 1","ativa","grupoAgenda",emp1);
         agendaRepository.save(agenda1);
-        Agenda agenda2 = new Agenda(null,"Agenda B funcionario3","agenda do profissional 2","ativa","grupoAgenda",emp3);
+        Agenda agenda2 = new Agenda(null,"Agenda B func2","agenda profissional 2","ativa","grupoAgenda",emp2);
         agendaRepository.save(agenda2);
-        Agenda agenda3 = new Agenda(null,"Agenda C funcionario4",emp4.getNome(),"ativa","Dentista",emp4);
+        Agenda agenda3 = new Agenda(null,"Agenda C func3",emp4.getNome(),"ativa","Dentista",emp3);
         agendaRepository.saveAndFlush(agenda3);
-        Agenda agenda4 = new Agenda(null,"Agenda D funcionario5", emp5.getNome(),"ativa","Médico",emp5);
+        Agenda agenda4 = new Agenda(null,"Agenda D func4", emp5.getNome(),"ativa","Médico",emp4);
         agendaRepository.save(agenda4);
-
-        // Adding agenda for the professional
-        emp2.setAgenda(agenda1);
-        emp3.setAgenda(agenda2);
-        emp4.setAgenda(agenda3);
-        emp5.setAgenda(agenda4);
-        professionalRepository.saveAll(Arrays.asList(emp2,emp3,emp4,emp5));
+        Agenda agenda5 = new Agenda(null,"Agenda D func5", emp5.getNome(),"ativa","Médico",emp5);
+        agendaRepository.save(agenda5);
 
         //Atendimentos
         Attendance a1 = new Attendance(null, "descricao atendimento1", "Atendimento pendente de confirmação", instantNow.plus(4,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS)), dtfPatternLocalZone.format(instantNow.plus(4,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)), "observacao1", instantNow.toString(), p1);

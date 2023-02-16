@@ -2,6 +2,7 @@ package com.lm.myagenda.services;
 
 import com.lm.myagenda.dto.ProfessionalDTO;
 import com.lm.myagenda.models.Professional;
+import com.lm.myagenda.repositories.AgendaRepository;
 import com.lm.myagenda.repositories.AttendanceRepository;
 import com.lm.myagenda.repositories.ProfessionalRepository;
 import com.lm.myagenda.services.exceptions.DataIntegratyViolationException;
@@ -27,6 +28,9 @@ public class ProfessionalService {
 
     @Autowired
     AttendanceRepository attendanceRepository;
+
+    @Autowired
+    AgendaRepository agendaRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -62,20 +66,20 @@ public class ProfessionalService {
         return repository.save(modelMapper.map(obj, Professional.class));
     }
 
-    public boolean isNumber(String s){
-        for (int i = 0; i < s.length(); i++) {
-            if (!Character.isDigit(s.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public Professional udpate(ProfessionalDTO objDto) {
         existsRegister(objDto);
         Professional obj = findById(objDto.getId());
         objDto.setDataCadastro(obj.getDataCadastro());
+        objDto.setStatus(obj.getStatus());
+        objDto.setDataAlteracaoStatus(Instant.ofEpochSecond(System.currentTimeMillis()/1000));
         return repository.save(modelMapper.map(objDto, Professional.class));
+    }
+
+    public void delete(Long id) {
+        if(attendanceRepository.existsProfessionalInSomeAttendance(findById(id).getId())){
+            throw new DataIntegratyViolationException("Violação de integridade! não é possível deletar!");
+        }
+        repository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
@@ -94,10 +98,12 @@ public class ProfessionalService {
         }
     }
 
-    public void delete(Long id) {
-        if(attendanceRepository.existsProfessionalInSomeAttendance(findById(id).getId())){
-            throw new DataIntegratyViolationException("Violação de integridade! não é possível deletar!");
+    public boolean isNumber(String s){
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i))) {
+                return false;
+            }
         }
-        repository.deleteById(id);
+        return true;
     }
 }

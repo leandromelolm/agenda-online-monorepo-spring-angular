@@ -57,7 +57,7 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
-    private List<Address> addresses = new ArrayList<>(); //addresses
+    private List<Address> addresses = new ArrayList<>();
     @OneToMany(mappedBy = "person",  cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude

@@ -1,11 +1,13 @@
 package com.lm.myagenda.dto;
 
+import com.lm.myagenda.models.Agenda;
 import com.lm.myagenda.models.Professional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -15,7 +17,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfessionalDTO {
+public class ProfessionalDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nome;
@@ -27,7 +30,6 @@ public class ProfessionalDTO {
     private String status;
     private Instant dataAlteracaoStatus;
     private Instant dataCadastro;
-
 
     public ProfessionalDTO(Professional entity){
         this.id = entity.getId();

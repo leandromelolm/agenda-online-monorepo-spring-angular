@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -34,11 +36,6 @@ public class Professional implements Serializable {
     private String status;
     private Instant dataAlteracaoStatus;
     private Instant dataCadastro;
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agenda_id", referencedColumnName = "id")
-    @ToString.Exclude
-    private Agenda agenda;
 
     public Professional(Long id, String nome, String cpf, String matricula, String especialidade, String email, String descricao, String status, Instant dataAlteracaoStatus, Instant dataCadastro) {
         this.id = id;

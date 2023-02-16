@@ -2,10 +2,9 @@ package com.lm.myagenda.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ public class Agenda implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
     private List<Attendance> attendances = new ArrayList<>();
+
 
     public Agenda(Long id, String nameAgenda, String description, String status, String groupAgenda, Professional professional) {
         this.id = id;
