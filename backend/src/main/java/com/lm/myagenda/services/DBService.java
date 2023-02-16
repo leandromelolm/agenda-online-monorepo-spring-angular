@@ -48,6 +48,8 @@ public class DBService {
     @Autowired
     ItemRepository itemRepository;
 
+    private final static Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
+
     public String currentDayPlusDays(int i){
         String datayyyymmdd = LocalDateTime.from(new Date().toInstant().atZone(ZoneId.of("GMT-3"))).plusDays(i).toString().substring(0, 10);
 		System.out.println("data yyyy-mm-dd: "+datayyyymmdd); //data yyyy-mm-dd: 2022-12-10
@@ -84,11 +86,11 @@ public class DBService {
         itemRepository.saveAll(Arrays.asList(item1,item2,item3,item4,item5,item6));
 
         //Professional (employee)
-        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(10));
-        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, LocalDate.now().minusDays(500));
-        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, LocalDate.now().minusYears(10));
-        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, LocalDate.now().minusMonths(12));
-        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, LocalDate.parse("2013-09-28"));
+        Professional emp1 = new Professional(null, "nomeEmpregado1","11891612069","1101","Tec de enfermagem", "enf@email.com","descricao","statusATIVO",null, dateRegister);
+        Professional emp2 = new Professional(null, "nomeEmpregado2","25455258044","2022","tec de enfermagem", "enf2@email.com","descricao","statusATIVO",null, dateRegister);
+        Professional emp3 = new Professional(null, "nomeEmpregado3","32611952078","3330","tec de enfermagem", "enf3@email.com","descricao","statusATIVO",null, dateRegister);
+        Professional emp4 = new Professional(null, "nomeEmpregado4","41211698084","4144","tec de enfermagem", "enf4@email.com","descricao","statusATIVO",null, dateRegister);
+        Professional emp5 = new Professional(null, "nomeEmpregado5","55096693066","5505","tec de enfermagem", "enf5@email.com","descricao","statusATIVO",null, dateRegister);
         professionalRepository.saveAll(Arrays.asList(emp1,emp2,emp3,emp4,emp5));
 
         //Person

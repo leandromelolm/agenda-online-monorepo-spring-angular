@@ -25,4 +25,10 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Long
 
     @Transactional(readOnly = true)
     Page<Professional> findByNomeContainingIgnoreCase(String search, Pageable pageable);
+
+    boolean existsByCpf(String cpf);
+
+    boolean existsByMatricula(String matricula);
+
+    boolean existsByEmail(String email);
 }

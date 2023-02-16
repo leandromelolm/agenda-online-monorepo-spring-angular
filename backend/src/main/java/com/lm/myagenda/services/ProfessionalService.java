@@ -5,14 +5,18 @@ import com.lm.myagenda.dto.ProfessionalDTO;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.models.Professional;
 import com.lm.myagenda.repositories.ProfessionalRepository;
+import com.lm.myagenda.services.exceptions.DataIntegratyViolationException;
 import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +25,9 @@ public class ProfessionalService {
 
     @Autowired
     ProfessionalRepository repository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     public List<Professional> findAll() {
         return repository.findAll();
@@ -46,6 +53,26 @@ public class ProfessionalService {
         return p.map(x -> new ProfessionalDTO(x));
     }
 
+    public Professional create(ProfessionalDTO obj) {
+        existsRegistration(obj);
+        obj.setStatus("Ativo");
+        obj.setDataCadastro(Instant.ofEpochSecond(System.currentTimeMillis()/1000));
+        return repository.save(modelMapper.map(obj, Professional.class));
+    }
+
+    @Transactional(readOnly = true)
+    private void existsRegistration(ProfessionalDTO obj){
+        if(repository.existsByCpf(obj.getCpf())){
+            throw new DataIntegratyViolationException("CPF já cadastrado!");
+        }
+        if(repository.existsByMatricula(obj.getMatricula())){
+            throw new DataIntegratyViolationException("Matrícula já cadastrado!");
+        }
+        if(repository.existsByEmail(obj.getEmail())){
+            throw new DataIntegratyViolationException("Email já cadastrado!");
+        }
+    }
+
     public boolean isNumber(String s){
         for (int i = 0; i < s.length(); i++) {
             if (!Character.isDigit(s.charAt(i))) {
@@ -54,5 +81,4 @@ public class ProfessionalService {
         }
         return true;
     }
-
 }

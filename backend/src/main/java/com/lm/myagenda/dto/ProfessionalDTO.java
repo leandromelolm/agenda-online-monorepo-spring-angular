@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +25,8 @@ public class ProfessionalDTO {
     private String email;
     private String descricao;
     private String status;
-    private LocalDate dataAlteracaoStatus;
-    private LocalDate dataCadastro;
+    private Instant dataAlteracaoStatus;
+    private Instant dataCadastro;
 
 
     public ProfessionalDTO(Professional entity){

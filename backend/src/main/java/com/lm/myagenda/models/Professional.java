@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -23,15 +24,15 @@ public class Professional implements Serializable {
     private String email;
     private String descricao;
     private String status;
-    private LocalDate dataAlteracaoStatus;
-    private LocalDate dataCadastro;
+    private Instant dataAlteracaoStatus;
+    private Instant dataCadastro;
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agenda_id", referencedColumnName = "id")
     @ToString.Exclude
     private Agenda agenda;
 
-    public Professional(Long id, String nome, String cpf, String matricula, String especialidade, String email, String descricao, String status, LocalDate dataAlteracaoStatus, LocalDate dataCadastro) {
+    public Professional(Long id, String nome, String cpf, String matricula, String especialidade, String email, String descricao, String status, Instant dataAlteracaoStatus, Instant dataCadastro) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
