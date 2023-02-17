@@ -38,6 +38,11 @@ public class AgendaService {
         return repository.save(modelMapper.map(obj, Agenda.class));
     }
 
+    public Agenda udpate(AgendaDTO objDto) {
+        findById(objDto.getId());
+        return repository.save(modelMapper.map(objDto, Agenda.class));
+    }
+
     public void delete(Long id) {
         repository.deleteById(id);
     }

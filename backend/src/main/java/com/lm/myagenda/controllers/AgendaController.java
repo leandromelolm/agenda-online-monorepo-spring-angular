@@ -47,6 +47,12 @@ public class AgendaController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AgendaDTO> update(@PathVariable Long id, @RequestBody AgendaDTO objDto){
+        objDto.setId(id);
+        return ResponseEntity.ok().body(modelMapper.map(service.udpate(objDto), AgendaDTO.class));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<AgendaDTO> delete(@PathVariable Long id){
         service.delete(id);
