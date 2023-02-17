@@ -24,10 +24,10 @@ public class AgendaController {
     ModelMapper modelMapper;
     
     @RequestMapping(value="/all", method = RequestMethod.GET)
-    public ResponseEntity<Page<Agenda>> findAll(
+    public ResponseEntity<Page<AgendaDTO>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size){
-        Page<Agenda> agendasList = service.findAll(page, size);
+        Page<AgendaDTO> agendasList = service.findAll(page, size);
         return ResponseEntity.ok().body(agendasList);
     }
 

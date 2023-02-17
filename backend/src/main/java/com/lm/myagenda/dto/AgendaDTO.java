@@ -34,7 +34,6 @@ public class AgendaDTO implements Serializable {
     @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
     private List<Attendance> attendances = new ArrayList<>();
 
-
     public AgendaDTO(Agenda agenda, Professional professional) {
         this.id = agenda.getId();
         this.nameAgenda = agenda.getNameAgenda();
@@ -44,5 +43,15 @@ public class AgendaDTO implements Serializable {
         this.agendaOwnerName = professional.getNome();
         this.agendaOwnerId = professional.getId();
         this.agendaOwnerMat = professional.getMatricula();
+    }
+    public AgendaDTO(Agenda agenda) {
+        this.id = agenda.getId();
+        this.nameAgenda = agenda.getNameAgenda();
+        this.description = agenda.getDescription();
+        this.status = agenda.getStatus();
+        this.groupAgenda = agenda.getGroupAgenda();
+        this.agendaOwnerName = agenda.getAgendaOwnerName();
+        this.agendaOwnerId = agenda.getAgendaOwnerId();
+        this.agendaOwnerMat = agenda.getAgendaOwnerMat();
     }
 }

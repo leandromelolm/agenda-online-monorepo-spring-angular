@@ -1,5 +1,6 @@
 package com.lm.myagenda.services;
 
+import com.lm.myagenda.dto.AgendaDTO;
 import com.lm.myagenda.models.Agenda;
 import com.lm.myagenda.repositories.AgendaRepository;
 import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
@@ -17,8 +18,9 @@ public class AgendaService {
     @Autowired
     AgendaRepository repository;
 
-    public Page<Agenda> findAll(Integer page, Integer size) {
-        return repository.findAll(PageRequest.of(page,size));
+    public Page<AgendaDTO> findAll(Integer page, Integer size) {
+        Page<Agenda> agendaPage = repository.findAll(PageRequest.of(page,size));
+        return agendaPage.map(x -> new AgendaDTO(x));
     }
 
     public Agenda findById(Long id) {
