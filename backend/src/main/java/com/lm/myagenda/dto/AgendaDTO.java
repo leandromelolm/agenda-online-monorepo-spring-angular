@@ -20,8 +20,6 @@ import java.util.List;
 public class AgendaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nameAgenda;
     private String description;
