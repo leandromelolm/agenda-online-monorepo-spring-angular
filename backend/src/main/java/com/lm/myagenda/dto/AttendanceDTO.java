@@ -5,7 +5,6 @@ import com.lm.myagenda.models.Attendance;
 import com.lm.myagenda.models.Professional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
