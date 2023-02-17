@@ -22,11 +22,12 @@ public class EventController {
     @GetMapping()
     public ResponseEntity<List<EventDTO>> findAllOrFindByName(
             @RequestParam(value="search", defaultValue="") String name,
+            @RequestParam(value="pastdate", defaultValue="true") Boolean pastDate,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value="orderBy", defaultValue="dateUTC") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
-        Page<EventDTO> eventDTOS = service.findAllOrFindByName(name, page, size, orderBy, direction);
+        Page<EventDTO> eventDTOS = service.findAllOrFindByName(name, pastDate, page, size, orderBy, direction);
         return ResponseEntity.ok().body(eventDTOS.getContent());
     }
 }

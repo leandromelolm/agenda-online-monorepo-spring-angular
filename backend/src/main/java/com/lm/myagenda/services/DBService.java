@@ -155,11 +155,20 @@ public class DBService {
         Attendance a6 = new Attendance(null, "descricao atendimento6", "Atendimento confirmado", instant.plus(5,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.plus(5, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instantNow.toString(), p3);
         a6.getProfessionais().addAll(Arrays.asList(emp3));
         a6.setAgenda(agenda3);
-        Attendance a7 = new Attendance(null, "descricao atendimento7", "Atendimento confirmado", instant.minus(3,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)), dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)), "observacao a6", instant.minus(10,ChronoUnit.DAYS).toString(), p3);
-//        a7.getProfessionais().addAll(Arrays.asList(emp3));
+        Attendance a7 = new Attendance(null, "descricao atendimento7", "Atendimento confirmado",
+                instant.minus(3,ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES),
+                dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)),
+                dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)),
+                "observacao7", instant.minus(10,ChronoUnit.DAYS).toString(), p3);
         a7.setAgenda(agenda3);
+        Attendance a8 = new Attendance(null, "descricao atendimento8", "Atendimento confirmado",
+                instant.minus(3,ChronoUnit.DAYS).minus(15, ChronoUnit.MINUTES),
+                dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(15, ChronoUnit.MINUTES)),
+                dtfPatternLocalZone.format(instant.minus(3, ChronoUnit.DAYS).plus(29, ChronoUnit.MINUTES)),
+                "observacao8", instant.minus(10,ChronoUnit.DAYS).toString(), p3);
+        a8.setAgenda(agenda3);
 
-        attendanceRepository.saveAllAndFlush(Arrays.asList(a1,a2,a3,a4,a5,a6,a7));
+        attendanceRepository.saveAllAndFlush(Arrays.asList(a1,a2,a3,a4,a5,a6,a7,a8));
 
         //Order - Ordem de servico (lista de itens no atendimento)
         Order order1 = new Order(null,a1,Arrays.asList(item1));
@@ -197,10 +206,18 @@ public class DBService {
         event2.setPersonPhone("22922222222");
         eventos.add(event2);                  
         
-        Event event3 = new Event(null, null, p3.getName(), a3.getDateInUTC(), a3.getStartTime(), a3.getEndTime(), null, null, null, false, "block", null, a3.getId(),p3.getCpf(),"33933333333", p3.getBirthdate().toString());
+        Event event3 = new Event(null, null, p3.getName(), a3.getDateInUTC(), a3.getStartTime(),
+                a3.getEndTime(), null, null, null, false, "block",
+                null, a3.getId(),p3.getCpf(),"33933333333", p3.getBirthdate().toString());
         eventos.add(event3);        
-        Event event4 = new Event(null, null, p4.getName(), a4.getDateInUTC(), a4.getStartTime(), a4.getEndTime(), null, null, null, false, "block", "descrição test", a4.getId(), p4.getCpf(), "44944444444", p4.getBirthdate().toString());
+        Event event4 = new Event(null, null, p4.getName(), a4.getDateInUTC(), a4.getStartTime(),
+                a4.getEndTime(), null, null, null, false, "block",
+                "descrição4", a4.getId(), p4.getCpf(), "44944444444", p4.getBirthdate().toString());
         eventos.add(event4);
+        Event event8 = new Event(null, null, p4.getName(), a8.getDateInUTC(), a8.getStartTime(),
+                a8.getEndTime(), null, null, null, false, "block",
+                "descrição4", a8.getId(), p4.getCpf(), "44944444444", p4.getBirthdate().toString());
+        eventos.add(event8);
 
         eventRepository.saveAll(eventos);
 
