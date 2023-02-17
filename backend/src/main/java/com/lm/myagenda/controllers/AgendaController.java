@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,6 +38,13 @@ public class AgendaController {
         Agenda agenda = service.findById(id);
         AgendaDTO agendaDTO = modelMapper.map(agenda, AgendaDTO.class);
         return ResponseEntity.ok().body(agendaDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> create(@RequestBody AgendaDTO obj){
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}").buildAndExpand(service.create(obj).getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
 }
