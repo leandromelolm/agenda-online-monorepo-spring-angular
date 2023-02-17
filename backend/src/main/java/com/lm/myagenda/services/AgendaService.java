@@ -4,6 +4,7 @@ import com.lm.myagenda.dto.AgendaDTO;
 import com.lm.myagenda.models.Agenda;
 import com.lm.myagenda.models.Professional;
 import com.lm.myagenda.repositories.AgendaRepository;
+import com.lm.myagenda.services.exceptions.DataIntegratyViolationException;
 import com.lm.myagenda.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,9 @@ public class AgendaService {
 
     public Agenda create(AgendaDTO obj) {
         return repository.save(modelMapper.map(obj, Agenda.class));
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
