@@ -175,7 +175,7 @@ public class DBService {
         List<Event>eventos = new ArrayList<>();
 
         Event event1 = new Event();
-        event1.setTitle(p1.getName()+" cpf:"+p1.getCpf());
+        event1.setTitle(p1.getName()+" CPF: "+p1.getCpf());
         event1.setDateUTC(instantNow.plus(2,ChronoUnit.DAYS));              
         event1.setStart(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS)));
         event1.setEnd(dtfPatternLocalZone.format(instantNow.plus(2,ChronoUnit.DAYS).plus(14,ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS)));        
@@ -186,7 +186,7 @@ public class DBService {
         eventos.add(event1);                
         
         Event event2 = new Event();
-        event2.setTitle(p2.getName()+" cpf:"+p2.getCpf());
+        event2.setTitle(p2.getName()+" CPF: "+p2.getCpf());
         event2.setDateUTC(a2.getDateInUTC());
         event2.setStart(a2.getStartTime());
         event2.setEnd(a2.getEndTime());
