@@ -1,7 +1,11 @@
 package com.lm.myagenda.controllers;
 
+import com.lm.myagenda.dto.AgendaDTO;
 import com.lm.myagenda.dto.EventDTO;
+import com.lm.myagenda.models.Agenda;
+import com.lm.myagenda.models.Event;
 import com.lm.myagenda.services.EventService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +22,11 @@ public class EventController {
 
     @Autowired
     EventService service;
+    @Autowired
+    ModelMapper mapper;
     
     @GetMapping()
-    public ResponseEntity<List<EventDTO>> findAllOrFindByName(
+    public ResponseEntity<List<EventDTO>> getAllOrGetByName(
             @RequestParam(value="search", defaultValue="") String name,
             @RequestParam(value="pastdate", defaultValue="true") Boolean pastDate,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -29,6 +35,13 @@ public class EventController {
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<EventDTO> eventDTOS = service.findAllOrFindByName(name, pastDate, page, size, orderBy, direction);
         return ResponseEntity.ok().body(eventDTOS.getContent());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EventDTO> getOneEvent(@PathVariable("id") UUID id){
+        Event event = service.findById(id);
+        EventDTO eventDTO = mapper.map(event, EventDTO.class);
+        return ResponseEntity.ok().body(eventDTO);
     }
 
     @PostMapping()

@@ -25,19 +25,12 @@ public class EventService {
 
     @Autowired
     EventRepository repository;
-
     @Autowired
     PersonRepository personRepository;
     @Autowired
     AttendanceRepository attendanceRepository;
-
     @Autowired
     ModelMapper mapper;
-
-    public Event findById(UUID id){
-        Optional<Event> eventOpt = repository.findById(id);
-        return eventOpt.orElseThrow(() -> new ObjectNotFoundException("Evento não encontrado"));
-    }
 
     public Page<EventDTO> findAllOrFindByName(
             String search, Boolean pastDate, Integer page, Integer size, String orderBy, String direction) {
@@ -53,6 +46,11 @@ public class EventService {
             events = repository.findByName(search.toUpperCase(), pageable);
         }
         return events.map(x -> new EventDTO(x));
+    }
+
+    public Event findById(UUID id){
+        Optional<Event> eventOpt = repository.findById(id);
+        return eventOpt.orElseThrow(() -> new ObjectNotFoundException("Evento não encontrado"));
     }
 
     public Event create(EventDTO obj) {
