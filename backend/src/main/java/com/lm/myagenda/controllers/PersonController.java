@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value="/api/person")
+@RequestMapping(value="/person")
 public class PersonController {
 
     @Autowired

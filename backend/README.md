@@ -3,26 +3,21 @@
 
 #### PERSON GET ENDPOINT
 ###### person summary with name, cpf, cns, birthdate
-###### http://localhost:8080/api/person?search= [all paged]
-###### http://localhost:8080/api/person?search= {name} or {cpf} or {cns}
-###### http://localhost:8080/api/person/all/summary
-
-###### person with address, phone and attendance
-###### http://localhost:8080/api/person/search [all]
-###### http://localhost:8080/api/person/search?name=gomes [search by name]
+###### http://localhost:8080/myagenda/person [all paged]
+###### http://localhost:8080/myagenda/person?search={name||cpf||cns}
 
 ###### person with address
-###### http://localhost:8080/api/person/ {personId} [find by id]
-###### http://localhost:8080/api/person/persons/address
-###### http://localhost:8080/api/person/all/address
+###### http://localhost:8080/myagenda/person/persons/address [all paged]
+###### http://localhost:8080/myagenda/person/{id}
+
 
 #### PERSON DELETE ENDPOINT
-###### http://localhost:8080/api/person/ {personId}
+###### http://localhost:8080/myagenda/person/{id}
 
 ### JSON EXAMPLES
 
 #### PERSON INSERT
-###### POST http://localhost:8080/api/person
+###### POST http://localhost:8080/myagenda/person
 
     {    
         "name": "personNew test1",
@@ -53,7 +48,7 @@
     }
 
 #### PERSON UPDATE
-######  PUT http://localhost:8080/api/person/{personId}
+######  PUT http://localhost:8080/myagenda/person/{personId}
     // Mesmo passando o CPF no json, ele não é alterado.
 
     {    
@@ -71,7 +66,7 @@
     }
 
 #### PERSON ADDRESS UPDATE
-######  PUT http://localhost:8080/person/{personId}/address/{addressId}
+######  PUT http://localhost:8080/myagenda/person/{personId}/address/{addressId}
     {    
         "logradouro": "rua atualizada",
         "numero": "2",
