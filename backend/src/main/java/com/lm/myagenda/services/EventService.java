@@ -17,8 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EventService {
@@ -33,6 +33,11 @@ public class EventService {
 
     @Autowired
     ModelMapper mapper;
+
+    public Event findById(UUID id){
+        Optional<Event> eventOpt = repository.findById(id);
+        return eventOpt.orElseThrow(() -> new ObjectNotFoundException("Evento não encontrado"));
+    }
 
     public Page<EventDTO> findAllOrFindByName(
             String search, Boolean pastDate, Integer page, Integer size, String orderBy, String direction) {
@@ -61,5 +66,11 @@ public class EventService {
         attendanceRepository.saveAndFlush(attendance);
         obj.setAttendanceId(attendance.getId());
         return repository.save(mapper.map(obj, Event.class));
+    }
+
+    public void delete(UUID id) {
+        Event event = findById(id);
+        attendanceRepository.deleteById(event.getAttendanceId());
+        repository.deleteById(event.getId());
     }
 }

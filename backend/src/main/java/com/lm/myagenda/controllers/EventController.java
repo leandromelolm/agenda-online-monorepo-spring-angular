@@ -1,6 +1,5 @@
 package com.lm.myagenda.controllers;
 
-import com.lm.myagenda.dto.AgendaDTO;
 import com.lm.myagenda.dto.EventDTO;
 import com.lm.myagenda.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value="/event")
@@ -36,5 +36,11 @@ public class EventController {
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}").buildAndExpand(service.create(obj).getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EventDTO> delete(@PathVariable UUID id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
