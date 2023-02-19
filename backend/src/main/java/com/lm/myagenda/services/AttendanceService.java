@@ -18,22 +18,22 @@ import java.util.List;
 public class AttendanceService {
 
     @Autowired
-    AttendanceRepository atr;
+    AttendanceRepository repository;
 
     public List<Attendance> findAll() {
-        return  atr.findAll();
+        return  repository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public Page<AttendanceDTO> pagedFindAll(Pageable pageable, int pageNumber, int pageSize) {
-        pageable =  PageRequest.of(pageNumber, pageSize, Sort.by("startTime"));
-        Page<Attendance> page = atr.findAll(pageable);
+    public Page<AttendanceDTO> pagedFindAll(int pageNumber, int pageSize) {
+        Pageable pageable =  PageRequest.of(pageNumber, pageSize, Sort.by("startTime"));
+        Page<Attendance> page = repository.findAll(pageable);
         return page.map(x -> new AttendanceDTO(x));
     }
 
     @Transactional(readOnly = true)
     public Page<AttendanceDTO> findAllAttendaceOfAgenda(Long idAgenda, Pageable pageable) {
-        Page<Attendance> page = atr.findAllByIdAgenda(idAgenda, pageable);
+        Page<Attendance> page = repository.findAllByIdAgenda(idAgenda, pageable);
         return page.map(x -> new AttendanceDTO(x));
     }
 }

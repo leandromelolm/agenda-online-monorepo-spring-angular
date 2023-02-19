@@ -14,46 +14,45 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/attendance")
 public class AttendanceController {
 
     @Autowired
-    AttendanceService attendanceService;
+    AttendanceService service;
 
-    @RequestMapping(value="/admin/attendance/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Attendance>> findAllAdmin(){
-        return ResponseEntity.ok(attendanceService.findAll());
-    }
-
-    @GetMapping("/attendance/all")
+    @GetMapping("/all")
     public ResponseEntity<List<AttendanceDTO>> findAll(){
-        List<Attendance> attendanceList = attendanceService.findAll();
-        List<AttendanceDTO> AttendanceDTOList = attendanceList.stream().map(x -> new AttendanceDTO(x)).collect(Collectors.toList());
+        List<Attendance> attendanceList = service.findAll();
+        List<AttendanceDTO> AttendanceDTOList = attendanceList.stream().map(
+                x -> new AttendanceDTO(x)).collect(Collectors.toList());
         return ResponseEntity.ok().body(AttendanceDTOList);
     }
 
     @GetMapping("/attendances")
-    public ResponseEntity<Page<AttendanceDTO>> pagedFindAll(
+    public ResponseEntity<Page<AttendanceDTO>> findAllAttendance(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "15") Integer size,
-            Pageable pageable){
-        Page<AttendanceDTO> attendanceList = attendanceService.pagedFindAll(pageable, page, size);
+            @RequestParam(value = "size", defaultValue = "15") Integer size){
+        Page<AttendanceDTO> attendanceList = service.pagedFindAll(page, size);
         return ResponseEntity.ok().body(attendanceList);
     }
 
-    @GetMapping("/attendances/{id}")
-    public ResponseEntity<Page<AttendanceDTO>>pagedFindIdAgenda(@PathVariable Long id, Pageable pageable){
-        Page<AttendanceDTO> listDto = attendanceService.findAllAttendaceOfAgenda(id, pageable);
+    @GetMapping("/{id}/{page}/{size}")
+    public ResponseEntity<Page<AttendanceDTO>>findAttendanceByIdAgenda(
+            @PathVariable Long id,
+            @PathVariable Integer page,
+            @PathVariable Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<AttendanceDTO> listDto = service.findAllAttendaceOfAgenda(id, pageable);
         return ResponseEntity.ok().body(listDto);
     }
 
-    @GetMapping("/attendances/agenda")
-    public ResponseEntity<Page<AttendanceDTO>>pagedFindIdAgendaWithRequestParam(
+    @GetMapping("/agenda")
+    public ResponseEntity<Page<AttendanceDTO>>findAttendanceByIdAgendaWithRequestParam(
             @RequestParam(value = "id", defaultValue = "0") Long idAgenda,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "25") Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<AttendanceDTO> listDto = attendanceService.findAllAttendaceOfAgenda(idAgenda, pageable);
+        Page<AttendanceDTO> listDto = service.findAllAttendaceOfAgenda(idAgenda, pageable);
         return ResponseEntity.ok().body(listDto);
     }
 }
