@@ -1,9 +1,6 @@
 package com.lm.myagenda.controllers;
 
-import com.lm.myagenda.dto.AddressDTO;
-import com.lm.myagenda.dto.PersonNewDTO;
-import com.lm.myagenda.dto.PersonSummaryDTO;
-import com.lm.myagenda.dto.PersonWithAddressDTO;
+import com.lm.myagenda.dto.*;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.services.PersonService;
@@ -60,11 +57,11 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(
+    public ResponseEntity<Person> update(
             @PathVariable(value = "id") Long id,
-            @RequestBody PersonNewDTO updatedPersonDTO){
+            @RequestBody PersonUpdateDTO personUpdateDTO){
         Person person = personService.findById(id);
-        Person updatedPerson = personService.fromDtoToEntity(updatedPersonDTO);
+        Person updatedPerson = personService.fromDtoToEntityUpdate(id, personUpdateDTO);
         return ResponseEntity.status(HttpStatus.OK).body(personService.updatePerson(id, updatedPerson, person));
     }
 

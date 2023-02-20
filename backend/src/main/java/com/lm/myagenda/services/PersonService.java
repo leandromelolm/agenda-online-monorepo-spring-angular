@@ -1,9 +1,6 @@
 package com.lm.myagenda.services;
 
-import com.lm.myagenda.dto.AddressDTO;
-import com.lm.myagenda.dto.PersonNewDTO;
-import com.lm.myagenda.dto.PersonSummaryDTO;
-import com.lm.myagenda.dto.PersonWithAddressDTO;
+import com.lm.myagenda.dto.*;
 import com.lm.myagenda.models.Address;
 import com.lm.myagenda.models.Person;
 import com.lm.myagenda.models.Phone;
@@ -108,9 +105,9 @@ public class PersonService {
     public Person updatePerson(Long id, Person updatedPerson, Person currentPerson){
         findByCns(updatedPerson);
         findByEmail(updatedPerson);
+        findByCpf(updatedPerson);
         updatedPerson.setId(id);
-        /* CPF, Data de Registro, Endereços e Telefones não são alterados ao atualizar a pessoa*/
-        updatedPerson.setCpf(currentPerson.getCpf());
+        /* Data de Registro, Endereços e Telefones não são alterados ao atualizar a pessoa*/
         updatedPerson.setRegisterDate(currentPerson.getRegisterDate());
         updatedPerson.setAddresses(currentPerson.getAddresses());
         updatedPerson.setPhones(currentPerson.getPhones());
@@ -144,6 +141,25 @@ public class PersonService {
         Phone phone = new Phone(null, p.getDdd(), p.getNumber(), p.getDescription(), p.getPhoneType(), person);
         person.getAddresses().add(address);
         person.getPhones().add(phone);
+        return person;
+    }
+
+    public Person fromDtoToEntityUpdate(Long id, PersonUpdateDTO dto){
+        Person p = findById(id);
+        Person person = new Person();
+        person.setAddresses(p.getAddresses());
+        person.setPhones(p.getPhones());
+        person.setId(id);
+        person.setName(dto.getName());
+        person.setSocialName(dto.getSocialName());
+        person.setCpf(dto.getCpf());
+        person.setCns(dto.getCns());
+        person.setEmailAddress(dto.getEmailAddress());
+        person.setGender(dto.getGender());
+        person.setBirthdate(dto.getBirthdate());
+        person.setIne(dto.getIne());
+        person.setArea(dto.getArea());
+        person.setNote(dto.getNote());
         return person;
     }
 

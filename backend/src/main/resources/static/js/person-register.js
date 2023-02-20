@@ -1,5 +1,6 @@
 function savePerson() {
 
+    var id = $("#id").val();
     var name = $("#name").val();
     var socialName = $("#socialName").val();
     var cpf = $("#cpf").val();
@@ -21,6 +22,11 @@ function savePerson() {
     var ddd = $("#ddd").val();
     var number = $("#number").val();
     var description = $("#description").val();
+
+    if(id != null){
+        editarPerson(id, name, socialName, cpf, cns, emailAddress, gender, birthdate);
+        return;
+    }
 
     if (name == null || name != null && name.trim() == ''){
         $("#nome").focus();
@@ -96,7 +102,9 @@ function pesquisarPerson(){
                 '</td><td>'+response.content[i].cns+
                 '</td><td>'+response.content[i].emailAddress+
                 '</td><td>'+response.content[i].birthdate+
-                '</td></tr>');
+                '</td><td><button type="button" onclick="preencherFormParaEdicao('+response.content[i].id+')"'+
+                ' class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
+                ' aria-expanded="false" aria-controls="pesquisaUsuarioCollapse" >Selecionar</button></td></tr>');
             }
         }
       }).fail(function(xhr, status, errorThrown) {
@@ -105,4 +113,51 @@ function pesquisarPerson(){
   }else{
   alert("digite algum nome, cpf ou cns no campo")
   }
+}
+
+function preencherFormParaEdicao(id) {
+    $.ajax({
+        method : "GET",
+        url : "person/"+id,
+        success : function(response) {
+
+            $("#id").val(response.id);
+            $("#name").val(response.name);
+            $("#socialName").val(response.socialName);
+            $("#cpf").val(response.cpf);
+            $("#cns").val(response.cns);
+            $("#emailAddress").val(response.emailAddress);
+            $("#gender").val(response.gender);
+            $("#birthdate").val(response.birthdate);
+
+            $('#modalPesquisarPerson').modal('hide');
+        }
+    }).fail(function(xhr, status, errorThrown) {
+        alert("Erro ao buscar usuario por id: " + xhr.responseText);
+    });
+}
+
+function editarPerson(id, name, socialName, cpf, cns, emailAddress, gender, birthdate){
+    let data = {
+        "id" : id,
+        "name" : name,
+        "socialName" : socialName,
+        "cpf" : cpf,
+        "cns" : cns,
+        "emailAddress" : emailAddress,
+        "gender" : gender,
+        "birthdate" : birthdate
+    }
+
+    $.ajax({
+        method : "PUT",
+        url : "person/"+id,
+        data : JSON.stringify(data),
+        contentType : "application/json; charset=utf-8",
+        success : function(response) {
+            alert("Salvo com sucesso!");
+        }
+    }).fail(function(xhr, status, errorThrown) {
+        alert("Erro ao salvar: " + xhr.responseText);
+    });
 }
