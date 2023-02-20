@@ -4,12 +4,104 @@
     <meta charset="UTF-8">
     <title>Agenda person-register</title>
     <link rel="stylesheet" href="bootstrap-5.2.0-dist/css/bootstrap.min.css">
+    <script src='jquery-3.6.0-dist/jquery-3.6.0.min.js'></script>
     <script type="text/javascript" src="bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h5>My Agenda Online - Cadastro Pessoa</h5>
+        <h4>My Agenda Online - Cadastro Pessoa</h4>
         <a href="index.html">Index</a>
+        <form action="" id="formCadastroPerson">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome do usuário</label>
+                <input type="text" class="form-control" id="name" placeholder="Informe o nome" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="socialName" class="form-label">Nome Social</label>
+                <input type="text" class="form-control" id="socialName" placeholder="Caso tenha informe o nome social aqui (Opcional)">
+            </div>
+            <div class="mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" class="form-control" id="cpf" placeholder="Informe o cpf" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="cns" class="form-label">CNS</label>
+                <input type="text" class="form-control" id="cns" placeholder="Informe o cns" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="emailAddress" class="form-label">Email</label>
+                <input type="text" class="form-control" id="emailAddress" placeholder="Informe o email" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <input type="text" class="form-control" id="gender" placeholder="Informe o gender" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="birthdate" class="form-label">Birthdate</label>
+                <input type="text" class="form-control" id="birthdate" placeholder="Informe o birthdate" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="logradouro" class="form-label">Logradouro</label>
+                <input type="text" class="form-control" id="logradouro" placeholder="Informe o logradouro" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control" id="numero" placeholder="Informe o número" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="complemento" class="form-label">Complemento</label>
+                <input type="text" class="form-control" id="complemento" placeholder="Informe o complemento (Opcional)">
+            </div>
+            <div class="mb-3">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control" id="bairro" placeholder="Informe o bairro" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" placeholder="Informe o cidade" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="cep" class="form-label">Cep</label>
+                <input type="text" class="form-control" id="cep" placeholder="Informe o cep" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="observacao" class="form-label">Observação</label>
+                <input type="text" class="form-control" id="observacao" placeholder="Informe observação se houver (Opcional)">
+            </div>
+            <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo de Residência</label>
+                <input type="text" class="form-control" id="tipo" placeholder="Informe o tipo da residência">
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">UF</label>
+                <input type="text" class="form-control" id="estado" placeholder="Informe o estado" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" class="form-control" id="pais" placeholder="Informe o país" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="phoneType" class="form-label">Tipo de Telefone</label>
+                <input type="text" class="form-control" id="phoneType" placeholder="Informe tipo de telefone, ex: celular, trabalho">
+            </div>
+            <div class="mb-3">
+                <label for="ddd" class="form-label">DDD</label>
+                <input type="text" class="form-control" id="ddd" placeholder="Informe o ddd">
+            </div>
+            <div class="mb-3">
+                <label for="number" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="number" placeholder="Informe o número do telefone">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descrição sobre o telefone</label>
+                <input type="text" class="form-control" id="description" placeholder="Informe uma descrição (Opcional)">
+            </div>
+
+        </form>
+        <button type="button" class="btn btn-primary" onclick="savePerson()">Salvar</button>
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('formCadastroPerson').reset();">Limpar</button>
     </div>
+
+    <script type="text/javascript" src='js/person-register.js'></script>
 </body>
 </html>

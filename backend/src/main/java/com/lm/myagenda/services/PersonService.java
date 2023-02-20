@@ -40,8 +40,6 @@ public class PersonService {
     @Autowired
     ModelMapper modelMapper;
 
-    private final static Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
-
     @Transactional(readOnly = true)
     public Person findById(Long id) {
         Optional<Person> person = personRepository.findById(id);
@@ -98,6 +96,7 @@ public class PersonService {
         findByCns(person);
         findByEmail(person);
 //        person.setId(null);
+        Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
         person.setRegisterDate(dateRegister);
         person = personRepository.save(person);
         addressRepository.saveAll(person.getAddresses());
