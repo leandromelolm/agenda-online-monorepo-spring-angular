@@ -146,20 +146,10 @@ public class PersonService {
 
     public Person fromDtoToEntityUpdate(Long id, PersonUpdateDTO dto){
         Person p = findById(id);
-        Person person = new Person();
+        Person person = modelMapper.map(dto, Person.class);
         person.setAddresses(p.getAddresses());
         person.setPhones(p.getPhones());
         person.setId(id);
-        person.setName(dto.getName());
-        person.setSocialName(dto.getSocialName());
-        person.setCpf(dto.getCpf());
-        person.setCns(dto.getCns());
-        person.setEmailAddress(dto.getEmailAddress());
-        person.setGender(dto.getGender());
-        person.setBirthdate(dto.getBirthdate());
-        person.setIne(dto.getIne());
-        person.setArea(dto.getArea());
-        person.setNote(dto.getNote());
         return person;
     }
 
