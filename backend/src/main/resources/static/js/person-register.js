@@ -65,12 +65,44 @@ function savePerson() {
             ddd : ddd,
             number : number,
             description : description
-    }),
-    contentType : "application/json; charset=utf-8",
-    success : function(response) {
-        alert("Salvo com sucesso!");
-    }
+        }),
+        contentType : "application/json; charset=utf-8",
+        success : function(response) {
+            alert("Salvo com sucesso!");
+        }
     }).fail(function(xhr, status, errorThrown) {
         alert("Erro ao salvar: " + xhr.responseText);
     });
+}
+
+function pesquisarPerson(){
+  var nome = $('#nameBusca').val();
+  if (nome != null && nome.trim() != ''){
+    $.ajax({
+        method : "GET",
+//        url : "/myagenda/person",
+        url : "person",
+        data : "search=" + nome,
+        success : function(response) {
+
+            $('#tabelaresultados > tbody > tr').remove();
+
+            for (var i = 0; i < response.content.length; i++){
+                $('#tabelaresultados > tbody').append(
+                '<tr id="'+response.content[i].id+
+                '"><td>'+response.content[i].id+
+                '</td><td>'+response.content[i].name+
+                '</td><td>'+response.content[i].cpf+
+                '</td><td>'+response.content[i].cns+
+                '</td><td>'+response.content[i].emailAddress+
+                '</td><td>'+response.content[i].birthdate+
+                '</td></tr>');
+            }
+        }
+      }).fail(function(xhr, status, errorThrown) {
+            alert("Erro ao buscar usuario: " + xhr.responseText);
+      });
+  }else{
+  alert("digite algum nome, cpf ou cns no campo")
+  }
 }
