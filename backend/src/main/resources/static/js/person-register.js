@@ -23,7 +23,7 @@ function savePerson() {
     var number = $("#number").val();
     var description = $("#description").val();
 
-    if(id != null){
+    if(!id.trim() == ''){
         editarPerson(id, name, socialName, cpf, cns, emailAddress, gender, birthdate);
         return;
     }
@@ -104,7 +104,7 @@ function pesquisarPerson(){
                 '</td><td>'+response.content[i].birthdate+
                 '</td><td><button type="button" onclick="preencherFormParaEdicao('+response.content[i].id+')"'+
                 'class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
-                'aria-expanded="false" aria-controls="pesquisaUsuarioCollapse" >Selecionar</button></td>'+
+                'aria-expanded="false">Selecionar</button></td>'+
                 '<td><button type="button" class="btn btn-danger"'+
                 'onclick="deletePersonById('+response.content[i].id+')">Delete</button></td></tr>');
             }
@@ -133,6 +133,8 @@ function preencherFormParaEdicao(id) {
             $("#birthdate").val(response.birthdate);
 
             $('#modalPesquisarPerson').modal('hide');
+
+            ocultarDiv();
         }
     }).fail(function(xhr, status, errorThrown) {
         alert("Erro ao buscar usuario por id: " + xhr.responseText);
@@ -158,6 +160,8 @@ function editarPerson(id, name, socialName, cpf, cns, emailAddress, gender, birt
         contentType : "application/json; charset=utf-8",
         success : function(response) {
             alert("Salvo com sucesso!");
+            cleanForm();
+            exibirDiv();
         }
     }).fail(function(xhr, status, errorThrown) {
         alert("Erro ao salvar: " + xhr.responseText);
@@ -180,9 +184,25 @@ function deletePersonById(id){
 			success : function(response) {
 				$('#'+ id).remove();
 				alert(response);
+				exibirDiv();
 			}
 		}).fail(function(xhr, status, errorThrown) {
 			alert("Erro ao deletar usuario por id: " + xhr.responseText);
 		});
 	}
+}
+
+function ocultarDiv(){
+    let el = document.querySelector('#fieldsAddressAndPhone');
+    el.style.display = 'none';
+}
+
+function exibirDiv(){
+    let el = document.getElementById('fieldsAddressAndPhone');
+    el.style.display = 'block';
+}
+
+function cleanForm(){
+    document.getElementById('formCadastroPerson').reset();
+    exibirDiv();
 }
