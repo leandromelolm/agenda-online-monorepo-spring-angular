@@ -103,8 +103,10 @@ function pesquisarPerson(){
                 '</td><td>'+response.content[i].emailAddress+
                 '</td><td>'+response.content[i].birthdate+
                 '</td><td><button type="button" onclick="preencherFormParaEdicao('+response.content[i].id+')"'+
-                ' class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
-                ' aria-expanded="false" aria-controls="pesquisaUsuarioCollapse" >Selecionar</button></td></tr>');
+                'class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
+                'aria-expanded="false" aria-controls="pesquisaUsuarioCollapse" >Selecionar</button></td>'+
+                '<td><button type="button" class="btn btn-danger"'+
+                'onclick="deletePersonById('+response.content[i].id+')">Delete</button></td></tr>');
             }
         }
       }).fail(function(xhr, status, errorThrown) {
@@ -160,4 +162,27 @@ function editarPerson(id, name, socialName, cpf, cns, emailAddress, gender, birt
     }).fail(function(xhr, status, errorThrown) {
         alert("Erro ao salvar: " + xhr.responseText);
     });
+}
+
+function deletePerson(){
+	var id = $('#id').val();
+	if(id != null && id.trim() != ''){
+	    deletePersonById(id);
+	    document.getElementById('formCadastroPerson').reset();
+	}
+}
+
+function deletePersonById(id){
+	if(confirm('Deseja realmente deletar as informações do id '+ id +'?')) {
+	    $.ajax({
+			method : "DELETE",
+			url : "person/"+id,
+			success : function(response) {
+				$('#'+ id).remove();
+				alert(response);
+			}
+		}).fail(function(xhr, status, errorThrown) {
+			alert("Erro ao deletar usuario por id: " + xhr.responseText);
+		});
+	}
 }
