@@ -10,3 +10,34 @@
     color: white;
     text-decoration: none;
 }
+
+.div-all{
+    margin-top: 10px;
+    position: relative;
+}
+
+.div-conteudo {
+  padding-bottom: 30px;
+  height: 1200px;
+}
+
+@media(max-width: 576px) {
+  .container-agendas {
+    display: block;
+  }
+}
+
+@media(min-width: 577px) {
+  .container-agendas {
+    display: flex;
+  }
+}
+
+.div-pickadate{
+    margin-right: 10px;
+    padding:0px 0px 0px 10px;
+}
+
+.div-fullcalendar{
+    flex-grow: 1
+}
