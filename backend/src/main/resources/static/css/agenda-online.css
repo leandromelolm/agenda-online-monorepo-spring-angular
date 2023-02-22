@@ -1,0 +1,12 @@
+.header {
+    background: #003267;
+    background: linear-gradient(to right, #011329 0%, #066297 44%, #033777 100%);
+    padding: 20px 10px;
+    color: white;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.75);
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+}
