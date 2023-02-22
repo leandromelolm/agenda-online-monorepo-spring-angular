@@ -23,7 +23,7 @@ function savePerson() {
     var number = $("#number").val();
     var description = $("#description").val();
 
-    if(!id.trim() == ''){
+    if(id == null || !id.trim() == ''){
         editarPerson(id, name, socialName, cpf, cns, emailAddress, gender, birthdate);
         return;
     }
@@ -81,41 +81,87 @@ function savePerson() {
     });
 }
 
+let currentPage = 0;    // pageable.pageNumber, number
+let totalOfPages;       // totalPages
+let linePerPage = 0;    // pageable.pageSize, size
+let totalOfElementos;   // totalElements
+
+function buttonSearchPerson(){
+    let nome = $('#nameBusca').val();
+    currentPage = 0;
+    if (nome != null && nome.trim() != ''){
+        pesquisarPerson();
+    }else{
+        alert("digite algum nome, cpf ou cns no campo");
+        findAll();
+    }
+}
+
 function pesquisarPerson(){
-  var nome = $('#nameBusca').val();
-  if (nome != null && nome.trim() != ''){
+    let nome = $('#nameBusca').val();
     $.ajax({
         method : "GET",
-//        url : "/myagenda/person",
         url : "person",
-        data : "search=" + nome,
+        data : "search=" + nome + "&page=" + currentPage + "&size=" + linePerPage,
         success : function(response) {
 
-            $('#tabelaresultados > tbody > tr').remove();
+            preencherTabela(response);
 
-            for (var i = 0; i < response.content.length; i++){
-                $('#tabelaresultados > tbody').append(
-                '<tr id="'+response.content[i].id+
-                '"><td>'+response.content[i].id+
-                '</td><td>'+response.content[i].name+
-                '</td><td>'+response.content[i].cpf+
-                '</td><td>'+response.content[i].cns+
-                '</td><td>'+response.content[i].emailAddress+
-                '</td><td>'+response.content[i].birthdate+
-                '</td><td><button type="button" onclick="preencherFormParaEdicao('+response.content[i].id+')"'+
-                'class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
-                'aria-expanded="false">Selecionar</button></td>'+
-                '<td><button type="button" class="btn btn-danger"'+
-                'onclick="deletePersonById('+response.content[i].id+')">Delete</button></td></tr>');
-            }
+            $('#numeracao').text('Página ' + (response.pageable.pageNumber + 1) + ' de ' + response.totalPages);
+            currentPage = response.pageable.pageNumber;
+            totalOfPages = response.totalPages;
+            totalOfElementos = response.totalElements;
+            linePerPage = response.pageable.pageSize;
+            ajustarBotoesPaginacao();
         }
       }).fail(function(xhr, status, errorThrown) {
             alert("Erro ao buscar usuario: " + xhr.responseText);
       });
-  }else{
-  alert("digite algum nome, cpf ou cns no campo")
-  }
 }
+
+function findAll(){
+    $.ajax({
+        method : "GET",
+//        url : "/myagenda/person?search=&page=0&size=10",
+        url : "person",
+        data : "page=0&size=5",
+        success : function(response) {
+            preencherTabela(response);
+//            document.getElementById("numeracao").innerHTML ="Página "+(response.size + 1)+' de '+response.totalPages;
+            $('#numeracao').text('Página ' + (response.pageable.pageNumber + 1) + ' de ' + response.totalPages);
+            currentPage = response.pageable.pageNumber;
+            totalOfPages = response.totalPages;
+            totalOfElementos = response.totalElements;
+            linePerPage = response.size;
+            ajustarBotoesPaginacao();
+            $('#nameBusca').val('');
+        }
+    }).fail(function(xhr, status, errorThrown) {
+        alert("Erro ao buscar usuario: " + xhr.responseText);
+    });
+}
+
+function ajustarBotoesPaginacao() {
+    $('#proximo').prop('disabled', totalOfElementos <= linePerPage || currentPage >= totalOfPages - 1);
+    $('#anterior').prop('disabled', totalOfElementos <= linePerPage || currentPage == 0);
+}
+
+$(function() {
+    $('#proximo').click(function() {
+        if (currentPage < totalOfPages) {
+            currentPage++;
+            pesquisarPerson();
+            ajustarBotoesPaginacao();
+        }
+    });
+    $('#anterior').click(function() {
+        if (currentPage > 0) {
+            currentPage--;
+            pesquisarPerson();
+            ajustarBotoesPaginacao();
+        }
+    });
+});
 
 function preencherFormParaEdicao(id) {
     $.ajax({
@@ -205,4 +251,23 @@ function exibirDiv(){
 function cleanForm(){
     document.getElementById('formCadastroPerson').reset();
     exibirDiv();
+}
+
+function preencherTabela(response){
+    $('#tabelaresultados > tbody > tr').remove();
+    for (var i = 0; i < response.content.length; i++){
+        $('#tabelaresultados > tbody').append(
+        '<tr id="'+response.content[i].id+
+        '"><td>'+response.content[i].id+
+        '</td><td>'+response.content[i].name+
+        '</td><td>'+response.content[i].cpf+
+        '</td><td>'+response.content[i].cns+
+        '</td><td>'+response.content[i].emailAddress+
+        '</td><td>'+response.content[i].birthdate+
+        '</td><td><button type="button" onclick="preencherFormParaEdicao('+response.content[i].id+')"'+
+        'class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
+        'aria-expanded="false">Selecionar</button></td>'+
+        '<td><button type="button" class="btn btn-danger"'+
+        'onclick="deletePersonById('+response.content[i].id+')">Delete</button></td></tr>');
+    }
 }

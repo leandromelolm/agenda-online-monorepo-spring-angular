@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Agenda person-register</title>
     <link rel="stylesheet" href="bootstrap-5.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/person-register.css">
     <script src='jquery-3.6.0-dist/jquery-3.6.0.min.js'></script>
     <script type="text/javascript" src="bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -172,7 +173,8 @@
         <button type="button" class="btn btn-primary" onclick="savePerson()">Salvar</button>
 <!--        <button type="button" class="btn btn-secondary" onclick="document.getElementById('formCadastroPerson').reset();">Limpar</button>-->
         <button type="button" class="btn btn-secondary" onclick="cleanForm();">Limpar</button>
-        <button type="button" class="btn btn-warning"  data-bs-toggle="modal"  data-bs-target="#modalPesquisarPerson">Pesquisar</button>
+        <button type="button" class="btn btn-warning"  data-bs-toggle="modal"
+                data-bs-target="#modalPesquisarPerson" onclick="findAll();">Pesquisar</button>
         <button type="button" class="btn btn-danger" onclick="deletePerson();">Deletar</button>
     </div>
 
@@ -189,10 +191,10 @@
                             <label for="nameBusca" class="col-form-label">Informe um nome, cpf ou cns:</label>
                             <input type="text" class="form-control" id="nameBusca">
                         </div>
-                        <button type="button" class="btn btn-success" onclick="pesquisarPerson()">Buscar</button>
+                        <button type="button" class="btn btn-success" onclick="buttonSearchPerson()">Buscar</button>
                     </form>
 
-                    <div style="height: 500px;overflow: scroll;">
+                    <div class="divTable">
                         <table class="table" id="tabelaresultados">
                             <thead>
                             <tr>
@@ -209,6 +211,11 @@
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                    <div id="divPageSelect">
+                        <button id="anterior" disabled>&lsaquo; Anterior</button>
+                        <span id="numeracao"></span>
+                        <button id="proximo" disabled>Próximo &rsaquo;</button>
                     </div>
                 </div>
                 <div class="modal-footer">

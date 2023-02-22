@@ -1,0 +1,8 @@
+#divPageSelect{
+    padding-top: 10px;
+    text-align: center;
+}
+.divTable{
+    height: 500px;
+    overflow: scroll;
+}
