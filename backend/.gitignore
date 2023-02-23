@@ -37,3 +37,5 @@ build/
 
 ### Test ###
 *agenda-online-test.html
+/src/main/resources/static/js/agenda-online-test.js
+/src/main/resources/static/css/agenda-online-test.css
