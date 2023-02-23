@@ -29,6 +29,11 @@
         <div class="div-conteudo">
             <div class="container-agendas">
                 <div class="div-datepicker">
+                    <div class="buttonsPrevNext">
+                        <button id="previous_day" onclick="diaAnterior()">Anterior</button>
+                        <div id="DataSelecionada"></div>
+                        <button id="next_day" onclick="diaProximo()">Próximo</button>
+                    </div>
                     <div id="datePicker"></div>
                 </div>
                 <div class="div-fullcalendar">
@@ -37,6 +42,6 @@
             </div>
         </div>
     </div>
-    <script src='js/agenda-online.js'></script>
+    <script type="text/javascript" src='js/agenda-online.js'></script>
 </body>
 </html>
