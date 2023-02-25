@@ -1,8 +1,6 @@
 
-let daySelect = new Date();
-let formatTodayDate= formataDataParaDDMMYYYY(daySelect)
-$('#DataSelecionada').text(formatTodayDate);
-
+let selectedDate = new Date();
+$('#dataSelecionada').text(formataDataParaDDMMYYYY(new Date()));
 
 $('#datePicker').datepicker({
     showOtherMonths: true,
@@ -13,16 +11,32 @@ $('#datePicker').datepicker({
 
     onSelect: function (dateText, inst) {
         let date = new Date(dateText);
-        date.setDate(date.getDate() + 1);
-        daySelect = date;
-        $('#DataSelecionada').text(formataDataParaDDMMYYYY(date));
+        $('#dataSelecionada').text(formataDataParaDDMMYYYY(date));
     },
 })
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth'
+        locale: 'pt-BR',
+        initialView: 'timeGridDay',
+        editable: false, // impedir que o evento seja arrastado
+        selectable: true,
+        businessHours: false,
+        businessHours: {
+            daysOfWeek: [1, 2, 3, 4, 5],
+            startTime: '7:30',
+            endTime: '16:30',
+        },
+        headerToolbar: {
+            left: 'dayGridMonth,timeGridWeek,timeGridDay,listYear',
+            center:'title',
+            right: 'prev next'
+        },
+        allDaySlot:false,
+        dayMaxEvents: true, // allow "more" link when too many events
+        slotDuration: '00:15:00', slotMinTime: '07:00', slotMaxTime: '17:15', slotLabelInterval: '00:15',
+        slotLabelFormat: [{ hour: '2-digit', minute: '2-digit' },],
     });
     calendar.render();
 });
@@ -36,13 +50,13 @@ function formataDataParaYYYYMMDD(data){
 }
 
 function diaAnterior() {
-    daySelect.setDate(daySelect.getDate() - 1)
-    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(daySelect));
-    $('#DataSelecionada').text(formataDataParaDDMMYYYY(daySelect));
+    selectedDate.setDate(selectedDate.getDate() - 1)
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
 };
 
 function diaProximo() {
-    daySelect.setDate(daySelect.getDate() + 1)
-    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(daySelect));
-    $('#DataSelecionada').text(formataDataParaDDMMYYYY(daySelect));
+    selectedDate.setDate(selectedDate.getDate() + 1)
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
 };
