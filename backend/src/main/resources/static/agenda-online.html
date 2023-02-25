@@ -31,6 +31,15 @@
         <div class="div-conteudo">
             <div class="container-agendas">
                 <div class="div-datepicker">
+
+                    <span> Grade de visualização</span>
+                    <div class="viewTimeGrid">
+                        <button onclick="viewtimeGridMonth()">Mês</button>
+                        <button onclick="viewtimeGridWeek()">Semana</button>
+                        <button onclick="viewtimeGridDay()">Dia</button>
+                    </div>
+                    <span id="tipoGradeSelecionada"></span>
+
                     <div class="buttonsPrevNext">
                         <button id="previous_day" onclick="datePrev()">Anterior</button>
                         <div id="dataSelecionada"></div>

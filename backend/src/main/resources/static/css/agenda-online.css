@@ -52,6 +52,11 @@
     margin: 0px 10px 0px 10px
 }
 
+.viewTimeGrid{
+    display: flex;
+    margin: 5px 5px 5px 5px
+}
+
 .fc .fc-toolbar-title {
   font-size: 1.00em;
 }
