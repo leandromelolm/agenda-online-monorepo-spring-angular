@@ -34,7 +34,7 @@ function callFullCalendar(date) {
             endTime: '16:30',
         },
         headerToolbar: {
-            left: 'dayGridMonth,timeGridWeek,timeGridDay,listYear',
+            left: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
             center:'title',
             right: 'prev next'
         },
@@ -43,7 +43,6 @@ function callFullCalendar(date) {
         slotDuration: '00:15:00', slotMinTime: '07:00', slotMaxTime: '17:15', slotLabelInterval: '00:15',
         slotLabelFormat: [{ hour: '2-digit', minute: '2-digit' },],
     });
-    console.log("fullcalendar render")
     calendar.render();
 };
 
@@ -68,3 +67,15 @@ function dateNext() {
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
     callFullCalendar(formataDataParaYYYYMMDD(selectedDate));
 };
+
+$('body').on('click', '.fc-prev-button', function() {
+    selectedDate.setDate(selectedDate.getDate() - 1)
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
+});
+
+$('body').on('click', '.fc-next-button', function() {
+    selectedDate.setDate(selectedDate.getDate() + 1)
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
+});
