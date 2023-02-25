@@ -54,9 +54,14 @@
 
 .viewTimeGrid{
     display: flex;
-    margin: 5px 5px 5px 5px
+    margin: 5px 5px 5px 50px
 }
 
 .fc .fc-toolbar-title {
   font-size: 1.00em;
+}
+
+#todayButton{
+    display: flex;
+    margin: 5px 5px 5px 5px
 }

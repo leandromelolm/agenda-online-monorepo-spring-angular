@@ -100,6 +100,13 @@ $('body').on('click', '.fc-next-button', function() {
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
 });
 
+function diaAtual(){
+    selectedDate = new Date();
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(new Date()));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(new Date()));
+    callFullCalendar(new Date());
+}
+
 function viewtimeGridMonth(){
     infoViewType = 'dayGridMonth';
     document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade selecionada: <b>Mês</b></div>";
