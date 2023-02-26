@@ -24,7 +24,7 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.headers().frameOptions().disable();
-        http.csrf().disable().authorizeHttpRequests()
+        http.cors().and().csrf().disable().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/**").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/**").permitAll()

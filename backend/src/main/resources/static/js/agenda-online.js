@@ -5,6 +5,8 @@ $('#dataSelecionada').text(formataDataParaDDMMYYYY(new Date()));
 let infoViewType = 'dayGridMonth';
 document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade em exibição: <b>Mês</b></div>";
 
+const url = "http://localhost:8080/myagenda/";
+
 callFullCalendar(selectedDate);
 
 $('#datePicker').datepicker({
@@ -45,6 +47,10 @@ function callFullCalendar(date) {
         dayMaxEvents: true, // allow "more" link when too many events
         slotDuration: '00:15:00', slotMinTime: '07:00', slotMaxTime: '17:15', slotLabelInterval: '00:15',
         slotLabelFormat: [{ hour: '2-digit', minute: '2-digit' },],
+
+        events: {
+            url: url+'event',
+        },
     });
     console.log("calendar.render()")
     calendar.render();
