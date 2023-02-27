@@ -1,7 +1,7 @@
 .header {
     background: #003267;
     background: linear-gradient(to right, #011329 0%, #066297 44%, #033777 100%);
-    padding: 20px 10px;
+    padding: 5px 10px;
     color: white;
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.75);
 }
@@ -18,7 +18,7 @@
 
 .div-conteudo {
   padding-bottom: 30px;
-  height: 1200px;
+  height: 0px;
 }
 
 @media(max-width: 576px) {
@@ -65,3 +65,60 @@
     display: flex;
     margin: 5px 5px 5px 5px
 }
+
+.fc .fc-timegrid-cols{
+    height: 0px /*remove cor fundo padrão do timeGridDay*/
+}
+
+
+@media(max-height: 664px) {
+  #calendar{
+    height: 510px;
+    /*background-color:blue*/
+  }
+}
+
+@media(max-height: 540px) {
+  #calendar{
+    height: 420px;
+    /*background-color:blue*/
+  }
+}
+
+@media(max-height: 446px) {
+  #calendar{
+    height: 390px;
+    /*background-color:blue*/
+  }
+}
+
+
+@media(max-height: 340px) {
+  #calendar{
+    height: 1120px;
+    /*background-color:red*/
+  }
+}
+
+@media(min-height: 700px) {
+  #calendar{
+    height: 620px;
+  }
+}
+
+@media(min-height: 800px) {
+  #calendar{
+    height: 720px;
+  }
+}
+
+@media(min-height: 900px) {
+  #calendar{
+    height: 880px;
+}
+
+@media(min-height: 1200px) {
+  #calendar{
+    height: 1180px;
+}
+
