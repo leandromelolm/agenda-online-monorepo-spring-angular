@@ -66,10 +66,6 @@
     margin: 5px 5px 5px 5px
 }
 
-.fc .fc-timegrid-cols{
-    height: 0px /*remove cor fundo padrão do timeGridDay*/
-}
-
 
 @media(max-height: 664px) {
   #calendar{

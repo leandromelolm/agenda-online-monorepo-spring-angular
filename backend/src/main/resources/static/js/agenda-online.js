@@ -51,6 +51,17 @@ function callFullCalendar(date) {
         events: {
             url: url+'event',
         },
+
+        dateClick: function(info){
+            if(info.view.type =='dayGridMonth'){
+                infoViewType = 'timeGridDay';
+                selectedDate = info.date;
+                calendar.changeView('timeGridDay', info.dateStr);
+                $("#datePicker").datepicker("setDate", info.dateStr);
+                $('#dataSelecionada').text(formataDataParaDDMMYYYY(info.date));
+            }
+        },
+
     });
     console.log("calendar.render()")
     calendar.render();
