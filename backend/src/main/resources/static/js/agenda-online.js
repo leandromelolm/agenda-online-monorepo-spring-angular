@@ -60,6 +60,16 @@ function callFullCalendar(date) {
                 $("#datePicker").datepicker("setDate", info.dateStr);
                 $('#dataSelecionada').text(formataDataParaDDMMYYYY(info.date));
             }
+            if (info.view.type == 'timeGridDay' || info.view.type == 'timeGridWeek') {
+                if(info.view.type == 'timeGridWeek'){
+                    infoViewType = 'timeGridWeek';
+                }
+                if(info.view.type == 'timeGridDay'){
+                    infoViewType = 'timeGridDay';
+                }
+                openModalThatCreateEvent(info.dateStr);
+
+            }
         },
 
     });
@@ -141,3 +151,45 @@ function viewtimeGridDay(){
     infoViewType = 'timeGridDay';
     callFullCalendar(selectedDate);
 }
+
+function openModalThatCreateEvent(date){
+    let dateClicked = new Date(date);
+    let hourStart = new Date(dateClicked);
+    let hourEnd = new Date(dateClicked.setMinutes(dateClicked.getMinutes() + 14)); //data com 14 minutos a mais
+
+    let dt = dateClicked.getFullYear().toString() + "-";
+    dt += (dateClicked.getMonth() + 1).toString().padStart(2, '0') + "-";
+    dt += dateClicked.getDate().toString().padStart(2, '0');
+    document.getElementById("data").value = dt;
+
+    let horaInicio = hourStart.getHours().toString().padStart(2, '0') + ":";
+    horaInicio += hourStart.getMinutes().toString().padStart(2, '0') + ":";
+    horaInicio += hourStart.getSeconds().toString().padStart(2, '0');
+    document.getElementById("start").value = horaInicio;
+
+    let horaFim = hourEnd.getHours().toString().padStart(2, '0') + ":";
+    horaFim += hourEnd.getMinutes().toString().padStart(2, '0') + ":";
+    horaFim += hourEnd.getSeconds().toString().padStart(2, '0');
+    document.getElementById("end").value = horaFim;
+
+    document.getElementById("title").value = "";
+    document.getElementById("newBoardColor").value = "#3788D8";
+
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    $('#modal-create-event #dataSelecionadaModal').text(dateClicked.toLocaleString(undefined, options));
+    $('#modal-create-event').modal('show');
+}
+
+$(document).ready(function () {
+    $("#addEvent").on("submit", function (event) {
+        var dados = {
+            title: $('#title').val(),
+            data: $('#data').val(),
+            start: $('#start').val(),
+            end: $('#end').val(),
+            backgroundColor: document.getElementById("newBoardColor").value,
+        }
+        event.preventDefault();
+        console.log(dados);
+    });
+});

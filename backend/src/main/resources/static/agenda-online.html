@@ -54,6 +54,91 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal-create-event">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar Agendamento</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal"><span>×</span></button>
+                </div>
+
+                <div class="modal-body" style="margin:10px;">
+
+                    <div>
+                        <div class="row">
+                            <div div class="col-sm-12 col-md-4">
+                                <label for="data" class="col-form-label">Data Selecionada:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <h5 id="dataSelecionadaModal"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="addEvent" method="POST" enctype="multipart/form-data">
+                        <div class="row" style="display: none;">
+                            <div div class="col-sm-12 col-md-4">
+                                <label for="data" class="col-form-label">data Selecionada:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="data" name="data" id="data">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="start" class="col-form-label">Hora Inicial:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="start" name="start" id="start">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="end" class="col-form-label">Hora Final:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="end" name="end" id="end">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="title" class="col-form-label">nome:</label>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="title" name="title" value="" id="title" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="title" class="col-form-label">color:</label>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <input type="color" id="newBoardColor" list="presetColors"  class="form-control" required
+                                       style=" height: 50px; width: 70px;">
+                                <datalist id="presetColors">
+                                    <option>#FF1493</option>
+                                    <option>#800000</option>
+                                    <option>#000080</option>
+                                    <option>#006400</option>
+                                    <option>#89609E</option>
+                                    <option>#00FF00</option>
+                                    <option>#00AECC</option>
+                                    <option>#838C91</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- bootstrap v4 data-dismiss , bootstrap v5 data-bs-dismiss -->
+                    <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript" src='js/agenda-online.js'></script>
 </body>
 </html>
