@@ -59,10 +59,16 @@ public class EventService {
             throw new ObjectNotFoundException("CPF não encontrado");
         }
         Instant dateRegister = Instant.ofEpochSecond(System.currentTimeMillis()/1000);
-        Attendance attendance = new Attendance(null, obj.getDescricao(),"Ativo",
-                obj.getDateUTC(),obj.getStart(), obj.getEnd(), "",dateRegister.toString(), person.get());
+        Attendance attendance = new Attendance(
+                null, obj.getDescricao(),"Ativo",
+                obj.getDateUTC(),
+                obj.getDateUTC().toString().substring(0,10)+ "T"+ obj.getStart(),
+                obj.getDateUTC().toString().substring(0,10)+ "T"+ obj.getEnd(),
+                "",dateRegister.toString(), person.get());
         attendanceRepository.saveAndFlush(attendance);
         obj.setAttendanceId(attendance.getId());
+        obj.setStart(obj.getDateUTC().toString().substring(0,10)+ "T"+ obj.getStart());
+        obj.setEnd(obj.getDateUTC().toString().substring(0,10)+ "T"+ obj.getEnd());
         return repository.save(mapper.map(obj, Event.class));
     }
 

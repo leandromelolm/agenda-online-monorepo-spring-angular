@@ -30,7 +30,6 @@ public class Event implements Serializable{
 
     private String title; 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Instant dateUTC;
     
     @Column(name = "time_start")

@@ -18,7 +18,6 @@ public class EventDTO {
     private UUID id;
     private String groupId;
     private String title;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Instant dateUTC;
     @Column(name = "time_start")
     private String start;

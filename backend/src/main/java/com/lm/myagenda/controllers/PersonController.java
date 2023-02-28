@@ -47,7 +47,7 @@ public class PersonController {
         return ResponseEntity.ok().body(personSummaryList);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Void> insert(@RequestBody PersonNewDTO personNewDTO){
         Person person = personService.fromDtoToEntity(personNewDTO);
         person = personService.insert(person);

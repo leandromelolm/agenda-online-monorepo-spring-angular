@@ -49,7 +49,7 @@ function callFullCalendar(date) {
         slotLabelFormat: [{ hour: '2-digit', minute: '2-digit' },],
 
         events: {
-            url: url+'event',
+            url: url+'event'+'?size=200',
         },
 
         dateClick: function(info){
@@ -160,7 +160,8 @@ function openModalThatCreateEvent(date){
     let dt = dateClicked.getFullYear().toString() + "-";
     dt += (dateClicked.getMonth() + 1).toString().padStart(2, '0') + "-";
     dt += dateClicked.getDate().toString().padStart(2, '0');
-    document.getElementById("data").value = dt;
+    document.getElementById("data").value = dateClicked.toISOString();
+    console.log(dateClicked.toISOString())
 
     let horaInicio = hourStart.getHours().toString().padStart(2, '0') + ":";
     horaInicio += hourStart.getMinutes().toString().padStart(2, '0') + ":";
@@ -184,12 +185,34 @@ $(document).ready(function () {
     $("#addEvent").on("submit", function (event) {
         var dados = {
             title: $('#title').val(),
-            data: $('#data').val(),
+            dateUTC: $('#data').val(),
             start: $('#start').val(),
             end: $('#end').val(),
             backgroundColor: document.getElementById("newBoardColor").value,
+            personCPF: "14031195036"
         }
         event.preventDefault();
-        console.log(dados);
-    });
+        $.ajax({
+            type: "POST",
+            url: url+"event",
+            data: JSON.stringify(dados),
+            async: false,
+            cache: false,
+            dataType: 'json',
+            contentType: 'application/json',
+            processData: false,
+            success: function (event) {
+                $('#modal-create-event').modal('hide');
+                $('#msgSucess').html(
+                  '<div class="alert alert-success">'+
+                    '<strong>Salvo com Sucesso! </strong> Agendamento feito para: <b>'+
+                     event.title +'</b> Data: <b>'+event.start.substr(0,10)+'</b>'+
+                     ' Hora: <b>'+event.start.substr(11)+'</b>'+
+                  '</div>')
+                callFullCalendar(event.dateUTC);
+            }
+        }).fail(function(xhr, status, errorThrown) {
+            alert("Erro ao salvar: " + xhr.responseText);
+        });
+     });
 });

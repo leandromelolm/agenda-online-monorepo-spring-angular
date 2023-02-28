@@ -8,6 +8,7 @@ import com.lm.myagenda.services.EventService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -45,10 +46,11 @@ public class EventController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> create(@RequestBody EventDTO obj){
+    public ResponseEntity<EventDTO> create(@RequestBody EventDTO obj){
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}").buildAndExpand(service.create(obj).getId()).toUri();
-        return ResponseEntity.created(uri).build();
+//        return ResponseEntity.created(uri).build();
+        return new ResponseEntity<EventDTO>(obj, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
