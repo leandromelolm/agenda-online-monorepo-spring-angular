@@ -14,6 +14,25 @@ blockedHours[0] = "07";
 blockedHours[1] = "12";
 blockedHours[2] = "17";
 
+const allowedMonths = []; // meses com permissão para criar evento
+allowedMonths[0] = "2023-03";
+allowedMonths[1] = "2023-11";
+allowedMonths[2] = "2023-05";
+
+const allowedDates = []; // datas com permissão para criar evento
+allowedDates[0] = "2023-12-30";
+allowedDates[1] = "2023-12-21";
+allowedDates[2] = "2023-12-15";
+allowedDates[3] = "2023-12-16";
+allowedDates[4] = "2023-12-10";
+allowedDates[5] = "2023-07-02";
+allowedDates[6] = "2023-12-28";
+
+const allowedDatesTime = []; // data com horário permitido criar evento
+allowedDatesTime[2] = "2023-06-29T09:00:00";
+allowedDatesTime[0] = "2023-06-29T09:45:00";
+allowedDatesTime[1] = "2023-06-29T11:00:00";
+
 callFullCalendar(selectedDate);
 
 $('#datePicker').datepicker({
@@ -66,8 +85,8 @@ function callFullCalendar(date) {
         dateClick: function(info){
             if(info.view.type =='dayGridMonth'){
                 infoViewType = 'timeGridDay';
-                selectedDate = info.date;
-                calendar.changeView('timeGridDay', info.dateStr);
+                selectedDate = info.date; //info.date = Wed Nov 30 2023 07:45:00 GMT-0300 (Horário Padrão de Brasília)
+                calendar.changeView('timeGridDay', info.dateStr); // info.dateStr = 2023-11-30T07:45:00-03:00
                 changeBackgroundColorBlockedHours();
                 $("#datePicker").datepicker("setDate", info.dateStr);
                 $('#dataSelecionada').text(formataDataParaDDMMYYYY(info.date));
@@ -85,6 +104,9 @@ function callFullCalendar(date) {
                          blockedHours[index]+":00 e "+ blockedHours[index]+":59");
                     }
                 }
+                if(checkPermissionToCreateEvent(info.dateStr)){ // verificar permissão de criar evento na data selecionada
+                    return alert("Não está permitido agendar essa data!");
+                }
                 openModalThatCreateEvent(info.dateStr);
             }
         },
@@ -96,6 +118,20 @@ function callFullCalendar(date) {
     console.log("calendar.render()")
     calendar.render();
 };
+
+function checkPermissionToCreateEvent(dateStr){
+    const foundMonth =  allowedMonths.find(e => e.includes(dateStr.substr(0,7)));
+    if(foundMonth == undefined){
+        const foundDay =  allowedDates.find(e => e.includes(dateStr.substr(0,10)));
+        if(foundDay == undefined){
+            const foundTime =  allowedDatesTime.find(e => e.includes(dateStr.substr(0,19)))
+            if(foundTime == undefined){
+                console.log("Não é permitido criar evento nessa data!")
+                return true;
+            }
+        }
+    }
+}
 
 function formataDataParaDDMMYYYY(date){
     return ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
