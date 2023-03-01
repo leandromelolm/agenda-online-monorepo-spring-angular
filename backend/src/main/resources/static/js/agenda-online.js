@@ -161,7 +161,6 @@ function openModalThatCreateEvent(date){
     dt += (dateClicked.getMonth() + 1).toString().padStart(2, '0') + "-";
     dt += dateClicked.getDate().toString().padStart(2, '0');
     document.getElementById("data").value = dateClicked.toISOString();
-    console.log(dateClicked.toISOString())
 
     let horaInicio = hourStart.getHours().toString().padStart(2, '0') + ":";
     horaInicio += hourStart.getMinutes().toString().padStart(2, '0') + ":";
@@ -173,24 +172,86 @@ function openModalThatCreateEvent(date){
     horaFim += hourEnd.getSeconds().toString().padStart(2, '0');
     document.getElementById("end").value = horaFim;
 
-    document.getElementById("title").value = "";
+    $('#title').html("");
+    $('#cpf').html("");
+    $('#birthdate').html("");
+    $('#hour').html('<b>'+horaInicio+'</b> - '+ '<b>'+horaFim+'</b>');
     document.getElementById("newBoardColor").value = "#3788D8";
+    document.getElementById("descricao").value = "";
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     $('#modal-create-event #dataSelecionadaModal').text(dateClicked.toLocaleString(undefined, options));
     $('#modal-create-event').modal('show');
 }
 
+function pesquisarUser(){
+    let n = $('#nameBusca').val();
+    nome = n.replaceAll(".","").replaceAll("-","");
+    if (nome != null && nome.trim() != ''){
+        $.ajax({
+            method : "GET",
+            url : url+"person",
+            data : "search=" + nome,
+            success : function(response) {
+                $('#tabelaresultados > tbody > tr').remove();
+                for (var i = 0; i < response.content.length; i++){
+                    $('#tabelaresultados > tbody').append(
+                    '<tr id="'+response.content[i].id+
+                    '"><td><button type="button" onclick="preencherFormCadastroAgenda('+response.content[i].id+')"'+
+                    ' class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".multi-collapse"'+
+                    ' aria-expanded="false" aria-controls="pesquisaUsuarioCollapse" >Selecionar</button></td>'+
+                    '</td><td>'+response.content[i].name+
+                    '</td><td>'+response.content[i].cpf+
+                    '</td><td>'+response.content[i].cns+
+                    '</td><td>'+response.content[i].id+'</td></tr>');
+                }
+            }
+        }).fail(function(xhr, status, errorThrown) {
+            alert("Erro ao tentar pesquisar no servidor: " + xhr.responseText);
+        });
+    }else{
+         alert("preencha o campo para pesquisar");
+    }
+}
+
+var inputNameBusca = document.getElementById("nameBusca");
+inputNameBusca.addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+        event.preventDefault();
+        document.getElementById("btnFindUser").click();
+    }
+})
+
+function preencherFormCadastroAgenda(id) {
+    $.ajax({
+        method : "GET",
+        url : url+"person/" + id,
+        success : function(response) {
+            $("#id").val(response.id);
+            $("#title").html(response.name);
+            $('#cpf').html(response.cpf);
+            $('#birthdate').html(response.birthdate);
+
+            $('#modalPesquisarUser').modal('hide');
+        }
+    }).fail(function(xhr, status, errorThrown) {
+        alert("Erro ao buscar usuario por id: " + xhr.responseText);
+    });
+}
+
 $(document).ready(function () {
     $("#addEvent").on("submit", function (event) {
         var dados = {
-            title: $('#title').val(),
+            title: $('#title').html(),
             dateUTC: $('#data').val(),
             start: $('#start').val(),
             end: $('#end').val(),
             backgroundColor: document.getElementById("newBoardColor").value,
-            personCPF: "14031195036"
+            personCPF: $('#cpf').html(),
+            personBirthDate: $('#birthdate').html(),
+            descricao: $('#descricao').val()
         }
+        console.log(dados);
         event.preventDefault();
         $.ajax({
             type: "POST",
