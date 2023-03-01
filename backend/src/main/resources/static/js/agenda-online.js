@@ -109,9 +109,9 @@ function callFullCalendar(date) {
                          blockedHours[index]+":00 e "+ blockedHours[index]+":59");
                     }
                 }
-                if(checkPermissionToCreateEvent(info.dateStr)){ // verificar permissão de criar evento na data selecionada
-                    return alert("Não está permitido agendar essa data!");
-                }
+//                if(checkPermissionToCreateEvent(info.dateStr)){ // verificar permissão de criar evento na data selecionada
+//                    return alert("Não está permitido agendar essa data!");
+//                }
                 openModalThatCreateEvent(info.dateStr);
             }
         },
