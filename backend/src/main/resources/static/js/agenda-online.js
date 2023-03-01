@@ -7,6 +7,8 @@ document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade em exibi
 
 const url = "http://localhost:8080/myagenda/";
 
+let ultimoEventoSelecionado;
+
 const blockedHours = [];
 blockedHours[0] = "07";
 blockedHours[1] = "12";
@@ -85,6 +87,9 @@ function callFullCalendar(date) {
                 }
                 openModalThatCreateEvent(info.dateStr);
             }
+        },
+        eventClick: function(infoEvent) {
+            deleteEvent(infoEvent);
         },
 
     });
@@ -350,4 +355,30 @@ function changeBackgroundColorBlockedHours(){
             }
         }
     });
+}
+
+function deleteEvent(infoEvent){
+    console.log(infoEvent);
+    infoEvent.el.style.borderColor = '#b7ff12';
+    infoEvent.el.style.backgroundColor = '#274360';
+    infoEvent.jsEvent.preventDefault();
+    let excluir = confirm(
+        'Clique em OK para APAGAR o evento: ' +infoEvent.event.title +
+        ' CPF: '+infoEvent.event.extendedProps.personCPF +
+        ' Data: '+infoEvent.event.start);
+    if(excluir){
+        infoEvent.event.remove();
+        $.ajax({
+            method: "DELETE",
+            url: url+'event/'+infoEvent.event.id,
+            success: function() {
+                console.log();
+                alert("Deletado com sucesso! " + infoEvent.event.title);
+            }
+        })
+    }
+    if(ultimoEventoSelecionado !== undefined){
+        ultimoEventoSelecionado.el.style.backgroundColor = '#007FFF';
+    }
+    ultimoEventoSelecionado = infoEvent;
 }
