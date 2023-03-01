@@ -221,7 +221,7 @@ var inputNameBusca = document.getElementById("nameBusca");
 inputNameBusca.addEventListener("keypress", function(event){
     if(event.key === "Enter"){
         event.preventDefault();
-        document.getElementById("btnFindUser").click();
+        document.getElementById("btnFindPerson").click();
     }
 })
 
