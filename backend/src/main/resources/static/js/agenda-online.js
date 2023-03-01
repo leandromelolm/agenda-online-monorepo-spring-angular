@@ -185,6 +185,7 @@ function openModalThatCreateEvent(date){
 }
 
 function pesquisarUser(){
+    event.preventDefault();
     let n = $('#nameBusca').val();
     nome = n.replaceAll(".","").replaceAll("-","");
     if (nome != null && nome.trim() != ''){
@@ -210,7 +211,7 @@ function pesquisarUser(){
             alert("Erro ao tentar pesquisar no servidor: " + xhr.responseText);
         });
     }else{
-         alert("preencha o campo para pesquisar");
+         alert("preencha o campo para pesquisa");
     }
 }
 
