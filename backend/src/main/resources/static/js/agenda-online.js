@@ -7,6 +7,11 @@ document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade em exibi
 
 const url = "http://localhost:8080/myagenda/";
 
+const blockedHours = [];
+blockedHours[0] = "07";
+blockedHours[1] = "12";
+blockedHours[2] = "17";
+
 callFullCalendar(selectedDate);
 
 $('#datePicker').datepicker({
@@ -24,6 +29,7 @@ $('#datePicker').datepicker({
         selectedDate.setDate(selectedDate.getDate() + 1);
         $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
         callFullCalendar(selectedDate);
+        changeBackgroundColorBlockedHours();
     },
 })
 
@@ -60,6 +66,7 @@ function callFullCalendar(date) {
                 infoViewType = 'timeGridDay';
                 selectedDate = info.date;
                 calendar.changeView('timeGridDay', info.dateStr);
+                changeBackgroundColorBlockedHours();
                 $("#datePicker").datepicker("setDate", info.dateStr);
                 $('#dataSelecionada').text(formataDataParaDDMMYYYY(info.date));
             }
@@ -69,6 +76,12 @@ function callFullCalendar(date) {
                 }
                 if(info.view.type == 'timeGridDay'){
                     infoViewType = 'timeGridDay';
+                }
+                for (let index = 0; index < blockedHours.length; index++) {
+                    if(info.dateStr.substring(11,13) == blockedHours[index]){
+                        return alert("Não é possível agendar nesse intervalo de hora. Entre as "+
+                         blockedHours[index]+":00 e "+ blockedHours[index]+":59");
+                    }
                 }
                 openModalThatCreateEvent(info.dateStr);
             }
@@ -88,14 +101,14 @@ function formataDataParaYYYYMMDD(data){
 }
 
 function datePrev() {
-    selectedDate.setDate(selectedDate.getDate() - 1)
+    selectedDate.setDate(selectedDate.getDate() - 1);
     $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
     callFullCalendar(formataDataParaYYYYMMDD(selectedDate));
 };
 
 function dateNext() {
-    selectedDate.setDate(selectedDate.getDate() + 1)
+    selectedDate.setDate(selectedDate.getDate() + 1);
     $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
     callFullCalendar(formataDataParaYYYYMMDD(selectedDate));
@@ -103,13 +116,13 @@ function dateNext() {
 
 $('body').on('click', '.fc-prev-button', function() {
     if(infoViewType == "timeGridDay"){
-        selectedDate.setDate(selectedDate.getDate() - 1)
+        selectedDate.setDate(selectedDate.getDate() - 1);
     }
     if(infoViewType == "timeGridWeek"){
-        selectedDate.setDate(selectedDate.getDate() - 7)
+        selectedDate.setDate(selectedDate.getDate() - 7);
     }
     if(infoViewType == "dayGridMonth"){
-        selectedDate.setMonth(selectedDate.getMonth() - 1)
+        selectedDate.setMonth(selectedDate.getMonth() - 1);
     }
     $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
@@ -117,13 +130,13 @@ $('body').on('click', '.fc-prev-button', function() {
 
 $('body').on('click', '.fc-next-button', function() {
     if(infoViewType == "timeGridDay"){
-        selectedDate.setDate(selectedDate.getDate() + 1)
+        selectedDate.setDate(selectedDate.getDate() + 1);
     }
     if(infoViewType == "timeGridWeek"){
-        selectedDate.setDate(selectedDate.getDate() + 7)
+        selectedDate.setDate(selectedDate.getDate() + 7);
     }
     if(infoViewType == "dayGridMonth"){
-        selectedDate.setMonth(selectedDate.getMonth() + 1)
+        selectedDate.setMonth(selectedDate.getMonth() + 1);
     }
     $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
@@ -146,12 +159,14 @@ function viewtimeGridWeek(){
     document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade selecionada: <b>Semana</b></div>";
     infoViewType = 'timeGridWeek';
     callFullCalendar(selectedDate);
+    changeBackgroundColorBlockedHours();
 }
 
 function viewtimeGridDay(){
     document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade selecionada: <b>Dia</b></div>";
     infoViewType = 'timeGridDay';
     callFullCalendar(selectedDate);
+    changeBackgroundColorBlockedHours();
 }
 
 function openModalThatCreateEvent(date){
@@ -287,7 +302,7 @@ let tipoPesquisa = "nome";
 let inputLabelSearch = document.getElementById("labelInputPesquisa");
 
 function nomeSelecionado(){
-  tipoPesquisa = "nome"
+  tipoPesquisa = "nome";
   document.getElementById("nameBusca").value = "";
   $('#labelInputPesquisa').html("<label>Informe o Nome:</label>"); // JQuery
 }
@@ -324,4 +339,15 @@ function mascaraCPFouCNS(i) {
     i.setAttribute("maxlength", "18");
     if (v.length == 3 || v.length == 8 || v.length == 13) i.value += ".";
   }
+}
+
+function changeBackgroundColorBlockedHours(){
+    $('.fc .fc-timegrid-slot').each( function(){ // pecorre as linhas da grade diaria
+        var timeSlot = $(this).text();
+        for (i = 0; i < blockedHours.length; i++) {
+            if(timeSlot.substring(0,2) == blockedHours[i]){
+                $(this).closest('tr').css('background-color', '#E9E9E9'); //CINZA #993399
+            }
+        }
+    });
 }
