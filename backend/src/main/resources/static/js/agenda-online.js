@@ -17,8 +17,11 @@ $('#datePicker').datepicker({
     dateFormat: 'yy-mm-dd',
 
     onSelect: function (dateText, inst) {
+        if(infoViewType == "dayGridMonth"){
+            infoViewType = "timeGridDay";
+        }
         selectedDate = new Date(dateText);
-        selectedDate.setDate(selectedDate.getDate() + 1)
+        selectedDate.setDate(selectedDate.getDate() + 1);
         $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
         callFullCalendar(selectedDate);
     },
