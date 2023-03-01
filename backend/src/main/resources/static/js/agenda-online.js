@@ -71,7 +71,6 @@ function callFullCalendar(date) {
                     infoViewType = 'timeGridDay';
                 }
                 openModalThatCreateEvent(info.dateStr);
-
             }
         },
 
@@ -220,7 +219,7 @@ btnFindPerson.addEventListener("click", function(event){
     }
 });
 
-var inputNameBusca = document.getElementById("nameBusca");
+let inputNameBusca = document.getElementById("nameBusca");
 inputNameBusca.addEventListener("keypress", function(event){
     if(event.key === "Enter"){
         event.preventDefault();
@@ -247,7 +246,7 @@ function preencherFormCadastroAgenda(id) {
 
 $(document).ready(function () {
     $("#addEvent").on("submit", function (event) {
-        var dados = {
+        let dados = {
             title: $('#title').html(),
             dateUTC: $('#data').val(),
             start: $('#start').val(),
@@ -283,3 +282,46 @@ $(document).ready(function () {
         });
      });
 });
+
+let tipoPesquisa = "nome";
+let inputLabelSearch = document.getElementById("labelInputPesquisa");
+
+function nomeSelecionado(){
+  tipoPesquisa = "nome"
+  document.getElementById("nameBusca").value = "";
+  $('#labelInputPesquisa').html("<label>Informe o Nome:</label>"); // JQuery
+}
+
+function cpfSelecionado(){
+  tipoPesquisa = "cpf";
+  document.getElementById("nameBusca").value = "";
+  inputLabelSearch.innerText = "Informe o CPF:" ;
+}
+
+function cnsSelecionado(){
+  tipoPesquisa = "cns";
+  document.getElementById("nameBusca").value = "";
+  inputLabelSearch.innerText = "Informe o CNS:" ;
+}
+
+function mascaraCPFouCNS(i) {
+  if(tipoPesquisa == "cpf"){
+    var v = i.value;
+    if (isNaN(v[v.length - 1])) { // permitir apenas caracteres numéricos
+        i.value = v.substring(0, v.length - 1);
+        return;
+    }
+    i.setAttribute("maxlength", "14");
+    if (v.length == 3 || v.length == 7) i.value += ".";
+    if (v.length == 11) i.value += "-";
+  }
+  if(tipoPesquisa == "cns"){
+    var v = i.value;
+    if (isNaN(v[v.length - 1])) {
+        i.value = v.substring(0, v.length - 1);
+        return;
+    }
+    i.setAttribute("maxlength", "18");
+    if (v.length == 3 || v.length == 8 || v.length == 13) i.value += ".";
+  }
+}

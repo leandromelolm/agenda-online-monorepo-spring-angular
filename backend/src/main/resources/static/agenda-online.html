@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Agenda agenda-online</title>
@@ -95,14 +95,30 @@
                     <div class="collapse multi-collapse" id="pesquisaUsuarioCollapse">
                         <div class="card card-body">
                             <div id="pesquisa">
-                                <form>
+                                <form id="formSearch">
+                                    <div>
+                                        <input type="radio" name="colors" id="rNome" checked
+                                               onClick="nomeSelecionado()"/>Nome
+                                        <input style="margin-left:5px;" type="radio" name="colors" id="rCpf"
+                                               onClick="cpfSelecionado()"/>CPF
+                                        <input style="margin-left:5px;" type="radio" name="colors" id="rCns"
+                                               onClick="cnsSelecionado()"/>CNS
+                                    </div>
                                     <div class="mb-3">
                                         <label id="labelInputPesquisa" for="nameBusca"
                                                class="col-form-label">Informe o dado de pesquisa:
                                         </label>
-                                        <input type="text" class="form-control input" id="nameBusca" />
+                                        <input  id="nameBusca"
+                                                type="text"
+                                                class="form-control input"
+                                                minlength="1"
+                                                oninput="mascaraCPFouCNS(this)"
+                                                required />
                                     </div>
                                     <button id="btnFindPerson" type="submit" class="btn btn-success">Buscar</button>
+                                    <button type="button" class="btn btn-secondary"
+                                            onclick="document.getElementById('formSearch').reset();
+                                            nomeSelecionado();">Limpar</button>
                                 </form>
                             </div>
                             <div style="height: 300px;overflow: scroll;">
