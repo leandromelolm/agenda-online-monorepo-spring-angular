@@ -184,7 +184,9 @@ function openModalThatCreateEvent(date){
     $('#modal-create-event').modal('show');
 }
 
-function pesquisarUser(){
+let btnFindPerson = document.querySelector("#btnFindPerson");
+
+btnFindPerson.addEventListener("click", function(event){
     event.preventDefault();
     let n = $('#nameBusca').val();
     nome = n.replaceAll(".","").replaceAll("-","");
@@ -213,7 +215,7 @@ function pesquisarUser(){
     }else{
          alert("preencha o campo para pesquisa");
     }
-}
+});
 
 var inputNameBusca = document.getElementById("nameBusca");
 inputNameBusca.addEventListener("keypress", function(event){
