@@ -78,9 +78,14 @@ function callFullCalendar(date) {
         slotDuration: '00:15:00', slotMinTime: '07:00', slotMaxTime: '17:15', slotLabelInterval: '00:15',
         slotLabelFormat: [{ hour: '2-digit', minute: '2-digit' },],
 
-        events: {
-            url: url+'event'+'?size=200',
-        },
+//        events: {
+//            url: url+'event'+'?size=200',
+//        },
+
+        eventSources: [
+            url+'event'+'?size=200',
+//            url+'eventos/datas-permitidas',
+        ],
 
         dateClick: function(info){
             if(info.view.type =='dayGridMonth'){
