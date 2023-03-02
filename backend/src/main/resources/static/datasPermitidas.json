@@ -1,0 +1,168 @@
+
+[
+  {
+    "id": 216,
+    "groupId": null,
+    "start": "",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 217,
+    "groupId": null,
+    "start": "2023-04",
+    "end": "2023-05",
+    "backgroundColor": null,
+    "color": null,
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "month"
+  },
+  {
+    "id": 218,
+    "groupId": null,
+    "start": "2022-12-21",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 219,
+    "groupId": null,
+    "start": "2022-12-15",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 220,
+    "groupId": null,
+    "start": "2022-12-16",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 221,
+    "groupId": null,
+    "start": "2022-12-10",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 222,
+    "groupId": null,
+    "start": "2023-01-02",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 223,
+    "groupId": null,
+    "start": "2022-12-29T09:00:00",
+    "end": "2022-12-29T09:14:00",
+    "backgroundColor": null,
+    "color": "#FFF000",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "dayandtime"
+  },
+  {
+    "id": 224,
+    "groupId": null,
+    "start": "2022-12-30",
+    "end": "2022-12-30",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 225,
+    "groupId": null,
+    "start": "2022-12-28",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  },
+  {
+    "id": 226,
+    "groupId": null,
+    "start": "2023-03",
+    "end": "2023-04",
+    "backgroundColor": "#9400D3",
+    "color": null,
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "month"
+  },
+  {
+    "id": 227,
+    "groupId": null,
+    "start": "2023-08",
+    "end": "2023-09",
+    "backgroundColor": "#9400D3",
+    "color": null,
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "month"
+  },
+  {
+    "id": 22221,
+    "groupId": null,
+    "start": "2022-12-29T09:45:00",
+    "end": "2022-12-29T09:59:00",
+    "backgroundColor": null,
+    "color": "#FFF000",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "dayandtime"
+  },
+  {
+    "id": 22225,
+    "groupId": null,
+    "start": "2023-06",
+    "end": "2023-07",
+    "backgroundColor": "#9400D3",
+    "color": null,
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "month"
+  },
+  {
+    "id": 100001,
+    "groupId": null,
+    "start": "2022-12-08",
+    "end": "",
+    "backgroundColor": null,
+    "color": "",
+    "display": "inverse-background",
+    "overlap": false,
+    "tipo": "day"
+  }
+]
