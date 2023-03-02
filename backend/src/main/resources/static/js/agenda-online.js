@@ -12,10 +12,11 @@ let ultimoEventoSelecionado;
 const allowedDates = [];
 const allowedDatesTime = [];
 const allowedMonths = [];
+
 const urlFetch = "./datasPermitidas.json";
 fetch(urlFetch).then(response => response.json()).then(itens => {
-    console.log(itens);
-    itens.reduce((total, elemento) => {
+    itens.map((elemento) => {
+//        console.log(elemento);
         if (elemento.tipo === 'day') return allowedDates.push(elemento.start);
         if (elemento.tipo === 'dayandtime') return allowedDatesTime.push(elemento.start);
         if (elemento.tipo === 'month') return allowedMonths.push(elemento.start);
@@ -29,24 +30,6 @@ const blockedHours = [];
 blockedHours[0] = "07";
 blockedHours[1] = "12";
 blockedHours[2] = "17";
-
-
-//const allowedMonths = []; // meses com permissão para criar evento
-//allowedMonths[0] = "2023-03";
-//allowedMonths[1] = "2023-11";
-//allowedMonths[2] = "2023-05";
-//const allowedDates = []; // datas com permissão para criar evento
-//allowedDates[0] = "2023-12-30";
-//allowedDates[1] = "2023-12-21";
-//allowedDates[2] = "2023-12-15";
-//allowedDates[3] = "2023-12-16";
-//allowedDates[4] = "2023-12-10";
-//allowedDates[5] = "2023-07-02";
-//allowedDates[6] = "2023-12-28";
-//const allowedDatesTime = []; // data com horário permitido criar evento
-//allowedDatesTime[2] = "2023-06-29T09:00:00";
-//allowedDatesTime[0] = "2023-06-29T09:45:00";
-//allowedDatesTime[1] = "2023-06-29T11:00:00";
 
 callFullCalendar(selectedDate);
 
@@ -438,3 +421,22 @@ function deleteEvent(infoEvent){
     }
     ultimoEventoSelecionado = infoEvent;
 }
+
+
+//// Teste de permissão para criar evento
+//const allowedMonths = []; // meses com permissão para criar evento
+//allowedMonths[0] = "2023-03";
+//allowedMonths[1] = "2023-11";
+//allowedMonths[2] = "2023-05";
+//const allowedDates = []; // datas com permissão para criar evento
+//allowedDates[0] = "2023-12-30";
+//allowedDates[1] = "2023-12-21";
+//allowedDates[2] = "2023-12-15";
+//allowedDates[3] = "2023-12-16";
+//allowedDates[4] = "2023-12-10";
+//allowedDates[5] = "2023-07-02";
+//allowedDates[6] = "2023-12-28";
+//const allowedDatesTime = []; // data com horário permitido criar evento
+//allowedDatesTime[2] = "2023-06-29T09:00:00";
+//allowedDatesTime[0] = "2023-06-29T09:45:00";
+//allowedDatesTime[1] = "2023-06-29T11:00:00";

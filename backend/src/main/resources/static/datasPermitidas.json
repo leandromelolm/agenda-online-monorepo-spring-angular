@@ -3,13 +3,13 @@
   {
     "id": 216,
     "groupId": null,
-    "start": "",
-    "end": "",
+    "start": "2024-01",
+    "end": "2024-02",
     "backgroundColor": null,
     "color": "",
     "display": "inverse-background",
     "overlap": false,
-    "tipo": "day"
+    "tipo": "month"
   },
   {
     "id": 217,
