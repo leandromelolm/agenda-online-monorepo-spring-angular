@@ -4,7 +4,7 @@
 #### Agenda-online
 The route <http://localhost:8080/myagenda/agenda-online.html> 
 opens html page agenda-online made in html and javascript with import from fullcalendar, Datepicker JQuery and Bootstrap.
-
+___
 #### Used Tecnology
 - Java 17
 - Spring Framework
@@ -14,7 +14,7 @@ opens html page agenda-online made in html and javascript with import from fullc
 - ModelMapper
 - H2 (database to test)
 
-
+___
 #### Person Endpoints
 
 All person. List paged (person summary: name, cpf, cns and birthdate) [GET]
@@ -108,7 +108,7 @@ Person Address Update
     pais: "Brasil"
 }
 ```
-
+___
 #### Event Endpoints
 
 Event Create [POST] http://localhost:8080/myagenda/event
