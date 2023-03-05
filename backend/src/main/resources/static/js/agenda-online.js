@@ -1,5 +1,5 @@
 
-let selectedDate = new Date();
+let sDate = new Date();
 $('#dataSelecionada').text(formataDataParaDDMMYYYY(new Date()));
 
 // test
@@ -38,7 +38,7 @@ blockedHours[0] = "07";
 blockedHours[1] = "12";
 blockedHours[2] = "17";
 
-callFullCalendar(selectedDate);
+callFullCalendar(sDate);
 
 $('#datePicker').datepicker({
     showOtherMonths: true,
@@ -51,10 +51,10 @@ $('#datePicker').datepicker({
         if(infoViewType == "dayGridMonth"){
             infoViewType = "timeGridDay";
         }
-        selectedDate = new Date(dateText);
-        selectedDate.setDate(selectedDate.getDate() + 1);
-        $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
-        callFullCalendar(selectedDate);
+        sDate = new Date(dateText);
+        sDate.setDate(sDate.getDate() + 1);
+        $('#dataSelecionada').text(formataDataParaDDMMYYYY(sDate));
+        callFullCalendar(sDate);
         changeBackgroundColorBlockedHours();
     },
 })
@@ -106,7 +106,7 @@ function callFullCalendar(date) {
         dateClick: function(info){
             if(info.view.type =='dayGridMonth'){
                 infoViewType = 'timeGridDay';
-                selectedDate = info.date; //info.date = Wed Nov 30 2023 07:45:00 GMT-0300 (Horário Padrão de Brasília)
+                sDate = info.date; //info.date = Wed Nov 30 2023 07:45:00 GMT-0300 (Horário Padrão de Brasília)
                 calendar.changeView('timeGridDay', info.dateStr); // info.dateStr = 2023-11-30T07:45:00-03:00
                 changeBackgroundColorBlockedHours();
                 $("#datePicker").datepicker("setDate", info.dateStr);
@@ -163,49 +163,49 @@ function formataDataParaYYYYMMDD(data){
 }
 
 function datePrev() {
-    selectedDate.setDate(selectedDate.getDate() - 1);
-    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
-    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
-    callFullCalendar(formataDataParaYYYYMMDD(selectedDate));
+    sDate.setDate(sDate.getDate() - 1);
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(sDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(sDate));
+    callFullCalendar(formataDataParaYYYYMMDD(sDate));
 };
 
 function dateNext() {
-    selectedDate.setDate(selectedDate.getDate() + 1);
-    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
-    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
-    callFullCalendar(formataDataParaYYYYMMDD(selectedDate));
+    sDate.setDate(sDate.getDate() + 1);
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(sDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(sDate));
+    callFullCalendar(formataDataParaYYYYMMDD(sDate));
 };
 
 $('body').on('click', '.fc-prev-button', function() {
     if(infoViewType == "timeGridDay"){
-        selectedDate.setDate(selectedDate.getDate() - 1);
+        sDate.setDate(sDate.getDate() - 1);
     }
     if(infoViewType == "timeGridWeek"){
-        selectedDate.setDate(selectedDate.getDate() - 7);
+        sDate.setDate(sDate.getDate() - 7);
     }
     if(infoViewType == "dayGridMonth"){
-        selectedDate.setMonth(selectedDate.getMonth() - 1);
+        sDate.setMonth(sDate.getMonth() - 1);
     }
-    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
-    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(sDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(sDate));
 });
 
 $('body').on('click', '.fc-next-button', function() {
     if(infoViewType == "timeGridDay"){
-        selectedDate.setDate(selectedDate.getDate() + 1);
+        sDate.setDate(sDate.getDate() + 1);
     }
     if(infoViewType == "timeGridWeek"){
-        selectedDate.setDate(selectedDate.getDate() + 7);
+        sDate.setDate(sDate.getDate() + 7);
     }
     if(infoViewType == "dayGridMonth"){
-        selectedDate.setMonth(selectedDate.getMonth() + 1);
+        sDate.setMonth(sDate.getMonth() + 1);
     }
-    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(selectedDate));
-    $('#dataSelecionada').text(formataDataParaDDMMYYYY(selectedDate));
+    $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(sDate));
+    $('#dataSelecionada').text(formataDataParaDDMMYYYY(sDate));
 });
 
 function diaAtual(){
-    selectedDate = new Date();
+    sDate = new Date();
     $("#datePicker").datepicker("setDate", formataDataParaYYYYMMDD(new Date()));
     $('#dataSelecionada').text(formataDataParaDDMMYYYY(new Date()));
     callFullCalendar(new Date());
@@ -214,20 +214,20 @@ function diaAtual(){
 function viewtimeGridMonth(){
     infoViewType = 'dayGridMonth';
     document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade selecionada: <b>Mês</b></div>";
-    callFullCalendar(selectedDate);
+    callFullCalendar(sDate);
 }
 
 function viewtimeGridWeek(){
     document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade selecionada: <b>Semana</b></div>";
     infoViewType = 'timeGridWeek';
-    callFullCalendar(selectedDate);
+    callFullCalendar(sDate);
     changeBackgroundColorBlockedHours();
 }
 
 function viewtimeGridDay(){
     document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade selecionada: <b>Dia</b></div>";
     infoViewType = 'timeGridDay';
-    callFullCalendar(selectedDate);
+    callFullCalendar(sDate);
     changeBackgroundColorBlockedHours();
 }
 
