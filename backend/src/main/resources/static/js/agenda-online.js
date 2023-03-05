@@ -2,6 +2,12 @@
 let selectedDate = new Date();
 $('#dataSelecionada').text(formataDataParaDDMMYYYY(new Date()));
 
+// test
+const date = new Date()
+let ymDate = new Date(date.setMonth(date.getMonth())).toISOString().substring(7,0);
+let ymFutureDate = new Date(date.setMonth(date.getMonth() + 1)).toISOString().substring(7,0);
+//console.log(ymDate + " " + ymFutureDate);
+
 let infoViewType = 'dayGridMonth';
 document.getElementById("tipoGradeSelecionada").innerHTML = "<div>Grade em exibição: <b>Mês</b></div>";
 
@@ -23,6 +29,7 @@ fetch(urlFetch).then(response => response.json()).then(itens => {
     });
     console.log("allowedDates: "+allowedDates)
     console.log("allowedDatesTime: "+allowedDatesTime)
+    allowedMonths.push(ymDate); // test
     console.log("allowedMonths: "+allowedMonths)
 })
 
@@ -76,13 +83,24 @@ function callFullCalendar(date) {
         slotDuration: '00:15:00', slotMinTime: '07:00', slotMaxTime: '17:15', slotLabelInterval: '00:15',
         slotLabelFormat: [{ hour: '2-digit', minute: '2-digit' },],
 
-//        events: {
-//            url: url+'event'+'?size=200',
-//        },
-
         eventSources: [
             url+'event'+'?size=200',
            "./datasPermitidas.json"
+        ],
+
+        // test
+        events: [
+            {
+                "id": 215,
+                "groupId": "data-permitida-test",
+                "start": ymDate,
+                "end": ymFutureDate,
+                "backgroundColor": null,
+                "color": "",
+                "display": "background",
+                "overlap": false,
+                "tipo": "month"
+            }
         ],
 
         dateClick: function(info){
