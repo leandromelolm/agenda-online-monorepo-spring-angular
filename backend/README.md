@@ -3,7 +3,7 @@
 
 #### Agenda-online
 The route `http://localhost:8080/myagenda/agenda-online.html` 
-opens html page agenda-online made in html and javascript with import from fullcalendar, Datepicker JQuery and Bootstrap.
+opens html page ***agenda-online*** made in html and javascript with import from fullcalendar, Datepicker JQuery and Bootstrap.
 ___
 #### Used Tecnology
 - Java 17
@@ -17,7 +17,8 @@ ___
 ___
 #### Person Endpoints
 
-All person. List paged (person summary: name, cpf, cns and birthdate) [GET]
+All person. List paged (person summary) [GET] <br>
+*person summary: name, cpf, cns and birthdate*
 ```
 http://localhost:8080/myagenda/person
 ```
@@ -76,7 +77,7 @@ Person Create
 
 Person Update
 [PUT] http://localhost:8080/myagenda/person/{personId} <br>
-Obs: Mesmo passando o CPF no json, ele não é alterado.
+*Obs: Mesmo passando o CPF no json, ele não é alterado.*
 ```json lines
 {    
     "name": "person test update",
