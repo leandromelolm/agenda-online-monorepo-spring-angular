@@ -7,7 +7,7 @@
     "end": "2024-02",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "month"
   },
@@ -18,7 +18,7 @@
     "end": "2023-05",
     "backgroundColor": null,
     "color": null,
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "month"
   },
@@ -29,7 +29,7 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
@@ -40,7 +40,7 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
@@ -51,7 +51,7 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
@@ -62,7 +62,7 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
@@ -73,7 +73,7 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
@@ -84,7 +84,7 @@
     "end": "2022-12-29T09:14:00",
     "backgroundColor": null,
     "color": "#FFF000",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "dayandtime"
   },
@@ -95,7 +95,7 @@
     "end": "2022-12-30",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
@@ -106,18 +106,18 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   },
   {
     "id": 226,
     "groupId": null,
-    "start": "2023-03",
-    "end": "2023-04",
-    "backgroundColor": "#9400D3",
+    "start": "2022-10",
+    "end": "2022-11",
+    "backgroundColor": null,
     "color": null,
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "month"
   },
@@ -126,9 +126,9 @@
     "groupId": null,
     "start": "2023-08",
     "end": "2023-09",
-    "backgroundColor": "#9400D3",
+    "backgroundColor": null,
     "color": null,
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "month"
   },
@@ -139,7 +139,7 @@
     "end": "2022-12-29T09:59:00",
     "backgroundColor": null,
     "color": "#FFF000",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "dayandtime"
   },
@@ -148,9 +148,9 @@
     "groupId": null,
     "start": "2023-06",
     "end": "2023-07",
-    "backgroundColor": "#9400D3",
+    "backgroundColor": null,
     "color": null,
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "month"
   },
@@ -161,7 +161,7 @@
     "end": "",
     "backgroundColor": null,
     "color": "",
-    "display": "inverse-background",
+    "display": "background",
     "overlap": false,
     "tipo": "day"
   }
