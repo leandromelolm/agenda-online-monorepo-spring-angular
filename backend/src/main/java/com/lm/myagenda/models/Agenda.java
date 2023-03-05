@@ -3,9 +3,6 @@ package com.lm.myagenda.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.lm.myagenda.core;
 
-import com.lm.myagenda.dto.AddressDTO;
 import com.lm.myagenda.dto.AttendanceDTO;
 import com.lm.myagenda.dto.PersonDTO;
 import com.lm.myagenda.models.Person;

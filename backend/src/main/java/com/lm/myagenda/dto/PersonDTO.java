@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class PersonDTO implements Serializable {
-    @Serial
+
     private static final long serialVersionUID = 1L;
 
     private Long id;

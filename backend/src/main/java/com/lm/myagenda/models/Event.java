@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

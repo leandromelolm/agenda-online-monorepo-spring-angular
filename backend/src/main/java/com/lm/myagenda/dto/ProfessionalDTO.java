@@ -1,6 +1,5 @@
 package com.lm.myagenda.dto;
 
-import com.lm.myagenda.models.Agenda;
 import com.lm.myagenda.models.Professional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 

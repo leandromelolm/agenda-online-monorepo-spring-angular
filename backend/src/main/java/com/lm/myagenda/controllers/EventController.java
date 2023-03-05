@@ -1,8 +1,6 @@
 package com.lm.myagenda.controllers;
 
-import com.lm.myagenda.dto.AgendaDTO;
 import com.lm.myagenda.dto.EventDTO;
-import com.lm.myagenda.models.Agenda;
 import com.lm.myagenda.models.Event;
 import com.lm.myagenda.services.EventService;
 import org.modelmapper.ModelMapper;
