@@ -4,6 +4,9 @@
 |-----------------------------------------------|----------------------------------|
 | Aba atual abre sobreposta                     | Shift + F4                       |
 | Run aplication                                | Shift + F10                      |
+| Parar aplicação (Customizado)  | Shift+F5 |
+| Run Application | Ctrl+Ctrl |
+| Terminal (Customizado) | Alt+2 |
 | Alterar janela para maximizar e redimensionar | Alt + F10                        |
 | Mudar de aba                                  | Alt + setas                      |
 | Fechar ABAS (lateral ou inferior)             | Shift + escape                   |
