@@ -6,10 +6,10 @@
 |-----------------------------------------------|----------------------------------|
 | Aba atual abre sobreposta                     | Shift + F4                       |
 | Run aplication                                | Shift + F10                      |
-| Run Application                               | Ctrl+Ctrl |
-| Parar aplicação (Customizado)                 | Ctrl+F2, Shift+F5  |
-| Terminal (Customizado)                        | Alt+F12, Alt+2 |
-| Close Tab (Customizado)                        | Ctrl+F4 , Alt+W |
+| Run Application                               | Ctrl+Ctrl                        |
+| Parar aplicação (Customizado)                 | Ctrl+F2, Shift+F5                |
+| Terminal (Customizado)                        | Alt+F12, Alt+2                   |
+| Close Tab (Customizado)                       | Ctrl+F4 , Alt+W                  |
 | Alterar janela para maximizar e redimensionar | Alt + F10                        |
 | Mudar de aba                                  | Alt + setas                      |
 | Fechar ABAS (lateral ou inferior)             | Shift + escape                   |
@@ -80,8 +80,6 @@
 | -                                            | -                                 |
 | -                                            | -                                 |
 
-
-#1(se estiver selecionado no editor de texto a linha atual é excluida)
 
 Observação: Algumas teclas foram customizadas na IDE.
 
