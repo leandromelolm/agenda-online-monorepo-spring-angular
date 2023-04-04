@@ -2,9 +2,9 @@
 ## MyAgenda - Backend
 
 #### Agenda-online
-The route <http://localhost:8080/myagenda/agenda-online.html> 
-opens html page agenda-online made in html and javascript with import from fullcalendar, Datepicker JQuery and Bootstrap.
-
+The route `http://localhost:8080/myagenda/agenda-online.html` 
+opens html page ***agenda-online*** made in html and javascript with import from fullcalendar, Datepicker JQuery and Bootstrap.
+___
 #### Used Tecnology
 - Java 17
 - Spring Framework
@@ -14,10 +14,11 @@ opens html page agenda-online made in html and javascript with import from fullc
 - ModelMapper
 - H2 (database to test)
 
-
+___
 #### Person Endpoints
 
-All person. List paged (person summary: name, cpf, cns and birthdate) [GET]
+All person. List paged (person summary) [GET] <br>
+*person summary: name, cpf, cns and birthdate*
 ```
 http://localhost:8080/myagenda/person
 ```
@@ -75,8 +76,8 @@ Person Create
 ```
 
 Person Update
-[PUT] http://localhost:8080/myagenda/person/{personId}
-    // Mesmo passando o CPF no json, ele não é alterado.
+[PUT] http://localhost:8080/myagenda/person/{personId} <br>
+*Obs: Mesmo passando o CPF no json, ele não é alterado.*
 ```json lines
 {    
     "name": "person test update",
@@ -96,19 +97,19 @@ Person Address Update
 [PUT] http://localhost:8080/myagenda/person/{personId}/address/{addressId}
 ```json   
 {    
-    logradouro: "rua atualizada",
-    numero: "2",
-    complemento: "Complemento atualizado",
-    bairro: "São Francisco",
-    cidade: "Boa vista",
-    cep: "11222111",
-    observacao: "observacao atualizado",
-    tipo: "Atualizado",
-    estado: "RO",
-    pais: "Brasil"
+    "logradouro": "rua atualizada",
+    "numero": "2",
+    "complemento": "Complemento atualizado",
+    "bairro": "São Francisco",
+    "cidade": "Boa vista",
+    "cep": "11222111",
+    "observacao": "observacao atualizado",
+    "tipo": "Atualizado",
+    "estado": "RO",
+    "pais": "Brasil"
 }
 ```
-
+___
 #### Event Endpoints
 
 Event Create [POST] http://localhost:8080/myagenda/event
