@@ -19,6 +19,12 @@ Iniciar para testar o projeto
 Criar componente  
 `ng generate component components/calendar`
 
+Instalar dependências fullcalendar  
+`npm install --save @fullcalendar/core @fullcalendar/angular @fullcalendar/daygrid @fullcalendar/interaction @fullcalendar/timegrid @fullcalendar/list`
+
+Importa modulo fullcalendar no app.module.
+
+
 
 # AgendaOnline
 
