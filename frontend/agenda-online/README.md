@@ -16,6 +16,8 @@ Criar o projeto angular
 Iniciar para testar o projeto  
 `ng serve`
 
+Criar componente  
+`ng generate component components/calendar`
 
 
 # AgendaOnline
