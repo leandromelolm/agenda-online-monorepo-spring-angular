@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import listPlugin from '@fullcalendar/list';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-calendar',
@@ -14,6 +15,7 @@ export class CalendarComponent implements OnInit {
   
   calendarOptions? : CalendarOptions;
   initialview : string = "dayGridMonth";
+  @ViewChild('fullcalendar') fullcalendar?: FullCalendarComponent;
 
   ngOnInit(): void {
    this.calendarRender(this.initialview)
@@ -28,9 +30,24 @@ export class CalendarComponent implements OnInit {
       headerToolbar: {
         left: 'prev,next today',       
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },      
-    };
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      dateClick: this.handleDateClick.bind(this),      
+    };    
+  }
+
+  handleDateClick(arg: DateClickArg) {
+    if(arg.view.type == "dayGridMonth"){   
+      this.changeCalendarView(arg);
+    }
+    if(arg.view.type != "dayGridMonth"){   
+    console.log(arg.date);    
+    }
+  }
+
+  changeCalendarView(arg: any) {
+    let calendar = this.fullcalendar?.getApi();
+    calendar?.changeView("timeGridDay", arg.date);
   }
 
 }
