@@ -54,30 +54,22 @@
 
 | VSCode command (comando)                     | shortcut keys (teclas de atalho)  |
 |----------------------------------------------|-----------------------------------|
-| Rodar Projeto Spring                         | [Alt] F5                          |
-| Parar Projeto Spring                         | [Alt] Shift + F5                  |
+| Rodar Projeto Spring                         | F5                                |
+| Parar Projeto Spring                         | Shift + F5                        |
 | Abrir e fechar aba terminal                  | Ctrl + J                          |
-| Abrir e fechar aba lateral esquerdo          | [Alt] Ctrl + B                    |
-| Abrir aba explorador                         | [Alt] Ctrl + Shift + E            |
+| Abrir e fechar aba lateral esquerdo          | Ctrl + B                          |
+| Abrir aba explorador                         | Ctrl + Shift + E                  |
 | Abrir e fechar aba lateral                   | Ctrl + m                          |
-| Fechar aba atual                             | [Alt] Ctrl + w                    |
-| Alternar entre painel lateral e arquivo      | Alt + 1                           |
-| Espaço de bloco                              | selecionar e backspace            |
-| Pesquisar aba lateral algum texto no projeto | Alt + 3                           |
-| Abrir o springboot menu lateral              | Alt + 5                           |
+| Fechar aba atual                             | Ctrl + w                          |
 | Pesquisa recurso vscode                      | Ctrl + Shift + P                  |
 | Pesquisar por nome do arquivo                | Ctrl + P                          |
-| Pesquisar por nome do arquivo                | Ctrl + Shift + N                  |
 | Pesquisar endpoint # (GET POST)              | Ctrl + N                          |
-| Pesquisa arquivo #1                          | [Alt] Ctrl+D                      |
 | Pesquisar no editor de texto                 | Ctrl + F                          |
 | Substituir no editor de texto                | Ctrl + R                          |
-| Pesquisar selecionando texto                 | Ctrl + K                          |
-| Comentar bloco                               | Ctrl + 7 ou Ctrl + /              |
+| Comentar bloco                               | Ctrl + /                          |
 | Comentar linha //                            | Ctrl+K Ctrl+C                     |
 | Descomentar linha //                         | Ctrl+K Ctrl+U                     |
 | Mudar de aba no editor                       | Ctrl+PageUP Ctrl+PageDown         |
-| Navegar para uma linha                       | Ctrl + L                          |
 | Navegar no fim ou inicio no editor           | Ctrl + End Ctrl + Home            |
 | Navegar no inicio ou fim da linha no editor  | Home ou End                       |
 | Navegar no editor de texto com salto         | Alt+PageUp Alt+PageDown           |
