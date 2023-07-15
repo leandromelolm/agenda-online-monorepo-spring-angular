@@ -10,7 +10,7 @@
 Instalar o CLI angular  
 `npm install -g @angular/cli`
 
-Criar o projeto angular
+Criar o projeto angular  
 `ng new agenda-online`
 
 Iniciar para testar o projeto  
