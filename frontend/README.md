@@ -14,7 +14,7 @@ Instalar o CLI angular
 Instalar dependências com o comando (dentro da pasta raiz do projeto)  
 `npm install`
 
-Executar o projeto (na pasta raiz) 
+Executar o projeto (na pasta raiz)  
 `ng serve`
 
 ### Comandos já executados no projeto
