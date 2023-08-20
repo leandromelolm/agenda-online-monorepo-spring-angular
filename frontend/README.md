@@ -35,3 +35,6 @@ Comando usado para instalar dependências fullcalendar
 `npm install --save @fullcalendar/core @fullcalendar/angular @fullcalendar/daygrid @fullcalendar/interaction @fullcalendar/timegrid @fullcalendar/list`
 
 Importado modulo fullcalendar no app.module.
+
+Instalar dependência Material Angular para usar datepicker  
+`ng add @angular/material`
