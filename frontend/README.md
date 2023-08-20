@@ -17,6 +17,13 @@ Instalar dependências com o comando (dentro da pasta raiz do projeto)
 Executar o projeto (na pasta raiz)  
 `ng serve`
 
+Parar o projeto com Ctrl+C
+
+Matar o processo via terminal que ocupa a porta 4200  
+`losf -i :4200`  
+`kill <PID>`
+
+
 ### Comandos já executados no projeto
 Criado o projeto com  
 `ng new agenda-online`
