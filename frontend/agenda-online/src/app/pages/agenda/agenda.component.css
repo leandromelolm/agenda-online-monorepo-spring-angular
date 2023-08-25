@@ -3,3 +3,8 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.agenda__fullcalendar{
+    margin-left: 10px;
+    width: 1200px;
+}
