@@ -38,3 +38,7 @@ Importado modulo fullcalendar no app.module.
 
 Instalar dependência Material Angular para usar datepicker  
 `ng add @angular/material`
+
+Criar service agenda  
+`ng g s service/agenda`
+

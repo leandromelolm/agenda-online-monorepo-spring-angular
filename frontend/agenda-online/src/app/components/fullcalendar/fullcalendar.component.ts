@@ -5,6 +5,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import { Subscription } from 'rxjs';
+import { AgendaService } from 'src/app/service/agenda.service';
 
 @Component({
   selector: 'app-fullcalendar',
@@ -16,8 +18,19 @@ export class FullcalendarComponent implements OnInit {
   @ViewChild('fullcalendar') fullcalendar?: FullCalendarComponent; 
   calendarOptions? :CalendarOptions;
 
+  eventSubcription! : Subscription;
+
+  constructor(
+    private agendaService : AgendaService
+  ){}
+
   ngOnInit(): void {
-    this.renderFullCalendar()
+    this.renderFullCalendar();
+    this.eventSubcription = this.agendaService.getDatePicker()
+      .subscribe(value =>{
+        console.log(value);
+        this.changeFCView(value);        
+      });
   }
 
   renderFullCalendar(){
@@ -25,5 +38,10 @@ export class FullcalendarComponent implements OnInit {
       plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
       initialView: 'timeGridDay'
     }
+  }
+
+  changeFCView(arg : any){
+    let calendarApi = this.fullcalendar?.getApi();
+    calendarApi?.changeView("timeGridDay", arg)
   }
 }
