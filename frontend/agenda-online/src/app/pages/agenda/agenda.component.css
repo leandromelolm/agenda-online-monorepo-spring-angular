@@ -1,4 +1,20 @@
 .agenda__container{
+    margin: 0;
+}
+
+.agenda__date{
+    margin:0px 0px 0px 305px;
+}
+
+.agenda__date h2{
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 32px;
+    font-family: Roboto, sans-serif;
+    letter-spacing: .0125em;
+}
+
+.agenda__content{
     /* position: relative; */
     display: flex;
     justify-content: space-evenly;
