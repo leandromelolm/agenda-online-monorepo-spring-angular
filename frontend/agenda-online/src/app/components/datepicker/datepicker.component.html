@@ -1,8 +1,8 @@
 <mat-card class="card__datepicker">    
     <mat-calendar
         #picker
-        [(selected)]="selectedDate"
         (click)="callAgendaService(selectedDate)"
+        (selectedChange)="onSelect($event)"
     ></mat-calendar>
 </mat-card>
 <div>Data: {{ selectedDate.toISOString() }}</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-agenda',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./agenda.component.css']
 })
 export class AgendaComponent {
+  
+  currentDate = new Date();
 
+  handleDataChange(newData: Date) {
+    this.currentDate = newData;
+  }
 }

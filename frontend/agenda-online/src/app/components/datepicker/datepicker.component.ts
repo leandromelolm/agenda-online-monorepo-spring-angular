@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AgendaService } from 'src/app/service/agenda.service';
 
@@ -16,6 +16,9 @@ export class DatepickerComponent {
 
   selectedDate : Date = new Date();
 
+  @Input() childData!: Date;
+  @Output() dataChanged = new EventEmitter<Date>();  
+
   constructor(
     private agendaService : AgendaService
   ){}
@@ -24,4 +27,9 @@ export class DatepickerComponent {
     this.agendaService.changeDateInFullcalendar(arg);
   }
 
+  onSelect(event: any){
+    // emitindo evento e argumento para o componente pai (AgendaComponent)
+    this.dataChanged.emit(event);
+    this.selectedDate = event;
+  } 
 }
