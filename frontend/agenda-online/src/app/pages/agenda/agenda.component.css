@@ -12,6 +12,7 @@
     line-height: 32px;
     font-family: Roboto, sans-serif;
     letter-spacing: .0125em;
+    margin: 0
 }
 
 .agenda__content{
