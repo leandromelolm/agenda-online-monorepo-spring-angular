@@ -6,7 +6,7 @@
     </div>
     <div class="agenda__content">
         <app-datepicker
-            [childData]="currentDate" (dataChanged)="handleDataChange($event)"
+            [childData]="currentDate" (dataChangedChild)="handleDataChange($event)"
         ></app-datepicker>
         <app-fullcalendar class="agenda__fullcalendar"></app-fullcalendar>
     </div>
