@@ -1,6 +1,6 @@
 <div class="agenda__container">
     <div class="buttons_next_prev_agenda">
-        <button (click)="nextMonthFirstDay(currentDate)">
+        <button (click)="nextMonthFirstDay(selectedDate)">
             <mat-icon>first_page</mat-icon>
         </button>
         <button (click)="changeMonth('prev')">
@@ -15,14 +15,15 @@
         <button (click)="changeMonth('next')">
             <mat-icon>keyboard_double_arrow_right</mat-icon>
         </button>
-        <button (click)="prevMonthFirstDay(currentDate)">
+        <button (click)="prevMonthFirstDay(selectedDate)">
             <mat-icon>last_page</mat-icon>
         </button>        
-        <h2>{{ currentDate | date: 'EEEE, d MMMM, y'}}</h2>
+        <h2>{{ selectedDate | date: 'EEEE, d MMMM, y'}}</h2>
     </div>
     <div class="agenda__content">
         <app-datepicker
-            [childData]="currentDate" (dataChangedChild)="handleDataChange($event)"
+            [dataFromParentToChild]="selectedDate" 
+            (childEvent)="handleDataChange($event)"
         ></app-datepicker>
         <app-fullcalendar class="agenda__fullcalendar"></app-fullcalendar>
     </div>

@@ -16,8 +16,11 @@ export class DatepickerComponent {
 
   selectedDate : Date = new Date();
 
-  @Input() childData!: Date;
-  @Output() dataChangedChild = new EventEmitter<Date>();
+  // Decorador @Input para receber evento do componente pai
+  @Input() dataFromParentToChild!: Date;
+
+  // @Output para emitir evento do componente filho para o pai
+  @Output() childEvent = new EventEmitter<Date>();
 
   @ViewChild('mat_calendar') matCalendar?: MatCalendar<Date>;
 
@@ -31,19 +34,19 @@ export class DatepickerComponent {
 
   onSelect(event: any){
     // emitindo evento e argumento para o componente pai (AgendaComponent)
-    this.dataChangedChild.emit(event);
+    this.childEvent.emit(event);
     this.selectedDate = event;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['childData']) {
+    if (changes['dataFromParentToChild']) {
       this.handleChange();
     }
   }
 
   handleChange() {
-    this.callSharedService(this.childData);
-    this.dateSelectedInDatePicker(this.childData);
+    this.callSharedService(this.dataFromParentToChild);
+    this.dateSelectedInDatePicker(this.dataFromParentToChild);
   }
 
   callSharedService(arg : any){
@@ -52,10 +55,9 @@ export class DatepickerComponent {
   
   dateSelectedInDatePicker( arg: Date){
     if (!this.matCalendar) {
-      console.error("'toPicker' ainda não está inicializado.");
+      console.error("'mat-calendar' ainda não está inicializado.");
       return;
     }
-    const activeDate = this.matCalendar?.activeDate || new Date();
     const selectedDt = new Date(arg);
     this.selectedDate = selectedDt;
     this.matCalendar!.activeDate = selectedDt;

@@ -8,25 +8,25 @@ import { addDays } from '@fullcalendar/core/internal';
 })
 export class AgendaComponent {
   
-  currentDate = new Date();
+  selectedDate = new Date();
 
   handleDataChange(newData: Date) {
-    this.currentDate = newData;
+    this.selectedDate = newData;
   }
 
   nextDay() {
-    this.currentDate = addDays(this.currentDate, 1)
+    this.selectedDate = addDays(this.selectedDate, 1)
   }
 
   prevDay() {
-    this.currentDate = addDays(this.currentDate, -1)
+    this.selectedDate = addDays(this.selectedDate, -1)
   }
 
   changeMonth(mode: 'prev' | 'next') {
-    this.currentDate =
+    this.selectedDate =
       mode === 'prev'
-        ? addDays(this.currentDate, -30)
-        : addDays(this.currentDate, 30)
+        ? addDays(this.selectedDate, -30)
+        : addDays(this.selectedDate, 30)
   }
 
   nextMonthFirstDay(selectedDate : Date) {
@@ -34,7 +34,7 @@ export class AgendaComponent {
     const month = activeDate.getMonth();
     const year = activeDate.getFullYear();
     const prevMonth = new Date(year, month - 1, 1);
-    this.currentDate = prevMonth;
+    this.selectedDate = prevMonth;
   }
 
   prevMonthFirstDay(selectedDate : Date) {
@@ -42,7 +42,7 @@ export class AgendaComponent {
     const month = activeDate.getMonth();
     const year = activeDate.getFullYear();
     const prevMonth = new Date(year, month + 1, 1);
-    this.currentDate = prevMonth;
+    this.selectedDate = prevMonth;
   }
   
 }
