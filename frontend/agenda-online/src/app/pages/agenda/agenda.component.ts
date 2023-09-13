@@ -21,4 +21,12 @@ export class AgendaComponent {
   prevDay() {
     this.currentDate = addDays(this.currentDate, -1)
   }
+
+  changeMonth(mode: 'prev' | 'next') {
+    this.currentDate =
+      mode === 'prev'
+        ? addDays(this.currentDate, -30)
+        : addDays(this.currentDate, 30)
+  }
+  
 }

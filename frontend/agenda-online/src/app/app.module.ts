@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import {MatDialogModule} from '@angular/material/dialog';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatDialogModule,
-    DatepickerComponent
+    DatepickerComponent,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
