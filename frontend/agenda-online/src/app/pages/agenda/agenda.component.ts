@@ -28,5 +28,21 @@ export class AgendaComponent {
         ? addDays(this.currentDate, -30)
         : addDays(this.currentDate, 30)
   }
+
+  nextMonthFirstDay(selectedDate : Date) {
+    const activeDate = selectedDate;
+    const month = activeDate.getMonth();
+    const year = activeDate.getFullYear();
+    const prevMonth = new Date(year, month - 1, 1);
+    this.currentDate = prevMonth;
+  }
+
+  prevMonthFirstDay(selectedDate : Date) {
+    const activeDate = selectedDate;
+    const month = activeDate.getMonth();
+    const year = activeDate.getFullYear();
+    const prevMonth = new Date(year, month + 1, 1);
+    this.currentDate = prevMonth;
+  }
   
 }
