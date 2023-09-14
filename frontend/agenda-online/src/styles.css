@@ -4,3 +4,9 @@
 .mat-calendar-previous-button {
   display: none !important;
 }
+
+.fc .fc-timegrid-slot:hover{
+  border-bottom: 0px;
+  height: 1.5em;
+  background-color: lightblue; 
+}
