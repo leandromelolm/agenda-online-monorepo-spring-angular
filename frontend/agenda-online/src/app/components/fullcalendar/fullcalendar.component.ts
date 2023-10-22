@@ -37,6 +37,11 @@ export class FullcalendarComponent implements OnInit {
     this.calendarOptions = {
       plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
       initialView: 'timeGridDay',
+      editable: true,
+      displayEventTime: true,     
+      weekends: true,
+      dayMaxEvents: true,
+      allDaySlot:false,
       headerToolbar: {
         left: '',       
         center: '',
